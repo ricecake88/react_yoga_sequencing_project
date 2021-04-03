@@ -28,9 +28,9 @@ Rails.application.routes.draw do
             sessions: "api/v1/users/sessions",
           }
       end
-    end  
+    end
 
-    get '/api/v1/users/current_user', to: 'api/v1/users/current_user#index'    
+    get '/api/v1/users/current_user', to: 'api/v1/users/current_user#index'
   ## For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #namespace :api do
   #  namespace :v1 do
