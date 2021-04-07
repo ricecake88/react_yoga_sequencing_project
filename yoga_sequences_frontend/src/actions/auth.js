@@ -1,14 +1,11 @@
-import { AUTHENTICATED, NOT_AUTHENTICATED } from '../actions';
-
-export const BACKEND_URL_BASE = `http://localhost:3001`;
-export const BACKEND_URL = `${BACKEND_URL_BASE}/api/v1/users`;
+import { AUTHENTICATED, NOT_AUTHENTICATED, BACKEND_USERS_URL } from '../actions';
 
 const setToken = (token) => {
     localStorage.setItem("token", token);
     localStorage.setItem("lastLoginTime", new Date(Date.now()).getTime());
 };
 
-const getToken = () => {
+export const getToken = () => {
     const now = new Date(Date.now()).getTime();
     const thirtyMinutes = 1000 * 60 * 30;
     const timeSinceLastLogin = now - localStorage.getItem("lastLoginTime");
@@ -26,7 +23,7 @@ export const checkAuth = () => {
         }
     }
     return (dispatch) => {
-        return fetch(`${BACKEND_URL}/current_user`, config)
+        return fetch(`${BACKEND_USERS_URL}/current_user`, config)
         .then(resp => {
             if (resp.ok) {
                 return resp.json().then(user => dispatch({type: AUTHENTICATED, payload: user}))
@@ -47,7 +44,7 @@ export const signupUser = (credentials) => {
         body: JSON.stringify({user: credentials })
     }
     return (dispatch) => {
-        return fetch(`${BACKEND_URL}/signup`, config)
+        return fetch(`${BACKEND_USERS_URL}/signup`, config)
         .then(resp => {
             if (resp.ok) {
                 setToken(resp.headers.get("Authorization"));
@@ -77,7 +74,7 @@ export const loginUser = (credentials) => {
         body: JSON.stringify({ user: credentials })
     };
     return (dispatch) => {
-        return fetch(`${BACKEND_URL}/login`, config)
+        return fetch(`${BACKEND_USERS_URL}/login`, config)
         .then(resp => {
             if (resp.ok) {
                 setToken(resp.headers.get("Authorization"));
@@ -98,7 +95,7 @@ export const loginUser = (credentials) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    return fetch(`${BACKEND_URL_BASE}/logout`, {
+    return fetch(`${BACKEND_USERS_URL}/logout`, {
       method: "DELETE",
       headers: {
         "Accept": "application/json",

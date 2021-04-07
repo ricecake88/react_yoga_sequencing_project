@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import Logout from './auth/Logout';
 import { checkAuth } from '../actions/auth';
 
+
 class Navbar extends React.Component {
   componentDidMount() {
     this.props.dispatchCheckAuth();
@@ -60,6 +61,9 @@ render() {
             to='/protected_route'
           >
             ProtectedRoute
+          </NavLink>
+          <NavLink exact to='/yoga_sequences'>
+            Yoga Sequence Container
           </NavLink>
         </div>
         <div className='sm:text-right'>

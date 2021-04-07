@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import withAuth from './components/auth/withAuth';
+import YogaSeqContainer from './containers/YogaSeqContainer';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Switch>
           <Route exact path='/' component={NormalRoute} />
           <Route exact path='/protected_route' component={withAuth(ProtectedRoute)} />
+          <Route exact path='/yoga_sequences' component={withAuth(YogaSeqContainer)}/>
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
       </Switch>
