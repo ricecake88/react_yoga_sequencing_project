@@ -10,7 +10,8 @@ export default function yogaCategoryReducer(state={categories: [], requesting: f
                 requesting: true
             }
         case 'GET_CATEGORIES':
-            return {
+        debugger
+        return {
                 ...state,
                 categories: action.categories,
                 requesting: false
@@ -22,7 +23,6 @@ export default function yogaCategoryReducer(state={categories: [], requesting: f
                 requesting: true
             }
         case 'ADD_CATEGORY':
-            debugger
             return {
                 ...state,
                 categories: [...state.categories, action.category],

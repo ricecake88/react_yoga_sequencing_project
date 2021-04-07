@@ -1,20 +1,24 @@
 import { BACKEND_URL } from '../actions';
 import { getToken } from '../actions/auth';
 
-export const getYogaCategories = () => {
-    console.log("in getYogaCategories");
+export const getYogaCategories = (user) => {
+    console.log(">>> in actions/yogaSeq -> getYogaCategories");
+    console.log(user);
     let config = {
         headers: {
             'Accept': "application/json",
             'Content-Type': 'application/json',
             'Authorization': getToken()
-        }
+        },
     }
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
-        fetch(`${BACKEND_URL}/yoga_categories`, config)
+        fetch(`${BACKEND_URL}/yoga_categories/?user_id=${user.id}`, config)
         .then(response => response.json())
-        .then(json => dispatch({ type: 'GET_CATEGORIES', json}));
+        .then(json => {
+            console.log(json);
+            dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
+        });
     };
 }
 

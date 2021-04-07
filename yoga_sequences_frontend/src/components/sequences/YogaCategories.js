@@ -11,9 +11,10 @@ class YogaCategories extends Component {
  }
 
   componentDidMount = () => {
-      console.log("component did mount")
-      this.props.getCategories();
-      console.log(this.props.categories)
+      console.log("components/sequences/YogaCategories ->component did mount");
+      console.log(this.props.user);
+      this.props.getCategories(this.props.user);
+      
   }
 
   onChange = (event) => {
@@ -62,7 +63,7 @@ function mapDispatchToProps(dispatch) {
     console.log("\tYogaCategories >> mapDispatchToProps");
     return {
         addCategory: (category) => dispatch(addYogaCategory(category)),
-        getCategories: () => dispatch(getYogaCategories)
+        getCategories: (user) => dispatch(getYogaCategories(user))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (YogaCategories);

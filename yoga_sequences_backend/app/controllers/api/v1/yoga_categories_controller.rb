@@ -1,8 +1,9 @@
 class Api::V1::YogaCategoriesController < ApplicationController
     before_action :authenticate_user!
     def index
+        Rails.logger.debug params.inspect
         if current_user
-            categories = YogaCategory.where(:user_id => params[:user].id)
+            categories = YogaCategory.where(:user_id => params[:user_id])
             render json: {categories: categories}
         else
             render json: {errors: "Error, no current_user"}
