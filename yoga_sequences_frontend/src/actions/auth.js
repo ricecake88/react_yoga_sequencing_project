@@ -69,7 +69,6 @@ export const loginUser = (credentials) => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': getToken(),
         },
         body: JSON.stringify({ user: credentials })
     };
