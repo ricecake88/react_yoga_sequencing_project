@@ -28,6 +28,7 @@ Rails.application.routes.draw do
             sessions: "api/v1/users/sessions",
           }
           resources :yoga_categories
+          resources :yoga_poses, only: [:index]
       end
     end
 

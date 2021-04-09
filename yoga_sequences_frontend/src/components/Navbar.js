@@ -60,10 +60,16 @@ render() {
             exact
             to='/protected_route'
           >
-            ProtectedRoute
+            ProtectedRoute |
           </NavLink>
           <NavLink exact to='/yoga_sequences'>
-            Yoga Sequence Container
+           Create A Yoga Sequence
+          </NavLink> |
+          <NavLink exact to='/yoga_categories'>
+            Yoga Categories
+          </NavLink> |
+          <NavLink exact to='/yoga_poses'>
+            Yoga Poses
           </NavLink>
         </div>
         <div className='sm:text-right'>

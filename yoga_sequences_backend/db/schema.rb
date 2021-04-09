@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_034752) do
   create_table "yoga_poses", force: :cascade do |t|
     t.string "name"
     t.string "sanskrit"
-    t.string "tags"
+    t.text "tags", array: true
     t.string "category"
     t.string "url"
     t.string "image"
