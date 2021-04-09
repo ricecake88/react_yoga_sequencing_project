@@ -25,4 +25,13 @@ class Api::V1::YogaCategoriesController < ApplicationController
         render json: {errors: "Not yet implemented"}
     end
 
+    def destroy
+        yoga_category = YogaCategory.find(params[:id])
+        if yoga_category.delete
+            render json: {category: yoga_category}
+        else
+            render json: {errors: yoga_category.errors}
+        end
+    end
+
 end

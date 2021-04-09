@@ -10,8 +10,7 @@ export default function yogaCategoryReducer(state={categories: [], requesting: f
                 requesting: true
             }
         case 'GET_CATEGORIES':
-        debugger
-        return {
+            return {
                 ...state,
                 categories: action.categories,
                 requesting: false
@@ -26,6 +25,15 @@ export default function yogaCategoryReducer(state={categories: [], requesting: f
             return {
                 ...state,
                 categories: [...state.categories, action.category],
+                requesting: false
+            }
+        case 'START_DELETE_CATEGORY':
+            return state;
+        case 'DELETE_CATEGORY':
+            console.log(action);
+            return {
+                ...state,
+                categories: state.categories.filter(category => category.id !== action.category.id),
                 requesting: false
             }
         default:
