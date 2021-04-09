@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
+import { Route } from 'react-router-dom';
 import YogaSeqForm from '../components/sequences/YogaSeqForm';
-import YogaCategories from '../components/sequences/YogaCategories';
+
 
 
 class YogaSeqContainer extends Component {
@@ -8,7 +9,7 @@ class YogaSeqContainer extends Component {
         return (
             <div>Yoga Sequence Container
                 <YogaSeqForm />
-                <YogaCategories addCategory={this.props.addCategory}/>
+
             </div>
         )
     }

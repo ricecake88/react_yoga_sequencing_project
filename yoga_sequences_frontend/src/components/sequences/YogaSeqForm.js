@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import YogaCategories from '../sequences/YogaCategories';
 
 class YogaSeqForm extends Component {
 
@@ -23,6 +24,7 @@ class YogaSeqForm extends Component {
             <form onSubmit={this.onSubmit}>
                 <label htmlFor="Name"/>Yoga Sequence Name:
                 <input type="name" name="name" onChange={this.onChange} value={this.props.name}/>
+                <YogaCategories addCategory={this.props.addCategory}/>
                 <input type="submit"></input>
             </form>
         </div>)

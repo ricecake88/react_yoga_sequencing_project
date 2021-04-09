@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import YogaCategoryAdd from '../sequences/YogaCategoryAdd';
-import { addYogaCategory } from '../../actions/yogaSeq';
-import { getYogaCategories } from '../../actions/yogaSeq';
+import { addYogaCategory } from '../../actions/yogaCategories';
+import { getYogaCategories } from '../../actions/yogaCategories';
 
 class YogaCategories extends Component {
 
