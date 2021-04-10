@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import CategoryAdd from './CategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
+import PoseSelector from '../poses/PoseSelector';
 
 class SeqForm extends Component {
 
@@ -16,7 +17,7 @@ class SeqForm extends Component {
         console.log("components/sequences/SeqForm ->component did mount");
         console.log(this.props.user);
         this.props.getCategories(this.props.user);
-        
+
     }
 
     onChange = (event) => {
@@ -40,13 +41,13 @@ class SeqForm extends Component {
             <form onSubmit={this.onSubmit}>
                 <label htmlFor="Name"> Sequence Name: </label>
                 <input type="name" name="name" onChange={this.onChange} value={this.state.name}/><br/>
-                
+
                 <select value={this.state.category_id} name="category_id" onChange={this.onChange}>
                     <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
                 </select>
                 <CategoryAdd user={this.props.currentUser} addTrue={this.state.category} name="category" addCategory={this.props.addCategory} onChange={this.onChange}/>
-                {/*<label htmlFor="AddPose">Add a Pose</label>
-                <PoseSelector poses={this.props.poses} addPose={true}/>*/}<br/>
+                <label htmlFor="AddPose">Add a Pose</label>
+                <PoseSelector poses={this.props.poses} addPose={true}/><br/>
                 <input type="submit"></input>
             </form>
         </div>)

@@ -7,7 +7,7 @@ class PoseSelector extends Component {
     state = {
         pose: {}
     }
-    
+
     componentDidMount = () => {
         if (Object.keys(this.props.poses).length !== 0) {
             this.setState({
@@ -36,9 +36,10 @@ class PoseSelector extends Component {
                 this.props.poses.map(pose => <option key={pose.id} value={pose.id}>{pose.name}</option>)
             : null}
             </select>
-            <>
-               {Object.keys(this.state.pose).length !== 0 ?
-                <Pose key={this.state.pose} pose={this.state.pose}/> : null }
+            <> {this.props.addTrue ?
+               Object.keys(this.state.pose).length !== 0 ?
+                <Pose key={this.state.pose} pose={this.state.pose}/> : null
+               :null}
                </>
         </>
         )
