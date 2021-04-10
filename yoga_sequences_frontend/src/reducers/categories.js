@@ -1,5 +1,5 @@
-export default function yogaCategoryReducer(state={categories: [], requesting: false}, action) {
-    console.log("\t >>>in yogaCategoryReducer")
+export default function categoryReducer(state={categories: [], requesting: false}, action) {
+    console.log("\t >>>in categoryReducer")
     console.log(state) 
     console.log(action)
     switch(action.type) {

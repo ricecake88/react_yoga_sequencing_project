@@ -1,8 +1,8 @@
 import { BACKEND_URL } from '.';
 import { getToken } from './auth';
 
-export const getYogaCategories = (user) => {
-    console.log(">>> in actions/yogaSeq -> getYogaCategories");
+export const getCategories = (user) => {
+    console.log(">>> in actions/sequences -> getCategories");
     console.log(user);
     let config = {
         headers: {
@@ -13,7 +13,7 @@ export const getYogaCategories = (user) => {
     }
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
-        fetch(`${BACKEND_URL}/yoga_categories/?user_id=${user.id}`, config)
+        fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
         .then(response => response.json())
         .then(json => {
             console.log(json);
@@ -22,8 +22,8 @@ export const getYogaCategories = (user) => {
     };
 }
 
-export const addYogaCategory = (category) => {
-    console.log("\tAction >> add Yoga Category");
+export const addCategory = (category) => {
+    console.log("\tAction >> add Category");
     let config = {
         method: 'POST',
         headers: {
@@ -37,7 +37,7 @@ export const addYogaCategory = (category) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_ADD_CATEGORY'});
-        fetch(`${BACKEND_URL}/yoga_categories`, config)
+        fetch(`${BACKEND_URL}/categories`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => 
@@ -55,7 +55,7 @@ export const addYogaCategory = (category) => {
 }
 
 export const deleteCategory = (id) => {
-    console.log("\t>>>yogaCategories Action -> deleteCategory");
+    console.log("\t>>>categories Action -> deleteCategory");
     console.log(id);
     let config = {
         method: 'DELETE',
@@ -67,7 +67,7 @@ export const deleteCategory = (id) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_DELETE_CATEGORY'});
-        fetch(`${BACKEND_URL}/yoga_categories/${id}`, config)
+        fetch(`${BACKEND_URL}/categories/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {

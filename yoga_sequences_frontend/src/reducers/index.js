@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import authReducer from './auth';
-import yogaCategoryReducer from './yogaCategories';
-import yogaPoseReducer from './yogaPoses';
+import categoryReducer from './categories';
+import poseReducer from './poses';
+import sequenceReducer from './sequences';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    yogaCategories: yogaCategoryReducer,
-    poses: yogaPoseReducer
+    categories: categoryReducer,
+    poses: poseReducer,
+    sequences: sequenceReducer
 })
 
 export default rootReducer;

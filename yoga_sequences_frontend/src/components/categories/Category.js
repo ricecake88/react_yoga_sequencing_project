@@ -1,7 +1,7 @@
 import React from 'react';
 
-const YogaCategory = (props) => {
-    console.log("in YogaCategory");
+const Category = (props) => {
+    console.log("in Category");
     console.log(props)
     return <div>
         <li>{props.category.name}
@@ -9,4 +9,4 @@ const YogaCategory = (props) => {
         </li>
     </div>
 }
-export default YogaCategory;
+export default Category;

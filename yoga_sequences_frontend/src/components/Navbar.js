@@ -62,14 +62,14 @@ render() {
           >
             ProtectedRoute |
           </NavLink>
-          <NavLink exact to='/yoga_sequences'>
-           Create A Yoga Sequence
+          <NavLink exact to='/sequences'>
+           Create a Sequence
           </NavLink> |
-          <NavLink exact to='/yoga_categories'>
-            Yoga Categories
+          <NavLink exact to='/categories'>
+            Categories
           </NavLink> |
-          <NavLink exact to='/yoga_poses'>
-            Yoga Poses
+          <NavLink exact to='/poses'>
+            Poses
           </NavLink>
         </div>
         <div className='sm:text-right'>

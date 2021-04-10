@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class YogaCategoryAdd extends Component {
+class CategoryAdd extends Component {
     state = {
         category: ''
     }
@@ -24,13 +24,13 @@ class YogaCategoryAdd extends Component {
     render() {
         return (this.props.addTrue === "Add Category") ?
          (
-             <form onSubmit={this.onSubmit} id="addCategory">
+                <>
                 <label htmlFor="category">Add Category</label>
                 <input type="text" name="category" value={this.state.category} onChange={this.onChange}></input>
-                <button>Add</button>
-            </form>
-        ) : ''
+                <button onClick={this.onSubmit} id="addCategory">Add</button>
+                </>
+        ) : null
     }
 }
 
-export default connect() (YogaCategoryAdd);
+export default connect() (CategoryAdd);

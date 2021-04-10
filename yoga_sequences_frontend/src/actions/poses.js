@@ -1,7 +1,7 @@
 import { BACKEND_URL } from '.';
 import { getToken } from './auth';
 
-export const getYogaPoses = () => {
+export const getPoses = () => {
     let config = {
         method: 'GET',
         headers: {
@@ -12,13 +12,13 @@ export const getYogaPoses = () => {
     }
     console.log(config)
     return (dispatch) => {
-        dispatch({type: 'START_GET_YOGA_POSES'});
-        fetch(`${BACKEND_URL}/yoga_poses`, config)
+        dispatch({type: 'START_GET_POSES'});
+        fetch(`${BACKEND_URL}/poses`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
                     console.log(json);
-                    dispatch({type: 'GET_YOGA_POSES', yoga_poses: json.yoga_poses})
+                    dispatch({type: 'GET_POSES', poses: json.poses})
                 })
             } else {
                 return response.json().then((errors) => {

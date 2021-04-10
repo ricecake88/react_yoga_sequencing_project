@@ -1,6 +1,6 @@
 import React from 'react';
 
-const YogaPose = ({pose}) => {
+const Pose = ({pose}) => {
     return (
         <div>
             <p>
@@ -16,4 +16,4 @@ const YogaPose = ({pose}) => {
         </div>
     )
 }
-export default YogaPose;
+export default Pose;
