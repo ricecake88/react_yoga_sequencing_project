@@ -6,9 +6,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import withAuth from './components/auth/withAuth';
-import YogaSeqContainer from './containers/YogaSeqContainer';
-import YogaCategoryContainer from './containers/YogaCategoryContainer';
-import YogaPoseContainer from './containers/YogaPoseContainer';
+import SeqContainer from './containers/SeqContainer';
+import CategoryContainer from './containers/CategoryContainer';
+import PoseContainer from './containers/PoseContainer';
 
 function App() {
   return (
@@ -18,9 +18,9 @@ function App() {
       <Switch>
           <Route exact path='/' component={NormalRoute} />
           <Route exact path='/protected_route' component={withAuth(ProtectedRoute)}/>
-          <Route exact path='/yoga_sequences' component={withAuth(YogaSeqContainer)}/>
-          <Route exact path='/yoga_categories' component={withAuth(YogaCategoryContainer)}/>
-          <Route exact path='/yoga_poses' component={withAuth(YogaPoseContainer)}/>
+          <Route exact path='/sequences' component={withAuth(SeqContainer)}/>
+          <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
+          <Route exact path='/poses' component={withAuth(PoseContainer)}/>
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
       </Switch>
