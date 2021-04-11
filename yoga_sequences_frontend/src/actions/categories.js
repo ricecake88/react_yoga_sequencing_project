@@ -2,8 +2,8 @@ import { BACKEND_URL } from '.';
 import { getToken } from './auth';
 
 export const getCategories = (user) => {
-    console.log(">>> in actions/sequences -> getCategories");
-    console.log(user);
+    //console.log(">>> in actions/sequences -> getCategories");
+    //console.log(user);
     let config = {
         headers: {
             'Accept': "application/json",
@@ -16,14 +16,14 @@ export const getCategories = (user) => {
         fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
         .then(response => response.json())
         .then(json => {
-            console.log(json);
+            //console.log(json);
             dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
         });
     };
 }
 
 export const addCategory = (category) => {
-    console.log("\tAction >> add Category");
+    //console.log("\tAction >> add Category");
     let config = {
         method: 'POST',
         headers: {
@@ -55,8 +55,8 @@ export const addCategory = (category) => {
 }
 
 export const deleteCategory = (id) => {
-    console.log("\t>>>categories Action -> deleteCategory");
-    console.log(id);
+    //console.log("\t>>>categories Action -> deleteCategory");
+    //console.log(id);
     let config = {
         method: 'DELETE',
         headers: {
@@ -71,7 +71,7 @@ export const deleteCategory = (id) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
+                   // console.log(json);
                     dispatch({type: 'DELETE_CATEGORY', category: json.category})
                 })
             } else {

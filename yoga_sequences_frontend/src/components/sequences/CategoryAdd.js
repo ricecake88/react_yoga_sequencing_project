@@ -14,7 +14,7 @@ class CategoryAdd extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state.category)
+        //console.log(this.state.category)
         this.props.addCategory(this.state.category)
         this.setState({
             category:''

@@ -5,7 +5,7 @@ class Categories extends Component {
 
 
   onChange = (event) => {
-    console.log("Selected onChangeCategory");
+    //console.log("Selected onChangeCategory");
      this.setState({
             [event.target.name]: event.target.value
         })
@@ -16,9 +16,9 @@ class Categories extends Component {
   }
 
   display() {
-        console.log(">>>Categories")
-        console.log(this.props.categories)
-        console.log(Object.keys(this.props.categories).length)
+        //console.log(">>>Categories")
+        //console.log(this.props.categories)
+        //console.log(Object.keys(this.props.categories).length)
         return (
         <>
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}

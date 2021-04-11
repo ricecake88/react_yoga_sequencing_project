@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CategoryAdd from './CategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
-import PoseSelector from '../poses/PoseSelector';
+import PoseAdd from '../sequences/PoseAdd';
 
 class SeqForm extends Component {
 
@@ -36,6 +36,8 @@ class SeqForm extends Component {
     }
 
     render() {
+        console.log(">>> SequenceForm -> SeqForm")
+        console.log(this.props)
         return(
         <div>
             <form onSubmit={this.onSubmit}>
@@ -47,7 +49,8 @@ class SeqForm extends Component {
                 </select>
                 <CategoryAdd user={this.props.currentUser} addTrue={this.state.category} name="category" addCategory={this.props.addCategory} onChange={this.onChange}/>
                 <label htmlFor="AddPose">Add a Pose</label>
-                <PoseSelector poses={this.props.poses} addPose={true}/><br/>
+                {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
+                <PoseAdd poses={this.props.poses}/><br/>
                 <input type="submit"></input>
             </form>
         </div>)
@@ -68,7 +71,7 @@ function mapDispatchToProps(dispatch) {
     return {
         addCategory: (category) => dispatch(addCategory(category)),
         getCategories: (user) => dispatch(getCategories(user)),
-        addSequence: (sequence) => dispatch(addSequence(sequence))
+        addSequence: (sequence) => dispatch(addSequence(sequence)),
     }
 }
 

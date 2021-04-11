@@ -23,7 +23,7 @@ export const getPoses = () => {
             } else {
                 return response.json().then((errors) => {
                     return Promise.reject(errors);
-                })   
+                })
             }
         })
 

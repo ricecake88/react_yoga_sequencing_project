@@ -6,11 +6,12 @@ import { getPoses } from '../actions/poses';
 
 class SeqContainer extends Component {
 
-    componentDidMount = () =>
+    componentDidMount = () => {
         this.props.getPoses()
+    }
 
     render() {
-        console.log(">>>SeqContainer ->render()")        
+        console.log(">>>SeqContainer ->render()")
         console.log(this.props.poses)
         return (
             <div>==== Sequence Container===
