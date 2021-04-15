@@ -29,7 +29,7 @@ Rails.application.routes.draw do
           }
           resources :categories
           resources :sequences
-          resources :poses, only: [:index]
+          resources :poses, only: [:index, :show]
       end
     end
 
