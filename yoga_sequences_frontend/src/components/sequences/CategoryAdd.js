@@ -7,6 +7,8 @@ class CategoryAdd extends Component {
     }
 
     onChange = (event) => {
+        //console.log("CategoryAdd onChange")
+        //console.log(event.target)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -22,6 +24,8 @@ class CategoryAdd extends Component {
     }
 
     render() {
+        //console.log("CategoryAdd -> render()")
+        //console.log(this.props)
         return (this.props.addTrue === "Add Category") ?
          (
                 <>

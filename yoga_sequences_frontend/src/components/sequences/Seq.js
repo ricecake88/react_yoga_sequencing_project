@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Seq = (seq) => {
+const Seq = ({seq}) => {
     return  (
         <div>{seq.name}</div>
     )

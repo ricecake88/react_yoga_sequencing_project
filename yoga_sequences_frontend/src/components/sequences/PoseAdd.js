@@ -1,33 +1,57 @@
 import React, { Component } from 'react';
 import PoseSelector from '../poses/PoseSelector';
 import PoseList from '../sequences/PoseList';
+import PoseDraggableEditable from '../sequences/PoseDraggableEditable';
+import PoseTable from '../sequences/PoseTable';
 
 class PoseAdd extends Component {
 
     state = {
-        poses: [],
+        //poses: [], // < ---- move this to Sequence Form, test if I can submit a sequence with multiple poses first
         pose_id: 0,
+        pose: this.props.poses.find(pose => pose.id === 0),
     }
 
     onClick = (event) => {
         event.preventDefault();
-        console.log("Pose Add to Sequence Click")
+        console.log("Pose Add to Sequence Click");
+        console.log(event.target.value)
+        /*const pose = this.props.poses.find(pose => pose.id === parseInt(event.target.value));
         this.setState({
-            poses: [...this.state.poses]
-        })
+            //pose_id: event.target.value,
+            poses: [...this.state.poses, pose]
+        })*/
+     
     }
 
+    updateValue = (id) => {
+        const pose = this.props.poses.find(pose => pose.id === parseInt(id));
+        this.setState({
+            pose_id: parseInt(id),
+            //poses: [...this.state.poses, pose]
+            
+        })
+    }
     render() {
         console.log("PoseAdd");
-        console.log(this.props.poses)
+        console.log(this.props)
         return (
         <>
-            <PoseSelector poses={this.props.poses} addTrue={true}/><br/>
-            <button onClick={this.onClick}>+</button><br/>
-            Poses that are added go here<br/>
-            {(this.state.poses.length !== 0) ?
+            <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
+            <button onClick={this.onClick} value={this.state.pose_id}>+</button><br/>
+            <button onClick={this.props.onClick} value={this.state.pose_id}>!</button><br/>
+            {/*(this.state.poses.length !== 0) ?
                 <PoseList poses={this.state.poses}/> : null
-            }
+            */}
+            {/*(this.props.addedPoses.length !== 0) ?
+                <PoseList poses={this.props.addedPoses}/> : null
+            */}
+            {(this.props.addedPoses.length !== 0) ?
+                <PoseTable poses={this.props.addedPoses} /> : null
+            }            
+            {/*(this.props.addedPoses.length !== 0) ?
+                <PoseDraggableEditable poses={this.props.addedPoses} /> : null
+            */}
         </>)
     }
 }

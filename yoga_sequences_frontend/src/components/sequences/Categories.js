@@ -5,7 +5,7 @@ class Categories extends Component {
 
 
   onChange = (event) => {
-    //console.log("Selected onChangeCategory");
+    console.log("Selected onChangeCategory");
      this.setState({
             [event.target.name]: event.target.value
         })
@@ -16,13 +16,13 @@ class Categories extends Component {
   }
 
   display() {
-        //console.log(">>>Categories")
-        //console.log(this.props.categories)
-        //console.log(Object.keys(this.props.categories).length)
+        console.log(">>>Categories")
+        console.log(this.props.categories)
+        console.log(Object.keys(this.props.categories).length)
         return (
         <>
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}
-            <option disabled value="">Select a Category</option>
+            <option disabled selected value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ? 
             this.props.categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
             : null}
