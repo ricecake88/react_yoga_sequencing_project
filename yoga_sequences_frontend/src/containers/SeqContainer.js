@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SeqForm from '../components/sequences/SeqForm';
 import { getPoses } from '../actions/poses';
+import { getSequences } from '../actions/sequences';
+import SeqList from '../components/sequences/SeqList';
 
 class SeqContainer extends Component {
 
@@ -13,9 +15,11 @@ class SeqContainer extends Component {
     render() {
         console.log(">>>SeqContainer ->render()")
         console.log(this.props.poses)
+        console.log(this.props.sequences)
         return (
             <div>==== Sequence Container===
                 <SeqForm poses={this.props.poses}/>
+                <SeqList sequences={this.props.sequences}/>
             </div>
         )
     }
@@ -23,12 +27,15 @@ class SeqContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        poses: state.poses.poses
+        poses: state.poses.poses,
+        sequences: state.sequences.sequences,
+        user: state.currentUser
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getPoses: () => dispatch(getPoses())
+        getPoses: () => dispatch(getPoses()),
+        getSequences: () => dispatch(getSequences())
     }
 }
 
