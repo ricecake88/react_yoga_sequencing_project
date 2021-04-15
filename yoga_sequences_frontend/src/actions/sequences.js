@@ -40,7 +40,9 @@ export const addSequence = (sequence) => {
         },
         body: JSON.stringify({
             name: sequence.name,
-            category_id: parseInt(sequence.category_id)
+            category_id: parseInt(sequence.category_id),
+            user_id: sequence.user_id,
+            pose_in_seqs_attributes: sequence.poses_in_seq
         })
     };
 

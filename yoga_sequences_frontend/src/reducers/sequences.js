@@ -3,9 +3,9 @@ export default function sequenceReducer(
         sequences: [],
         requesting: false
     }, action) {
-        //console.log(">>> sequenceReducer");
-        //console.log(state);
-        //console.log(action);
+        console.log(">>> sequenceReducer");
+        console.log(state);
+        console.log(action);
     switch(action.type) {
         case 'START_ADD_SEQ':
             return {
