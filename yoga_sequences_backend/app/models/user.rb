@@ -9,7 +9,7 @@ class User < ApplicationRecord
   #       devise :database_authenticatable,
   #       :jwt_authenticatable, jwt_revocation_strategy: self         
 
-    has_many :yoga_sequences
-    has_many :yoga_categories
+    has_many :sequences
+    has_many :categories
 
 end
