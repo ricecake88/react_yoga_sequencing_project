@@ -5,13 +5,14 @@ import CategoryAdd from './CategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
 import PoseAdd from '../sequences/PoseAdd';
+import {v4 as uuid} from 'uuid';
 
 class SeqForm extends Component {
 
     state = {
             name: '',
-            category: null,
-            poses: [],
+            category: "",
+            //poses: [],
             pose_id: 0,
             poses_in_seq: [],
             errors: []
@@ -32,6 +33,7 @@ class SeqForm extends Component {
         })
     }
 
+    /* this goes to the server */
     onSubmit = (event) => {
         event.preventDefault();
         console.log("on Submit")
@@ -50,7 +52,10 @@ class SeqForm extends Component {
         this.props.addSequence(sequence)
         this.setState({
             name: '',
-            category_id: null
+            category: "",
+            //poses: [],
+            poses_in_seq: [],
+            pose_id: 0
         })
     }
 
@@ -60,21 +65,76 @@ class SeqForm extends Component {
         console.log(event.target.value)
         const pose = this.props.poses.find(pose => pose.id === parseInt(event.target.value));
         const pose_in_seq = {
+            name: pose.name,
             pose_id: pose.id,
-            num_breaths: 0,
-            pose_order: 0
+            num_breaths: pose.num_breaths,
+            pose_order: this.state.poses_in_seq.length
         }
         this.setState({
             //pose_id: event.target.value,
-            poses: [...this.state.poses, pose],
+            //poses: [...this.state.poses, pose],
+            ...this.state,
             poses_in_seq: [...this.state.poses_in_seq, pose_in_seq ]
         })
-     
+        console.log(this.state.poses_in_seq);
+
+    }
+
+    onClickDeletePose = (event, id) => {
+        event.preventDefault()
+        console.log("onClickDeletePose")
+        console.log(id);
+        debugger
+        this.setState({
+            ...this.state,
+            poses_in_seq: this.state.poses_in_seq.filter((pose, index) => index !== id)
+        })
+        console.log(this.state)
+    }
+
+    onBlur = (event, poseElementId) => {
+        event.preventDefault();
+        console.log("onBlur");
+        console.log(event.target.name);
+        console.log(event.target.value);
+        console.log(poseElementId);
+       /* this.setState({
+            ...this.state,
+            poses_in_seq: this.state.poses_in_seq.map((pose, index) => {
+                return index === poseElementId ? {...pose,
+                    [event.target.name]: parseInt(event.target.value)}
+                : pose
+            })
+        })*/
+        this.setState(prevState => ({
+            ...prevState,
+            poses_in_seq: prevState.poses_in_seq.map((pose, index) => {
+                return index === poseElementId ? {...pose,
+                    [event.target.name]: parseInt(event.target.value)}
+                : pose
+            })
+        }))
+
+    }
+
+    handleOnDragEnd = (result) => {
+        console.log("In handleOnDragEnd")
+        console.log(result);
+        let items = Array.from(this.state.poses_in_seq)
+        const reorderedItem = items.splice(result.source.index, 1)[0];
+        items.splice(result.destination.index, 0, reorderedItem);
+        items.forEach((item, index) => {
+            item.pose_order = index;
+        })
+        this.setState({
+            poses_in_seq: items
+        })
     }
 
     render() {
         console.log(">>> SequenceForm -> SeqForm")
-        console.log(this.props)
+        console.log(this.props);
+        console.log(this.state);
         //Sequence.create!(:id => 1, :name => "Testing 2", :user_id => 2, :category_id => 4, :pose_in_seqs_attributes => [{:pose_id => 0, :num_breaths => 2, :pose_order => 1}, {:pose_id => 1, :num_breaths => 3, :pose_order => 0}]
         return(
         <div>
@@ -88,7 +148,7 @@ class SeqForm extends Component {
                 <CategoryAdd user={this.props.currentUser} addTrue={this.state.category} name="category" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
                 <label htmlFor="AddPose">Add a Pose</label>
                 {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
-                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.poses}/><br/>
+                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.poses_in_seq} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
                 <input type="submit"></input>
             </form>
         </div>)
