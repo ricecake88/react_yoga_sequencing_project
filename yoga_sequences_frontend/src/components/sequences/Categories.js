@@ -22,7 +22,7 @@ class Categories extends Component {
         return (
         <>
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}
-            <option disabled selected value="">Select a Category</option>
+            <option disabled value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ? 
             this.props.categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
             : null}

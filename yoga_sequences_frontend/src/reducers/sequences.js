@@ -16,7 +16,7 @@ export default function sequenceReducer(
         case 'ADD_SEQ':
             return {
                 ...state,
-                sequences: [state.sequences, action.sequence],
+                sequences: [...state.sequences, action.sequence],
                 requesting: false
             }
         default:
