@@ -15,7 +15,14 @@ class Api::V1::SequencesController < ApplicationController
             Rails.logger.debug params.inspect
             sequence = Sequence.new(seq_params)
             if sequence.save!
-                render json: {sequence: sequence}
+                render json: {
+                    sequence: {
+                        id: sequence.id,
+                        name: sequence.name,
+                        category_id: sequence.category_id,
+                        poses: sequence.poses,
+                        poses_in_seq: sequence.pose_in_seqs
+                    }}
             else
                 render json: {errors: sequence.errors}
             end
