@@ -1,5 +1,6 @@
 class Sequence < ApplicationRecord
-    
+    validates_uniqueness_of :name, scope: :user_id
+
     belongs_to :category
     belongs_to :user
     has_many :pose_in_seqs, inverse_of: :sequence, autosave: true

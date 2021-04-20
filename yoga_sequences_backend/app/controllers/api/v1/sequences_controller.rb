@@ -3,7 +3,7 @@ class Api::V1::SequencesController < ApplicationController
 
     def index
         if current_user
-            sequences = Sequence.find_by(:user_id => current_user.id)
+            sequences = Sequence.where(:user_id => current_user.id)
             render json: {sequences: sequences}
         else
             render json: {errors: "Not Authorized."}
@@ -26,6 +26,16 @@ class Api::V1::SequencesController < ApplicationController
             else
                 render json: {errors: sequence.errors}
             end
+        end
+    end
+
+    def destroy
+        Rails.logger.debug params.inspect
+        sequence = Sequence.find(params[:id])
+        if sequence.delete
+            render json: { sequence: sequence}
+        else
+            render json: { errors: sequence.errors}
         end
     end
 

@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Seq = ({seq}) => {
+const Seq = (props) => {
+    console.log("Seq Component");
+    console.log(props)
     return  (
-        <div>{seq.name}</div>
+        <span>
+        {props.sequence.name}
+        {props.sequence.category}
+        <button onClick={() => props.delete(props.sequence.id)}>X</button><br/>
+        </span>
     )
 }
 export default Seq;

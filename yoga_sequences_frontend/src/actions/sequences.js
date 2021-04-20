@@ -1,7 +1,8 @@
 import { BACKEND_URL } from '.';
 import { getToken } from './auth';
 
-export const getSequences = () => {
+export const getSequences = (user) => {
+    console.log("getSequences()");
     let config = {
         method: 'GET',
         headers: {
@@ -11,13 +12,13 @@ export const getSequences = () => {
         }
     };
     return (dispatch) => {
-        dispatch({type: 'START_GET_SEQ'});
-        fetch(`${BACKEND_URL}/sequences?user_id${this.state.auth.currentUser.id}`, config)
+        dispatch({type: 'START_GET_ALL_SEQ'});
+        fetch(`${BACKEND_URL}/sequences?user_id=${user.id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
                     console.log(json);
-                    dispatch({type: 'GET_YOGA_SEQS', sequences: json.sequences})
+                    dispatch({type: 'GET_ALL_SEQ', sequences: json.sequences})
                 })
             } else {
                 return response.json().then(errors => {
@@ -27,6 +28,7 @@ export const getSequences = () => {
         })
     }
 }
+
 
 export const addSequence = (sequence) => {
     console.log("action addSequence")
@@ -64,4 +66,35 @@ export const addSequence = (sequence) => {
         })
     }
 
+}
+
+export const deleteSequence = (id) => {
+    console.log("action addSequence")
+    console.log(id);
+    let config = {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': getToken()
+        }
+     };
+
+    console.log(config)
+    return (dispatch) => {
+        dispatch({type: 'START_DELETE_SEQ'});
+        fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        .then(response => {
+            if (response.ok) {
+                return response.json().then(json => {
+                    console.log(json);
+                    dispatch({type: 'DELETE_SEQ', sequence: json.sequence})
+                })
+            } else {
+                return response.json().then(errors => {
+                    Promise.reject(errors)
+                })
+            }
+        })
+    }
 }
