@@ -44,7 +44,7 @@ export const addSequence = (sequence) => {
             name: sequence.name,
             category_id: parseInt(sequence.category_id),
             user_id: sequence.user_id,
-            pose_in_seqs_attributes: sequence.poses_in_seq
+            pose_in_seqs_attributes: sequence.pose_in_seqs
         })
     };
 

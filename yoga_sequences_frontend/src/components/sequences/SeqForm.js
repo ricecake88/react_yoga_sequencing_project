@@ -14,7 +14,7 @@ class SeqForm extends Component {
             category: "",
             //poses: [],
             pose_id: 0,
-            poses_in_seq: [],
+            pose_in_seqs: [],
             errors: []
     }
 
@@ -44,7 +44,7 @@ class SeqForm extends Component {
             name: this.state.name,
             category_id: parseInt(this.state.category),
             user_id: this.props.user.id,
-            poses_in_seq: this.state.poses_in_seq
+            pose_in_seqs: this.state.pose_in_seqs
             }
         } else {
             this.state.errors.push("ERROR category is illegal")
@@ -54,7 +54,7 @@ class SeqForm extends Component {
             name: '',
             category: "",
             //poses: [],
-            poses_in_seq: [],
+            pose_in_seqs: [],
             pose_id: 0
         })
     }
@@ -68,15 +68,15 @@ class SeqForm extends Component {
             name: pose.name,
             pose_id: pose.id,
             num_breaths: pose.num_breaths,
-            pose_order: this.state.poses_in_seq.length
+            pose_order: this.state.pose_in_seqs.length
         }
         this.setState({
             //pose_id: event.target.value,
             //poses: [...this.state.poses, pose],
             ...this.state,
-            poses_in_seq: [...this.state.poses_in_seq, pose_in_seq ]
+            pose_in_seqs: [...this.state.pose_in_seqs, pose_in_seq ]
         })
-        console.log(this.state.poses_in_seq);
+        console.log(this.state.pose_in_seqs);
 
     }
 
@@ -87,7 +87,7 @@ class SeqForm extends Component {
         debugger
         this.setState({
             ...this.state,
-            poses_in_seq: this.state.poses_in_seq.filter((pose, index) => index !== id)
+            pose_in_seqs: this.state.pose_in_seqs.filter((pose, index) => index !== id)
         })
         console.log(this.state)
     }
@@ -100,7 +100,7 @@ class SeqForm extends Component {
         console.log(poseElementId);
        /* this.setState({
             ...this.state,
-            poses_in_seq: this.state.poses_in_seq.map((pose, index) => {
+            pose_in_seqs: this.state.pose_in_seqs.map((pose, index) => {
                 return index === poseElementId ? {...pose,
                     [event.target.name]: parseInt(event.target.value)}
                 : pose
@@ -108,7 +108,7 @@ class SeqForm extends Component {
         })*/
         this.setState(prevState => ({
             ...prevState,
-            poses_in_seq: prevState.poses_in_seq.map((pose, index) => {
+            pose_in_seqs: prevState.pose_in_seqs.map((pose, index) => {
                 return index === poseElementId ? {...pose,
                     [event.target.name]: parseInt(event.target.value)}
                 : pose
@@ -120,14 +120,14 @@ class SeqForm extends Component {
     handleOnDragEnd = (result) => {
         console.log("In handleOnDragEnd")
         console.log(result);
-        let items = Array.from(this.state.poses_in_seq)
+        let items = Array.from(this.state.pose_in_seqs)
         const reorderedItem = items.splice(result.source.index, 1)[0];
         items.splice(result.destination.index, 0, reorderedItem);
         items.forEach((item, index) => {
             item.pose_order = index;
         })
         this.setState({
-            poses_in_seq: items
+            pose_in_seqs: items
         })
     }
 
@@ -148,7 +148,7 @@ class SeqForm extends Component {
                 <CategoryAdd user={this.props.currentUser} addTrue={this.state.category} name="category" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
                 <label htmlFor="AddPose">Add a Pose</label>
                 {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
-                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.poses_in_seq} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
+                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
                 <input type="submit"></input>
             </form>
         </div>)

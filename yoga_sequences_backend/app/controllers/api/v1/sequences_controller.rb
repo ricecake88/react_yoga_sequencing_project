@@ -4,7 +4,8 @@ class Api::V1::SequencesController < ApplicationController
     def index
         if current_user
             sequences = Sequence.where(:user_id => current_user.id)
-            render json: {sequences: sequences}
+            #render json: {sequences: sequences}
+            render :json => {:sequences => sequences}.to_json(:include => :pose_in_seqs)
         else
             render json: {errors: "Not Authorized."}
         end
@@ -21,7 +22,7 @@ class Api::V1::SequencesController < ApplicationController
                         name: sequence.name,
                         category_id: sequence.category_id,
                         poses: sequence.poses,
-                        poses_in_seq: sequence.pose_in_seqs
+                        pose_in_seqs: sequence.pose_in_seqs
                     }}
             else
                 render json: {errors: sequence.errors}

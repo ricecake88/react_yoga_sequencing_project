@@ -9,6 +9,7 @@ import withAuth from './components/auth/withAuth';
 import SeqContainer from './containers/SeqContainer';
 import CategoryContainer from './containers/CategoryContainer';
 import PoseContainer from './containers/PoseContainer';
+import SeqShow from './components/sequences/SeqShow';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route exact path='/poses' component={withAuth(PoseContainer)}/>
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
+          <Route exact path="/sequence/:id" render={(props) => <SeqShow {...props}/>}/>
       </Switch>
       </Router>
     </div>
