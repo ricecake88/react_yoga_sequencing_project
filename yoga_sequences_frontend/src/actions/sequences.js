@@ -98,3 +98,39 @@ export const deleteSequence = (id) => {
         })
     }
 }
+
+export const editSequence = (sequence) => {
+    console.log("action editSequence")
+    console.log(sequence);
+    let config = {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': getToken()
+        },
+        body: JSON.stringify({
+            name: sequence.name,
+            category_id: parseInt(sequence.category_id),
+            user_id: sequence.user_id,
+            pose_in_seqs_attributes: sequence.pose_in_seqs
+        })
+    };
+    console.log(config);
+    return (dispatch) => {
+        dispatch({type: 'START_EDIT_SEQ'});
+        fetch(`${BACKEND_URL}/sequences/${sequence.id}`, config)
+        .then(response => {
+            if (response.ok) {
+                return response.json().then(json => {
+                    console.log(json);
+                    dispatch({type: 'EDIT_SEQ', sequence: json.sequence})
+                })
+            } else {
+                return response.json().then(errors => {
+                    Promise.reject(errors)
+                })
+            }
+        })
+    }
+}

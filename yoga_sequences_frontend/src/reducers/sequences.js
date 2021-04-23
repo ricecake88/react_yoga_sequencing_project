@@ -31,6 +31,20 @@ export default function sequenceReducer(
                 sequences: [...state.sequences, action.sequence],
                 requesting: false
             }
+        case 'START_EDIT_SEQ':
+            return {
+                ...state,
+                sequences: state.sequences,
+                requesting: true
+            }
+        case 'EDIT_SEQ':
+            const sequence = state.sequences[state.sequences.findIndex(sequence => sequence.id === action.sequence.id)]
+            console.log(sequence);
+            return {
+                ...state,
+                sequences: state.sequences,
+                requesting: false
+            }
         case 'START_DELETE_SEQ':
             return {
                 ...state,
