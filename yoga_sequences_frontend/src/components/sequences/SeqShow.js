@@ -28,21 +28,23 @@ class SeqShow extends Component {
 
     displaySequence = () => {
         const sequence = this.matchSequence();
-        const category = this.matchCategory(sequence.category_id)
-        if (sequence !== null && category !== null) {
-            console.log(sequence)
-            return (
-                <div>
-                    Name: {sequence.name}<br></br>
-                    Category: {category.name}
-                    {sequence.pose_in_seqs.length !== 0 ?
-                        sequence.pose_in_seqs.map(pose =>
-                            <span key={pose.id}>{pose.name}</span>)
-                    : null
-                    }
-                    <PoseShowInSeq pose_in_seqs={sequence.poses_in_seqs}/>
-                </div>
-            )
+        if (sequence !== null) {
+            const category = this.matchCategory(sequence.category_id)
+            if (category !== null ){
+                console.log(sequence)
+                return (
+                    <div>
+                        Name: {sequence.name}<br></br>
+                        Category: {sequence.category.name}
+                        {sequence.pose_in_seqs.length !== 0 ?
+                            sequence.pose_in_seqs.map(pose =>
+                                <span key={pose.id}>{pose.name}</span>)
+                        : null
+                        }
+                        <PoseShowInSeq pose_in_seqs={sequence.poses_in_seqs}/>
+                    </div>
+                )
+            }
         }
     }
     render() {
