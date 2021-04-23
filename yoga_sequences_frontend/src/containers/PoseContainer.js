@@ -3,12 +3,14 @@ import PoseSelector from '../components/poses/PoseSelector';
 import Pose from '../components/poses/Pose';
 import { connect } from 'react-redux';
 import { getPoses } from '../actions/poses';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 class PoseContainer extends Component {
 
     state = {
         pose_id: 0,
-        pose: this.props.poses.length !==0 ? this.props.poses.find(pose => pose.id === 0) : {}
+        pose: this.props.poses.length !==0 ? this.props.poses.find(pose => pose.id === 0) : {},
+        isLoaded: false
 
     }
 
@@ -23,6 +25,10 @@ class PoseContainer extends Component {
 
     componentDidMount = () => {
         this.props.getPoses();
+        this.setState({
+            ...this.state,
+            isLoaded: true
+        })
     }
 
     displayPose = () => {
@@ -34,10 +40,11 @@ class PoseContainer extends Component {
         }
     }
     render() {
-        return <>
+        const {isLoaded, data} = this.state;
+        return isLoaded ? <>
             <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
             {this.displayPose()}
-        </>
+        </> : <LoadingSpinner />
     }
 }
 
