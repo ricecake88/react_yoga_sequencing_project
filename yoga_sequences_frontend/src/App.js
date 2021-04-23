@@ -10,6 +10,7 @@ import SeqContainer from './containers/SeqContainer';
 import CategoryContainer from './containers/CategoryContainer';
 import PoseContainer from './containers/PoseContainer';
 import SeqShow from './components/sequences/SeqShow';
+import SeqEdit from './components/sequences/SeqEdit';
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
           <Route exact path='/poses' component={withAuth(PoseContainer)}/>
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
+          {/*<Route exact path="/sequence/:id" render={(props) => withAuth(<SeqShow {...props}/>)}/>*/}
           <Route exact path="/sequence/:id" render={(props) => <SeqShow {...props}/>}/>
+          <Route exact path="/sequence/edit/:id" render={(props) => <SeqEdit {...props} route={"edit"}/>}/>
       </Switch>
       </Router>
     </div>
