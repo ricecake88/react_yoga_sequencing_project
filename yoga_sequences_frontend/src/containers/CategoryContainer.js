@@ -1,24 +1,37 @@
 import React, { Component }from 'react';
 import { connect } from 'react-redux';
 import CategoryList from '../components/categories/CategoryList'
-import { getCategories, deleteCategory } from '../actions/categories';
+import { getCategories, deleteCategory, addCategory } from '../actions/categories';
+import LoadingSpinner from '../components/LoadingSpinner';
+import CategoryAdd from '../components/categories/CategoryAdd';
 
 class CategoryContainer extends Component {
+
+    state = {
+        isLoaded: false
+    }
 
     componentDidMount = () => {
         console.log(">>>CategoryContainer -> componentDidMount")
         console.log(this.props)
          this.props.getCategories(this.props.user);
+         this.setState({
+             isLoaded: true
+         })
+    }
+
+    addCategory = (category) => {
+        this.props.addCategory(category)
     }
 
     render() {
         console.log(">>>CategoryContainer -> render")
         console.log(this.props.categories)
         console.log("After categories")
-        return <div>
-            ==ADD A CATEGORY STILL NEEDS TO BE DONE ==<br/>
+        return this.state.isLoaded ? <div>
+            <CategoryAdd addCategory={this.addCategory} />
             <CategoryList categories={this.props.categories} delete={this.props.deleteCategory} user={this.props.user}/>
-        </div>
+        </div> : <LoadingSpinner />
     }
 }
 
@@ -34,7 +47,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: (user) => dispatch(getCategories(user)),
-        deleteCategory: (user) => dispatch(deleteCategory(user))
+        deleteCategory: (user) => dispatch(deleteCategory(user)),
+        addCategory: (category) => dispatch(addCategory(category))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (CategoryContainer);
