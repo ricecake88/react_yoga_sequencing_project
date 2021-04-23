@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Categories from './Categories';
 import { connect } from 'react-redux';
-import CategoryAdd from './CategoryAdd';
+import SeqCategoryAdd from './SeqCategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
 import PoseAdd from '../sequences/PoseAdd';
@@ -145,7 +145,7 @@ class SeqForm extends Component {
                 <select value={this.state.category_id} name="category_id" onChange={this.onChange}>
                     <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
                 </select>
-                <CategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
+                <SeqCategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
                 <label htmlFor="AddPose">Add a Pose</label>
                 {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
                 <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
