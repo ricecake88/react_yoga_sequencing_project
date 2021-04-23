@@ -11,7 +11,7 @@ class SeqForm extends Component {
 
     state = {
             name: '',
-            category: "",
+            category_id: "",
             //poses: [],
             pose_id: 0,
             pose_in_seqs: [],
@@ -39,10 +39,10 @@ class SeqForm extends Component {
         console.log("on Submit")
         console.log(this.state);
         let sequence = {}
-        if (this.state.category !== "Add Category") {
+        if (this.state.category_id !== "Add Category") {
             sequence = {
             name: this.state.name,
-            category_id: parseInt(this.state.category),
+            category_id: parseInt(this.state.category_id),
             user_id: this.props.user.id,
             pose_in_seqs: this.state.pose_in_seqs
             }
@@ -52,7 +52,7 @@ class SeqForm extends Component {
         this.props.addSequence(sequence)
         this.setState({
             name: '',
-            category: "",
+            category_id: "",
             //poses: [],
             pose_in_seqs: [],
             pose_id: 0
@@ -142,10 +142,10 @@ class SeqForm extends Component {
                 <label htmlFor="name"> Sequence Name: </label>
                 <input type="name" name="name" onChange={this.onChange} value={this.state.name}/><br/>
 
-                <select value={this.state.category} name="category" onChange={this.onChange}>
+                <select value={this.state.category_id} name="category_id" onChange={this.onChange}>
                     <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
                 </select>
-                <CategoryAdd user={this.props.currentUser} addTrue={this.state.category} name="category" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
+                <CategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
                 <label htmlFor="AddPose">Add a Pose</label>
                 {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
                 <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>

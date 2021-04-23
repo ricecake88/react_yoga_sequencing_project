@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class CategoryAdd extends Component {
     state = {
-        category: ''
+        category_id: ''
     }
 
     onChange = (event) => {
@@ -17,9 +17,9 @@ class CategoryAdd extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         //console.log(this.state.category)
-        this.props.addCategory(this.state.category)
+        this.props.addCategory(this.state.category_id)
         this.setState({
-            category:''
+            category_id:''
         })
     }
 
@@ -29,8 +29,8 @@ class CategoryAdd extends Component {
         return (this.props.addTrue === "Add Category") ?
          (
                 <>
-                <label htmlFor="category">Add Category</label>
-                <input type="text" name="category" value={this.state.category} onChange={this.onChange}></input>
+                <label htmlFor="category_id">Add Category</label>
+                <input type="text" name="category_id" value={this.state.category_id} onChange={this.onChange}></input>
                 <button onClick={this.onSubmit} id="addCategory">Add</button>
                 </>
         ) : null

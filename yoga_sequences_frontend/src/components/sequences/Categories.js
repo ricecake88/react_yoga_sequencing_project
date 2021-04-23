@@ -17,15 +17,17 @@ class Categories extends Component {
 
   display() {
         console.log(">>>Categories")
+        console.log(this.props)
         console.log(this.props.categories)
         console.log(Object.keys(this.props.categories).length)
         return (
         <>
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}
             <option disabled value="">Select a Category</option>
-            {Object.keys(this.props.categories).length !== 0 ? 
-            this.props.categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
-            : null}
+            {Object.keys(this.props.categories).length !== 0 ?
+            this.props.categories.map(category => {
+                 return <option key={category.id} value={category.id}>{category.name}</option>
+            }): null}
             <option value="Add Category">Add Category</option>
             {/*</select>*/}
             {/*<CategoryAdd user={this.props.currentUser} addTrue={this.state.name} name="name" addCategory={this.props.addCategory} onChange={this.onChange}/>*/}

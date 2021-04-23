@@ -10,7 +10,7 @@ class PoseAdd extends Component {
         //poses: [], // < ---- move this to Sequence Form, test if I can submit a sequence with multiple poses first
         pose_id: 0,
         pose: this.props.poses.find(pose => pose.id === 0),
-        }
+    }
 
     onClick = (event) => {
         event.preventDefault();
@@ -51,7 +51,7 @@ class PoseAdd extends Component {
                 <PoseTable poses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur}/> : null
             */}
             {(this.props.addedPoses.length !== 0) ?
-                <PoseDraggable poses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag}/> : null
+                <PoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag}/> : null
             }
         </>)
     }
