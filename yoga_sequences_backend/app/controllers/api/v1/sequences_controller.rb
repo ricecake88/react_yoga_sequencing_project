@@ -5,7 +5,8 @@ class Api::V1::SequencesController < ApplicationController
         if current_user
             sequences = Sequence.where(:user_id => current_user.id)
             #render json: {sequences: sequences}
-            render :json => {:sequences => sequences}.to_json(:include => :pose_in_seqs)
+            #render :json => {:sequences => sequences}.to_json(:include => :pose_in_seqs)
+            render json: {:sequences => sequences}.to_json({:include => [:pose_in_seqs, :poses, :category]})
         else
             render json: {errors: "Not Authorized."}
         end
@@ -20,7 +21,26 @@ class Api::V1::SequencesController < ApplicationController
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
-                        category_id: sequence.category_id,
+                        category: sequence.category,
+                        poses: sequence.poses,
+                        pose_in_seqs: sequence.pose_in_seqs
+                    }}
+            else
+                render json: {errors: sequence.errors}
+            end
+        end
+    end
+
+    def update
+        if current_user
+            Rails.logger.debug params.inspect
+            sequence = Sequence.find(params[:id])
+            if sequence.update(seq_params)
+                render json: {
+                    sequence: {
+                        id: sequence.id,
+                        name: sequence.name,
+                        category: sequence.category,
                         poses: sequence.poses,
                         pose_in_seqs: sequence.pose_in_seqs
                     }}
