@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SeqForm from '../components/sequences/SeqForm';
 import SeqList from '../components/sequences/SeqList';
