@@ -6,7 +6,7 @@ export default function categoryReducer(state={categories: [], requesting: false
         case 'START_GET_CATEGORIES':
             return {
                 ...state,
-                categories: [...state.categories],
+                categories: state.categories,
                 requesting: true
             }
         case 'GET_CATEGORIES':
@@ -18,7 +18,7 @@ export default function categoryReducer(state={categories: [], requesting: false
         case 'START_ADD_CATEGORY':
             return {
                 ...state,
-                categories: [...state.categories],
+                categories: state.categories,
                 requesting: true
             }
         case 'ADD_CATEGORY':
