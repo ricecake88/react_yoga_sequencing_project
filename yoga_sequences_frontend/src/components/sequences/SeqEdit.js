@@ -5,6 +5,7 @@ import SeqCategoryAdd from './SeqCategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { editSequence } from '../../actions/sequences';
 import { getPoses } from '../../actions/poses';
+import { deletePoseFromSeq } from '../../actions/poseInSeq'
 import PoseAdd from '../sequences/PoseAdd';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -91,14 +92,16 @@ class SeqForm extends Component {
 
     }
 
-    onClickDeletePose = (event, id) => {
+    onClickDeletePose = (event, local_pose_id, id) => {
         event.preventDefault()
         console.log("onClickDeletePose")
         console.log(id);
-        this.setState({
+        this.props.deletePoseFromSeq(id)
+        debugger
+        this.setState(prevState => ({
             ...this.state,
-            pose_in_seqs: this.state.pose_in_seqs.filter((pose, index) => index !== id)
-        })
+            pose_in_seqs: prevState.pose_in_seqs.filter((pose, index) => index !== local_pose_id)
+        }))
         console.log(this.state)
     }
 
@@ -123,7 +126,9 @@ class SeqForm extends Component {
         console.log("In handleOnDragEnd")
         console.log(result);
         let items = Array.from(this.state.pose_in_seqs)
-        const reorderedItem = items.splice(result.source.index, 1)[0];
+        const source_num_breaths = items[result.source.index].num_breaths
+        let reorderedItem = items.splice(result.source.index, 1)[0];
+        reorderedItem.num_breaths = source_num_breaths;
         items.splice(result.destination.index, 0, reorderedItem);
         items.forEach((item, index) => {
             item.pose_order = index;
@@ -137,7 +142,7 @@ class SeqForm extends Component {
         console.log(">>> SequenceForm -> SeqForm")
         console.log(this.props);
         console.log(this.state);
-        const {isLoaded, data} = this.state;
+        const {isLoaded, ...data} = this.state;
         return(
             isLoaded ?
             <div>
@@ -151,7 +156,7 @@ class SeqForm extends Component {
                 <SeqCategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
 
                 <label htmlFor="AddPose">Add a Pose</label>
-                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
+                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange}/><br/>
                 <input type="submit"></input>
             </form>
         </div> : <LoadingSpinner />)
@@ -175,7 +180,8 @@ function mapDispatchToProps(dispatch) {
         addCategory: (category) => dispatch(addCategory(category)),
         getCategories: (user) => dispatch(getCategories(user)),
         getPoses: () => dispatch(getPoses()),
-        editSequence: (sequence) => dispatch(editSequence(sequence))
+        editSequence: (sequence) => dispatch(editSequence(sequence)),
+        deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose))
     }
 }
 

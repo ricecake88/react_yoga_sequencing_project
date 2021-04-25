@@ -51,7 +51,7 @@ class PoseAdd extends Component {
                 <PoseTable poses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur}/> : null
             */}
             {(this.props.addedPoses.length !== 0) ?
-                <PoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag}/> : null
+                <PoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag} onChange={this.props.onChange}/> : null
             }
         </>)
     }
