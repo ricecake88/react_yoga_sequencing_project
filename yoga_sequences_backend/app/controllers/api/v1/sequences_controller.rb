@@ -35,7 +35,8 @@ class Api::V1::SequencesController < ApplicationController
         if current_user
             Rails.logger.debug params.inspect
             sequence = Sequence.find(params[:id])
-            if sequence.update(seq_params)
+            sequence.attributes = seq_params
+            if sequence.save
                 render json: {
                     sequence: {
                         id: sequence.id,
