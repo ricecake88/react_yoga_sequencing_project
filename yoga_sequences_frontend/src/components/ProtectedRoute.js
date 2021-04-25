@@ -4,8 +4,13 @@ import SeqList from '../components/sequences/SeqList';
 import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
+import LoadingSpinner from '../components/LoadingSpinner'
 
 class ProtectedRoute extends Component {
+
+  state = {
+    isLoaded: false
+  }
 
   componentDidMount = () => {
     console.log("Protected Route -> componentDidMount");
@@ -13,6 +18,9 @@ class ProtectedRoute extends Component {
     this.props.getSequences(this.props.user);
     this.props.getCategories(this.props.user);
     this.props.getPoses();
+    this.setState({
+      isLoaded: true
+    })
   }
 
   onDelete = (id) => {
@@ -22,10 +30,12 @@ class ProtectedRoute extends Component {
   render() {
     console.log("ProtectedRoute -> render ()")
     console.log(this.props)
+    const { isLoaded } = this.state
     return (
+      isLoaded ?
       <div>
         <SeqList sequences={this.props.sequences} delete={this.onDelete} categories={this.props.categories} poses={this.props.poses}/>
-      </div>
+      </div> : <LoadingSpinner />
     );
   }
 }

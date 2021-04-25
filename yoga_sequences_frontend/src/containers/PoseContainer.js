@@ -40,7 +40,7 @@ class PoseContainer extends Component {
         }
     }
     render() {
-        const {isLoaded, data} = this.state;
+        const {isLoaded, ...data} = this.state;
         return isLoaded ? <>
             <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
             {this.displayPose()}
