@@ -4,25 +4,14 @@ import { connect } from 'react-redux';
 class PoseShowInSeq extends Component {
 
     state = {
-        num_breaths: 1,
-        poses: this.props.pose_in_seqs
+        isLoaded: false
     }
 
-    componentDidMount = () => {
-        this.interval = setInterval(() => {
-            this.setState(prevState => ({
-                num_breaths: Date.now()}, prevState.num_breaths*1000)
-            )
-        })
-    }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
 
     render() {
-        return <div>
-            {this.state.num_breaths}
+        return <div onChange={this.props.onChange()}>
+           {this.props.pose.id}
         </div>
     }
 }
