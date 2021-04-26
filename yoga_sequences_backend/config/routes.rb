@@ -30,6 +30,7 @@ Rails.application.routes.draw do
           resources :categories
           resources :sequences
           resources :poses, only: [:index, :show]
+          resources :pose_in_seqs, only: [:create, :destroy]
       end
     end
 
