@@ -5,7 +5,7 @@ import SeqCategoryAdd from './SeqCategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { editSequence } from '../../actions/sequences';
 import { getPoses } from '../../actions/poses';
-import { deletePoseFromSeq } from '../../actions/poseInSeq'
+import { deletePoseFromSeq, addPoseToSeq } from '../../actions/poseInSeq'
 import PoseAdd from '../sequences/PoseAdd';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -81,9 +81,11 @@ class SeqForm extends Component {
         const pose_in_seq = {
             name: pose.name,
             pose_id: pose.id,
-            num_breaths: pose.num_breaths,
+            //num_breaths: pose.num_breaths,
+            num_breaths: 1,
             pose_order: this.state.pose_in_seqs.length
         }
+        this.props.addPoseToSeq(this.state.sequence.id, pose_in_seq);
         this.setState({
             ...this.state,
             pose_in_seqs: [...this.state.pose_in_seqs, pose_in_seq ]
@@ -181,7 +183,8 @@ function mapDispatchToProps(dispatch) {
         getCategories: (user) => dispatch(getCategories(user)),
         getPoses: () => dispatch(getPoses()),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
-        deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose))
+        deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
+        addPoseToSeq: (id, pose) => dispatch(deletePoseFromSeq(id, pose))
     }
 }
 
