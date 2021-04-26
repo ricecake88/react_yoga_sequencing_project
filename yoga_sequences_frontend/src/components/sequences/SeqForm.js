@@ -84,7 +84,6 @@ class SeqForm extends Component {
         event.preventDefault()
         console.log("onClickDeletePose")
         console.log(id);
-        debugger
         this.setState({
             ...this.state,
             pose_in_seqs: this.state.pose_in_seqs.filter((pose, index) => index !== id)
@@ -98,14 +97,6 @@ class SeqForm extends Component {
         console.log(event.target.name);
         console.log(event.target.value);
         console.log(poseElementId);
-       /* this.setState({
-            ...this.state,
-            pose_in_seqs: this.state.pose_in_seqs.map((pose, index) => {
-                return index === poseElementId ? {...pose,
-                    [event.target.name]: parseInt(event.target.value)}
-                : pose
-            })
-        })*/
         this.setState(prevState => ({
             ...prevState,
             pose_in_seqs: prevState.pose_in_seqs.map((pose, index) => {
@@ -121,7 +112,9 @@ class SeqForm extends Component {
         console.log("In handleOnDragEnd")
         console.log(result);
         let items = Array.from(this.state.pose_in_seqs)
-        const reorderedItem = items.splice(result.source.index, 1)[0];
+        const source_num_breaths = items[result.source.index].num_breaths
+        let reorderedItem = items.splice(result.source.index, 1)[0];
+        reorderedItem.num_breaths = source_num_breaths;
         items.splice(result.destination.index, 0, reorderedItem);
         items.forEach((item, index) => {
             item.pose_order = index;
@@ -148,7 +141,7 @@ class SeqForm extends Component {
                 <SeqCategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
                 <label htmlFor="AddPose">Add a Pose</label>
                 {/*<PoseSelector poses={this.props.poses} addPose={true}/><br/>*/}
-                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd}/><br/>
+                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
                 <input type="submit"></input>
             </form>
         </div>)
