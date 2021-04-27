@@ -4,8 +4,6 @@ class Api::V1::SequencesController < ApplicationController
     def index
         if current_user
             sequences = Sequence.where(:user_id => current_user.id)
-            #render json: {sequences: sequences}
-            #render :json => {:sequences => sequences}.to_json(:include => :pose_in_seqs)
             render json: {:sequences => sequences}.to_json({:include => [:pose_in_seqs, :poses, :category]})
         else
             render json: {errors: "Not Authorized."}
