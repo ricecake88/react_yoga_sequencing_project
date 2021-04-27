@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import PoseEdit from '../sequences/PoseEdit';
+import {v4 as uuid} from 'uuid';
 
 class PoseDraggable extends Component  {
 
     /*state = {
         num_breaths: 1,
         pose_order: 0,
-    }*/
+    }
 
-    /*onChange = (event) => {
+    onChange = (event) => {
         this.setState({
             num_breaths: event.target.value
         })
