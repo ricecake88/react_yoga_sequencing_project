@@ -7,12 +7,14 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import withAuth from './components/auth/withAuth';
 import SeqContainer from './containers/SeqContainer';
+import SeqContainerCOPY from './containers/SeqContainerCOPY';
 import CategoryContainer from './containers/CategoryContainer';
 import PoseContainer from './containers/PoseContainer';
 import SeqShow from './components/sequences/SeqShow';
 import SeqEdit from './components/sequences/SeqEdit';
-
+import SeqForm_TWO from './components/sequences/SeqForm_TWO';
 function App() {
+
   return (
     <div className="App">
       <Router>
@@ -20,14 +22,17 @@ function App() {
       <Switch>
           <Route exact path='/' component={NormalRoute} />
           <Route exact path='/protected_route' component={withAuth(ProtectedRoute)}/>
-          <Route exact path='/sequences' component={withAuth(SeqContainer)}/>
+          {/*<Route exact path='/sequences' component={withAuth(SeqContainer)}/>*/}
+          <Route exact path='/sequences' component={withAuth(SeqContainerCOPY)}/>
           <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
           <Route exact path='/poses' component={withAuth(PoseContainer)}/>
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/login' component={Login} />
           {/*<Route exact path="/sequence/:id" render={(props) => withAuth(<SeqShow {...props}/>)}/>*/}
           <Route exact path="/sequence/:id" render={(props) => <SeqShow {...props}/>}/>
-          <Route exact path="/sequence/edit/:id" render={(props) => <SeqEdit {...props} route={"edit"}/>}/>
+          {/*<Route exact path="/sequence/edit/:id" render={(props) => <SeqEdit {...props} route={"edit"}/>}/>*/}
+          <Route exact path="/sequence/edit/:id" render={(props) => <SeqForm_TWO {...props} route={"Edit"}/>}/>
+
       </Switch>
       </Router>
     </div>
