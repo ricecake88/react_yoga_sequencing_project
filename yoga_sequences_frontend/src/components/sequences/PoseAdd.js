@@ -27,6 +27,7 @@ class PoseAdd extends Component {
     updateValue = (id) => {
         const pose = this.props.poses.find(pose => pose.id === parseInt(id));
         this.setState({
+            ...this.state,
             pose_id: parseInt(id),
             //poses: [...this.state.poses, pose]
 
