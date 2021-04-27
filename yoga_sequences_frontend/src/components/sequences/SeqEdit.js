@@ -5,13 +5,13 @@ import SeqCategoryAdd from './SeqCategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { editSequence } from '../../actions/sequences';
 import { getPoses } from '../../actions/poses';
-import { deletePoseFromSeq, addPoseToSeq } from '../../actions/poseInSeq'
+import { deletePoseFromSeq } from '../../actions/poseInSeq'
 import PoseAdd from '../sequences/PoseAdd';
 import LoadingSpinner from '../LoadingSpinner';
 
 import {v4 as uuid} from 'uuid';
 
-class SeqForm extends Component {
+class SeqEdit extends Component {
 
     state = {
         sequence: {},
@@ -201,9 +201,8 @@ function mapDispatchToProps(dispatch) {
         getCategories: (user) => dispatch(getCategories(user)),
         getPoses: () => dispatch(getPoses()),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
-        deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
-        addPoseToSeq: (id, pose) => dispatch(deletePoseFromSeq(id, pose))
+        deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SeqForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SeqEdit);

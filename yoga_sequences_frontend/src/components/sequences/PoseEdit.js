@@ -21,8 +21,10 @@ class PoseEdit extends Component {
             })}
             <span><input key={this.props.poseInSeq.num_breaths} type="text" defaultValue={this.props.poseInSeq.num_breaths} name="num_breaths" onChange={(event) =>this.props.onChange(event)} onBlur={(event) => this.props.onBlur(event, this.props.index)}></input></span>
             {/*<span><input type="text" value={this.props.poseInSeq.num_breaths} name="num_breaths" onChange={(event) =>this.props.onChange(event)}></input></span>*/}
-
-            <span><button onClick={(event) => this.props.delete(event, this.props.index, this.props.poseInSeq.id)}>X</button></span>
+            {this.props.route === "Add" ?
+            <span><button onClick={(event) => this.props.delete(event, this.props.index )}>X</button></span>
+            : <span><button onClick={(event) => this.props.delete(event, this.props.poseInSeq.id, this.props.index )}>X</button></span>}
+            
         </>)
     }
 }
