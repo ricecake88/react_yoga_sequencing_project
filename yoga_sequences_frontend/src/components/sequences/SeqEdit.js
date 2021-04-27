@@ -18,7 +18,8 @@ class SeqForm extends Component {
         name: null,
         category_id: null,
         isLoaded: false,
-        pose_in_seqs:[]
+        pose_in_seqs:[],
+        errors: []
     }
 
     componentDidMount = () => {
@@ -28,6 +29,10 @@ class SeqForm extends Component {
         this.props.getPoses();
         if (this.props.sequences.length !== 0) {
             const sequence = this.props.sequences.find(sequence => sequence.id === parseInt(this.props.match.params.id))
+
+            console.log("why does it not ever check")
+            // sort poses in the sequence by pose order
+            this.sortPoses(sequence.pose_in_seqs);
             this.setState({
                 sequence: sequence,
                 name: sequence.name,
@@ -81,11 +86,10 @@ class SeqForm extends Component {
         const pose_in_seq = {
             name: pose.name,
             pose_id: pose.id,
-            //num_breaths: pose.num_breaths,
-            num_breaths: 1,
+            num_breaths: pose.num_breaths,
             pose_order: this.state.pose_in_seqs.length
         }
-        this.props.addPoseToSeq(this.state.sequence.id, pose_in_seq);
+        //this.props.addPoseToSeq(this.state.sequence.id, pose_in_seq);
         this.setState({
             ...this.state,
             pose_in_seqs: [...this.state.pose_in_seqs, pose_in_seq ]
@@ -99,7 +103,6 @@ class SeqForm extends Component {
         console.log("onClickDeletePose")
         console.log(id);
         this.props.deletePoseFromSeq(id)
-        debugger
         this.setState(prevState => ({
             ...this.state,
             pose_in_seqs: prevState.pose_in_seqs.filter((pose, index) => index !== local_pose_id)
@@ -136,8 +139,23 @@ class SeqForm extends Component {
             item.pose_order = index;
         })
         this.setState({
+            ...this.state,
             pose_in_seqs: items
         })
+    }
+
+    sortPoses = (posesInSeq) => {
+        if (posesInSeq.length !== 0) {
+            posesInSeq.sort((a, b) => {
+                if (a.pose_order < b.pose_order) {
+                    return -1;
+                }
+                if (a.pose_order > b.pose_order) {
+                    return 1;
+                }
+            return 0;
+            })
+        }
     }
 
     render() {
@@ -159,7 +177,7 @@ class SeqForm extends Component {
 
                 <label htmlFor="AddPose">Add a Pose</label>
                 <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange}/><br/>
-                <input type="submit"></input>
+                <input type="submit" value="Save Changes"></input>
             </form>
         </div> : <LoadingSpinner />)
     }

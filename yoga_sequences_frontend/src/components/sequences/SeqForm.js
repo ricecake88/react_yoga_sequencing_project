@@ -67,7 +67,7 @@ class SeqForm extends Component {
         const pose_in_seq = {
             name: pose.name,
             pose_id: pose.id,
-            num_breaths: pose.num_breaths,
+            num_breaths: 1,
             pose_order: this.state.pose_in_seqs.length
         }
         this.setState({
@@ -100,11 +100,13 @@ class SeqForm extends Component {
         this.setState(prevState => ({
             ...prevState,
             pose_in_seqs: prevState.pose_in_seqs.map((pose, index) => {
+                //debugger
                 return index === poseElementId ? {...pose,
-                    [event.target.name]: parseInt(event.target.value)}
+                    num_breaths: parseInt(event.target.value)}
                 : pose
             })
         }))
+        //debugger
 
     }
 
@@ -113,16 +115,21 @@ class SeqForm extends Component {
         console.log(result);
         let items = Array.from(this.state.pose_in_seqs)
         const source_num_breaths = items[result.source.index].num_breaths
+        //debugger
         let reorderedItem = items.splice(result.source.index, 1)[0];
         reorderedItem.num_breaths = source_num_breaths;
+       // debugger
         items.splice(result.destination.index, 0, reorderedItem);
         items.forEach((item, index) => {
             item.pose_order = index;
         })
         this.setState({
+            ...this.state,
             pose_in_seqs: items
         })
     }
+
+
 
     render() {
         console.log(">>> SequenceForm -> SeqForm")
