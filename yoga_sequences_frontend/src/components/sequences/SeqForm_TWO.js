@@ -224,7 +224,7 @@ function mapDispatchToProps(dispatch) {
         //getPoses: () => dispatch(getPoses()),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
         deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
-        addPoseToSeq: (sequence_id, pose) => dispatch(addPoseToSeq(sequence_id, pose)),
+        //addPoseToSeq: (sequence_id, pose) => dispatch(addPoseToSeq(sequence_id, pose)),
         dispatchCheckAuth: () => dispatch(checkAuth())
     }
 }
