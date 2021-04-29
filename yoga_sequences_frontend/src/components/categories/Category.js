@@ -8,7 +8,7 @@ const Category = (props) => {
         <li>Uncategorized</li>
         :
         <li>{props.category.name}
-        <button onClick={() => props.delete(props.category.id)}>X</button>
+        <button onClick={() => props.deleteCategory(props.category.id)}>X</button>
         </li>}
     </div>
 }

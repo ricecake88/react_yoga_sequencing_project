@@ -30,7 +30,7 @@ class CategoryContainer extends Component {
         console.log("After categories")
         return this.state.isLoaded ? <div>
             <CategoryAdd addCategory={this.addCategory} />
-            <CategoryList categories={this.props.categories} delete={this.props.deleteCategory} user={this.props.user}/>
+            <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
         </div> : <LoadingSpinner />
     }
 }
