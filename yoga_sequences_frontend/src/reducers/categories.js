@@ -28,7 +28,10 @@ export default function categoryReducer(state={categories: [], requesting: false
                 requesting: false
             }
         case 'START_DELETE_CATEGORY':
-            return state;
+            return {
+                ...state,
+                requesting: true
+            }
         case 'DELETE_CATEGORY':
             console.log(action);
             return {
