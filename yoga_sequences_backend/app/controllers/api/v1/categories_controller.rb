@@ -27,11 +27,7 @@ class Api::V1::CategoriesController < ApplicationController
 
     def destroy
         category = Category.find(params[:id])
-        sequences = Sequence.where(:user_id => current_user.id, :category_id => category.id)
-        uncategorized_category = Category.find_by(:user_id => current_user.id, :name => "Uncategorized")
-        sequences.each do |seq|
-            seq.update(:category_id => uncategorized_category.id)
-        end
+        Category.set_deleted_category_to_uncategorized(category.id, current_user)
         if category.delete
             render json: {category: category}
         else
