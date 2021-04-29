@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 
 class PoseShowInSeq extends Component {
 
-    state = {
-        isLoaded: false
-    }
-
-
-
     render() {
-        return <div onChange={this.props.onChange()}>
-           {this.props.pose.id}
-        </div>
+        const pose = this.props.poses.find(pose => pose.id === this.props.pose.pose_id);
+        return (
+            pose !== undefined ?
+             /*<div onChange={this.props.onChange()}>*/
+             <div>
+                <p>{this.props.pose.id}</p>
+                <p>{this.props.pose.pose_order}</p>
+                <p>{pose.name}</p>
+                <p>{pose.description}</p>
+                <p>{this.props.pose.num_breaths}</p>
+            </div> : null
+        )
     }
 }
 
