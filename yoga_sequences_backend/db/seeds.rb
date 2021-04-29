@@ -24,6 +24,14 @@ Pose.create!(:id => 1, :name=> "Warrior II", :sanskrit => "Virabhadrasana II",
         in a straight line with the front foot. Engage and straighten
         your left leg while looking past your right hand. Have your body continue facing forward,
         engaging your core as you make sure your back is fully aligned over your hip/tucked in.")
-
-Category.create(:id => 0, :name => "Uncategorized")
-#Sequence.create(:name => "Morning Routine", :category_id=>1, :poses => [{id: 1}, {id: 2}, {id: 3}])
+Pose.create!(:id => 2, :name=> "Warrior III", :sanskrit => "Virabhadrasana III",
+    :pose_category=> "Hamstrings", :tags => ["Quads", "Outer Thighs", "Pelvis"],
+    :url => "Warrior III URL", :video => "Warrior III Video",
+    :image => "warrior III Image",
+    :description => "Start by standing with feet at hips width apart. 
+        Take a step forward with your right leg forward and start to bend forward at your hip while 
+        bringing the left leg to align in a straight line with the torso, keeping the left leg 
+        strong and straight as possible with your feet flexed, as though it is pressing against a wall.
+        Keep your torso at a 90 degree angle, parallel with the floor. Bring your arms over your head,
+        so that it is aligned in a straight line with body and lifted leg. If this is too difficult, arms
+        can be airplane arms, where they are straight but next to the torso. ")
