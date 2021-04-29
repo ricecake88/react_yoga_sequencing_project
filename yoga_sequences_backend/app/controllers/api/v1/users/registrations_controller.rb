@@ -6,6 +6,7 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
+      Category.create(:user_id => current_user.id, :name => "Uncategorized")
       render json: {
         status: {code: 200, message: 'Signed up sucessfully.'},
         data: UserSerializer.new(resource).serializable_hash[:data][:attributes]

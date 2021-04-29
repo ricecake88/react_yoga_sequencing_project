@@ -25,9 +25,11 @@ class Categories extends Component {
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}
             <option disabled value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ?
-            this.props.categories.map(category => {
-                 return <option key={category.id} value={category.id}>{category.name}</option>
-            }): null}
+              this.props.categories.map(category => {
+                 return (category.name === "Uncategorized" ?
+                  <option value={category.id} disabled>Uncategorized</option> :
+                  <option key={category.id} value={category.id}>{category.name}</option>)
+              }) : null}
             <option value="Add Category">Add Category</option>
             {/*</select>*/}
             {/*<CategoryAdd user={this.props.currentUser} addTrue={this.state.name} name="name" addCategory={this.props.addCategory} onChange={this.onChange}/>*/}
