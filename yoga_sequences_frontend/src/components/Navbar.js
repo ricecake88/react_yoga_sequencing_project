@@ -14,6 +14,20 @@ class Navbar extends React.Component {
     if (authChecked) {
       return loggedIn ? (
         <>
+          <NavLink
+            className='p-4 block sm:inline-block'
+            activeClassName='text-blue-900'
+            exact
+            to='/protected_route'
+          >
+            ProtectedRoute |
+          </NavLink>
+          <NavLink exact to='/sequences'>
+           Create a Sequence
+          </NavLink> |
+          <NavLink exact to='/categories'>
+            Categories
+          </NavLink> |
           {currentUser.email}
           <Logout />
         </>
@@ -54,20 +68,7 @@ render() {
           >
             NormalRoute
           </NavLink>
-          <NavLink
-            className='p-4 block sm:inline-block'
-            activeClassName='text-blue-900'
-            exact
-            to='/protected_route'
-          >
-            ProtectedRoute |
-          </NavLink>
-          <NavLink exact to='/sequences'>
-           Create a Sequence
-          </NavLink> |
-          <NavLink exact to='/categories'>
-            Categories
-          </NavLink> |
+
           <NavLink exact to='/poses'>
             Poses
           </NavLink>
