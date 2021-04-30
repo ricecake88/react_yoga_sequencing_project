@@ -13,15 +13,14 @@ class PoseSelector extends Component {
         console.log(event.target.value);
         event.preventDefault();
         this.setState({
-            //pose: this.props.poses.find((pose) => pose.id === parseInt(event.target.value)),
             pose_id: event.target.value
         })
         this.props.updateValue(event.target.value);
 
     }
 
-    display2 = () => {
-        console.log("in display2")
+    display = () => {
+        console.log("in display")
         console.log(this.state)
         console.log(this.props.poses)
 
@@ -43,7 +42,7 @@ class PoseSelector extends Component {
         console.log(this.state);
         return (
             <>
-                {this.display2()}
+                {this.display()}
             </>)
     }
 }

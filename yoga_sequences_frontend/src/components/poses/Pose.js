@@ -8,7 +8,7 @@ const Pose = ({pose}) => {
             Name: {pose.name}<br/>
             Sanskrit: {pose.sanskrit}<br/>
             Category: {pose.category}<br/>
-            Tags: {pose.tags.map(tag => <span key={uuid()}>{tag}</span>)}<br/>
+            Tags: {pose.tags.map(tag => <span key={uuid()}>#{tag} </span>)}<br/>
             Video: {pose.video}<br/>
             Image: {pose.image}<br/>
             URL: {pose.url}<br/>
