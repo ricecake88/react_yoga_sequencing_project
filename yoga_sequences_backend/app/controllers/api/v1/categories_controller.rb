@@ -13,11 +13,11 @@ class Api::V1::CategoriesController < ApplicationController
     def create
         Rails.logger.debug params.inspect
         category = Category.new(:name=> params[:name], :user_id => current_user.id)
-        if category.save!
+        if category.save
             category.user = current_user
-            render json: {category: category}
+            render json: {status: 200, category: category}
         else
-            render json: {errors: category.errors}
+            render json: {status: 422, errors: category.errors.full_messages}
         end
     end
 

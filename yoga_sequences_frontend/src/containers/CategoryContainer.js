@@ -12,26 +12,36 @@ class CategoryContainer extends Component {
     }
 
     componentDidMount = () => {
-        console.log(">>>CategoryContainer -> componentDidMount")
-        console.log(this.props)
-         this.props.getCategories(this.props.user);
-         this.setState({
-             isLoaded: true
-         })
+        //console.log(">>>CategoryContainer -> componentDidMount")
+        //console.log(this.props)
+
+        //retrieve all the categories
+        this.props.getCategories(this.props.user);
+
+        // once categories are retrieved then set state to
+        // isLoaded
+        this.setState({
+           isLoaded: true
+        })
     }
 
     addCategory = (category) => {
+        // dispatch add category
+        // category is string
         this.props.addCategory(category)
     }
 
     render() {
-        console.log(">>>CategoryContainer -> render")
-        console.log(this.props.categories)
-        console.log("After categories")
-        return this.state.isLoaded ? <div>
-            <CategoryAdd addCategory={this.addCategory} />
-            <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
-        </div> : <LoadingSpinner />
+        //console.log(">>>CategoryContainer -> render")
+        //console.log(this.props.categories)
+        //console.log("After categories")
+        return this.state.isLoaded ?
+                <div>
+                    {this.props.errors.map((error,index) => <div key={index}>{error}</div>)}
+                    <CategoryAdd addCategory={this.addCategory} />
+                    <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
+                </div>
+            : <LoadingSpinner />
     }
 }
 
@@ -40,7 +50,8 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         categories: state.categories.categories,
-        user: state.auth.currentUser
+        user: state.auth.currentUser,
+        errors: state.categories.errors
     }
 }
 

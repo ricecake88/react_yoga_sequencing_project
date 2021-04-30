@@ -79,7 +79,7 @@ export const loginUser = (credentials) => {
                 setToken(resp.headers.get("Authorization"));
                 return resp.json()
                 .then((userJson) =>
-                    dispatch({type:AUTHENTICATED, payload: userJson})
+                    dispatch({type:AUTHENTICATED, payload: userJson.data})
                 );
             } else {
                 return resp.json().then((errors) => {

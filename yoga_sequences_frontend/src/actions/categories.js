@@ -3,7 +3,7 @@ import { getToken } from './auth';
 
 export const getCategories = (user) => {
     //console.log(">>> in actions/sequences -> getCategories");
-    //console.log(user);
+    console.log(user);
     let config = {
         headers: {
             'Accept': "application/json",
@@ -14,9 +14,8 @@ export const getCategories = (user) => {
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
         fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
-        .then(response => response.json())
+        .then(response =>  response.json())
         .then(json => {
-            //console.log(json);
             dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
         });
     };
@@ -28,7 +27,7 @@ export const addCategory = (category) => {
         method: 'POST',
         headers: {
             'Accept': "application/json",
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
             'Authorization': getToken()
         },
         body: JSON.stringify({
@@ -40,15 +39,19 @@ export const addCategory = (category) => {
         fetch(`${BACKEND_URL}/categories`, config)
         .then(response => {
             if (response.ok) {
-                return response.json().then(json => 
-                    dispatch({ type: 'ADD_CATEGORY', category: json.category})
+                return response.json().then(json => {
+                        if (json.status === 200)
+                            dispatch({ type: 'ADD_CATEGORY', category: json.category})
+                        else
+                            dispatch({ type: 'ADD_CATEGORY_ERROR', errors: json.errors})
+                    }
                 )
             } else {
                 return response.json().then((errors) => {
                     // NEED to write an action to handle errors
                     //dispatch({type: NOT_AUTHENTICATED});
                     return Promise.reject(errors);
-                });                
+                });
             }
         })
     }
@@ -61,8 +64,8 @@ export const deleteCategory = (id) => {
         method: 'DELETE',
         headers: {
             'Accept': "application/json",
-            'Content-Type': 'application/json', 
-            'Authorization': getToken()            
+            'Content-Type': 'application/json',
+            'Authorization': getToken()
         }
     }
     return (dispatch) => {

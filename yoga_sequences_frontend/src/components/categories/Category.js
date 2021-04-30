@@ -5,11 +5,11 @@ const Category = (props) => {
     //console.log(props)
     return <div>
         {props.category.name === "Uncategorized" ?
-        <li>Uncategorized</li>
+            <li>Uncategorized</li>
         :
-        <li>{props.category.name}
-        <button onClick={() => props.deleteCategory(props.category.id)}>X</button>
-        </li>}
-    </div>
+            <li>{props.category.name}
+                <button onClick={() => props.deleteCategory(props.category.id)}>X</button>
+            </li>}
+        </div>
 }
 export default Category;
