@@ -30,8 +30,6 @@ class SeqShow extends Component {
                 isLoaded: true
             }))
         }
-        //this.interval = setInterval(this.changePose2, this.state.seconds_per_breath*5000)
-        //this.timeoutID = setTimeout(this.changePose2, this.state.seconds_per_breath*this.state.num_breaths*1000);
     }
 
     componentWillUnmount() {

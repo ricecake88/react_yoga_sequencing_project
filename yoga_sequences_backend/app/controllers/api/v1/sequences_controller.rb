@@ -14,8 +14,9 @@ class Api::V1::SequencesController < ApplicationController
         if current_user
             Rails.logger.debug params.inspect
             sequence = Sequence.new(seq_params)
-            if sequence.save!
+            if sequence.save
                 render json: {
+                    status: 200,
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
@@ -24,7 +25,7 @@ class Api::V1::SequencesController < ApplicationController
                         pose_in_seqs: sequence.pose_in_seqs
                     }}
             else
-                render json: {errors: sequence.errors}
+                render json: {status: 422, errors: sequence.errors.full_messages}
             end
         end
     end
@@ -44,7 +45,7 @@ class Api::V1::SequencesController < ApplicationController
                         pose_in_seqs: sequence.pose_in_seqs
                     }}
             else
-                render json: {errors: sequence.errors}
+                render json: {errors: sequence.errors.full_messages}
             end
         end
     end
@@ -55,7 +56,7 @@ class Api::V1::SequencesController < ApplicationController
         if sequence.delete
             render json: { sequence: sequence}
         else
-            render json: { errors: sequence.errors}
+            render json: { errors: sequence.errors.full_messages}
         end
     end
 

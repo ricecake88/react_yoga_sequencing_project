@@ -55,12 +55,14 @@ export const addSequence = (sequence) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
-                    dispatch({type: 'ADD_SEQ', sequence: json.sequence})
+                    if (json.status === 200)
+                        dispatch({type: 'ADD_SEQ', sequence: json.sequence})
+                    else
+                        dispatch({type: "ADD_SEQ_ERROR", errors: json.errors})
                 })
             } else {
                 return response.json().then(errors => {
-                    Promise.reject(errors)
+                    dispatch({type: "ADD_SEQ_ERROR", errors: errors})
                 })
             }
         })

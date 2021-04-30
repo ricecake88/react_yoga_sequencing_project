@@ -27,7 +27,7 @@ class Categories extends Component {
             {Object.keys(this.props.categories).length !== 0 ?
               this.props.categories.map(category => {
                  return (category.name === "Uncategorized" ?
-                  <option value={category.id} disabled>Uncategorized</option> :
+                  <option key={category.id} value={category.id} disabled>Uncategorized</option> :
                   <option key={category.id} value={category.id}>{category.name}</option>)
               }) : null}
             <option value="Add Category">Add Category</option>

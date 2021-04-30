@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import PoseEdit from '../sequences/PoseEdit';
-import {v4 as uuid} from 'uuid';
 
 class PoseDraggable extends Component  {
-
-    /*state = {
-        num_breaths: 1,
-        pose_order: 0,
-    }
-
-    onChange = (event) => {
-        this.setState({
-            num_breaths: event.target.value
-        })
-    }*/
 
     render() {
         console.log("Pose Draggable")
@@ -29,11 +17,6 @@ class PoseDraggable extends Component  {
                                  <Draggable key={index} draggableId={index.toString()} index={index}>
                                      {(provided) => (
                                         <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                            {/*{this.props.poses.map(pose => {
-                                                return (pose.id === poseInSeq.pose_id) ? pose.name : null
-                                            })}
-                                            <span><input type="text" value={this.state.num_breaths} name="num_breaths" onChange={this.onChange} onBlur={(event) => this.props.onBlur(event, index)}></input></span>
-                                        <span><button onClick={(event) => this.props.delete(event, index)}>X</button></span>*/}
                                             <PoseEdit index={index} poseInSeq={poseInSeq} onChange={this.props.onChange} poses={this.props.poses} onBlur={this.props.onBlur} delete={this.props.delete}/>
                                         </li>
                                      )}

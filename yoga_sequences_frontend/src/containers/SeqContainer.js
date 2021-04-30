@@ -5,13 +5,22 @@ import SeqList from '../components/sequences/SeqList';
 import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
+import LoadingSpinner from '../components/LoadingSpinner';
+
 
 class SeqContainer extends Component {
+
+    state = {
+        isLoaded: false
+    }
 
     componentDidMount = () => {
         this.props.getPoses()
         this.props.getSequences(this.props.user);
         this.props.getCategories(this.props.user);
+        this.setState({
+            isLoaded: true
+        })
     }
 
     onDelete = (id) => {
@@ -20,14 +29,16 @@ class SeqContainer extends Component {
 
 
     render() {
-        console.log(">>>SeqContainer ->render()")
+        console.log(">>>SeqContainer->render()")
         console.log(this.props.poses)
         console.log(this.props.sequences)
+        const { isLoaded } = this.state;
         return (
-            <div>==== Sequence Container===
-                <SeqForm poses={this.props.poses}/>
+            isLoaded ?
+            <div>
+                <SeqForm route={"Add"} />
                 <SeqList poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/>
-            </div>
+            </div> : <LoadingSpinner />
         )
     }
 }
@@ -45,7 +56,8 @@ const mapDispatchToProps = (dispatch) => {
         getPoses: () => dispatch(getPoses()),
         getSequences: (user) => dispatch(getSequences(user)),
         getCategories: (user) => dispatch(getCategories(user)),
-        deleteSequence: (id) => dispatch(deleteSequence(id))
+        deleteSequence: (id) => dispatch(deleteSequence(id)),
+
     }
 }
 
