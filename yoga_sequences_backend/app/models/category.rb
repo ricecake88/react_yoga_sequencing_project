@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
-    validates_uniqueness_of :name, scope: :user_id    
+    validates_presence_of :name
+    validates_uniqueness_of :name, scope: :user_id
     belongs_to :user
 
     def self.set_deleted_category_to_uncategorized(id, current_user)
