@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SeqList from '../components/sequences/SeqList';
+import SeqList from './sequences/SeqList';
 import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
-import LoadingSpinner from '../components/LoadingSpinner'
+import LoadingSpinner from './LoadingSpinner'
 
-class ProtectedRoute extends Component {
+
+class AllSequences extends Component {
 
   state = {
     isLoaded: false
@@ -18,6 +19,7 @@ class ProtectedRoute extends Component {
     this.props.getSequences(this.props.user);
     this.props.getCategories(this.props.user);
     this.props.getPoses();
+
     this.setState({
       isLoaded: true
     })
@@ -58,4 +60,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProtectedRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(AllSequences);

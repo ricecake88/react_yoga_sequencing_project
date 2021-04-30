@@ -20,7 +20,7 @@ class Navbar extends React.Component {
             exact
             to='/protected_route'
           >
-            ProtectedRoute |
+            All Sequences |
           </NavLink>
           <NavLink exact to='/sequences'>
            Create a Sequence

@@ -11,11 +11,11 @@ class SeqList extends Component {
             <div>
             {this.props.sequences.length !== 0 ?
                 this.props.sequences.map(seq => {
-                    return <span key={seq.id}>
+                    return <><div key={seq.id}>
                             <NavLink to={`sequence/${seq.id}`} >{seq.name}</NavLink>
                             <button onClick={() => this.props.delete(seq.id)}>X</button>
                             <NavLink to={`/sequence/edit/${seq.id}`}>Edit</NavLink>
-                        </span>
+                        </div></>
                 }) : null}
             </div>
             )
