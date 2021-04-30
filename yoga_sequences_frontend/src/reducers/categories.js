@@ -1,4 +1,4 @@
-export default function categoryReducer(state={categories: [], requesting: false}, action) {
+export default function categoryReducer(state={categories: [], errors: [], requesting: false}, action) {
     //console.log("\t >>>in categoryReducer")
     //console.log(state)
     //console.log(action)
@@ -13,6 +13,7 @@ export default function categoryReducer(state={categories: [], requesting: false
             return {
                 ...state,
                 categories: action.categories,
+                errors: [],
                 requesting: false
             }
         case 'START_ADD_CATEGORY':
@@ -25,6 +26,13 @@ export default function categoryReducer(state={categories: [], requesting: false
             return {
                 ...state,
                 categories: [...state.categories, action.category],
+                errors: [],
+                requesting: false
+            }
+        case 'ADD_CATEGORY_ERROR':
+            return {
+                ...state,
+                errors: action.errors,
                 requesting: false
             }
         case 'START_DELETE_CATEGORY':
@@ -33,10 +41,10 @@ export default function categoryReducer(state={categories: [], requesting: false
                 requesting: true
             }
         case 'DELETE_CATEGORY':
-            console.log(action);
             return {
                 ...state,
                 categories: state.categories.filter(category => category.id !== action.category.id),
+                errors: [],
                 requesting: false
             }
         default:
