@@ -22,7 +22,12 @@ class Api::V1::SequencesController < ApplicationController
                         name: sequence.name,
                         category: sequence.category,
                         poses: sequence.poses,
-                        pose_in_seqs: sequence.pose_in_seqs
+                        pose_in_seqs: sequence.pose_in_seqs.each{|pose_in_seq| {
+                            pose_order: pose_in_seq.pose_order,
+                            pose_id: pose_in_seq.pose_id,
+                            num_breaths: pose_in_seq.num_breaths,
+                            sequence_id: sequence.id
+                            }}
                     }}
             else
                 render json: {status: 422, errors: sequence.errors.full_messages}
@@ -42,7 +47,12 @@ class Api::V1::SequencesController < ApplicationController
                         name: sequence.name,
                         category: sequence.category,
                         poses: sequence.poses,
-                        pose_in_seqs: sequence.pose_in_seqs
+                        pose_in_seqs: sequence.pose_in_seqs.each{|pose_in_seq| {
+                            pose_order: pose_in_seq.pose_order,
+                            pose_id: pose_in_seq.pose_id,
+                            num_breaths: pose_in_seq.num_breaths,
+                            sequence_id: sequence.id
+                            }}
                     }}
             else
                 render json: {errors: sequence.errors.full_messages}
