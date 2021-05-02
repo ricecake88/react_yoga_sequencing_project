@@ -66,7 +66,7 @@ class SeqShow extends Component {
                 sequence: sequence,
                 isLoaded: true
             }))
-        }        
+        }
     }
 
     displaySequence2 = (data) => {
@@ -96,11 +96,11 @@ class SeqShow extends Component {
                     </div>
             )
     }
-    
+
     render() {
         console.log("Sequence Show");
         console.log(this.props);
-        
+
         const {isLoaded, ...data} = this.state;
         return isLoaded && !this.props.requesting ? <div>
             {this.displaySequence2(data)}
