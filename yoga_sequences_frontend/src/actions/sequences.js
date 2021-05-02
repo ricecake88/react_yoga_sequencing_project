@@ -126,7 +126,10 @@ export const editSequence = (sequence) => {
             if (response.ok) {
                 return response.json().then(json => {
                     console.log(json);
-                    dispatch({type: 'EDIT_SEQ', sequence: json.sequence})
+                    if (json.status === 200)
+                        dispatch({type: 'EDIT_SEQ', sequence: json.sequence})
+                    else
+                        dispatch({type: 'EDIT_SEQ_ERROR', errors: json.errors})
                 })
             } else {
                 return response.json().then(errors => {
