@@ -18,16 +18,16 @@ class Navbar extends React.Component {
             className='p-4 block sm:inline-block'
             activeClassName='text-blue-900'
             exact
-            to='/protected_route'
+            to='/sequences'
           >
             All Sequences |
           </NavLink>
-          <NavLink exact to='/sequences'>
+          <NavLink exact to='/sequences/new'>
            Create a Sequence
           </NavLink> |
           <NavLink exact to='/categories'>
             Categories
-          </NavLink> |
+          </NavLink> | <br/>
           {currentUser.email}
           <Logout />
         </>

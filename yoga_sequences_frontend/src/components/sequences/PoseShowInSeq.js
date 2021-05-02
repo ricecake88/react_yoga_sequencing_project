@@ -7,7 +7,6 @@ class PoseShowInSeq extends Component {
         const pose = this.props.poses.find(pose => pose.id === this.props.pose.pose_id);
         return (
             pose !== undefined ?
-             /*<div onChange={this.props.onChange()}>*/
              <div>
                 <p>{this.props.pose.id}</p>
                 <p>{this.props.pose.pose_order}</p>
