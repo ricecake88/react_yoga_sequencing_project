@@ -1,11 +1,20 @@
 import React from 'react';
 
-const PoseList = ({poses}) => {
+const PoseList = ({posesInSeq, poses}) => {
     console.log("PoseList");
-    console.log(poses);
+    const posesAll = posesInSeq.map(poseInSeq => {
+            return {
+                ...poses.find(pose => poseInSeq.pose_id === pose.id),
+                pose_order: poseInSeq.pose_order,
+                num_breaths: poseInSeq.num_breaths,
+                id: poseInSeq.id
+            }
+        })
+    console.log(posesAll);
+
     return (
-        <>
-        {poses.map(pose => <div key={pose.id}>{pose.name}</div>)}
+        <><p>List of Poses</p>
+        {posesAll.map((pose, index) => <div id={"pose" + pose.id} key={"pose" + pose.id}>#{index+1} {pose.name} Number of Breaths: {pose.num_breaths}</div>)}
         </>
     )
 }
