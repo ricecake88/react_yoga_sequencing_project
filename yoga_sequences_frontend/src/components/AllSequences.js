@@ -16,8 +16,14 @@ class AllSequences extends Component {
   componentDidMount = () => {
     console.log("Protected Route -> componentDidMount");
     console.log(this.props)
-    this.props.getSequences(this.props.user);
+
+    //// get initial state of sequences
+    //this.props.getSequences(this.props.user);
+
+    // get initial state of categories
     this.props.getCategories(this.props.user);
+
+    // get data on poses
     this.props.getPoses();
 
     this.setState({
@@ -36,7 +42,7 @@ class AllSequences extends Component {
     return (
       isLoaded ?
       <div>
-        <SeqList sequences={this.props.sequences} delete={this.onDelete} categories={this.props.categories} poses={this.props.poses}/>
+        <SeqList user={this.props.user} delete={this.onDelete} categories={this.props.categories} poses={this.props.poses}/>
       </div> : <LoadingSpinner />
     );
   }
@@ -45,7 +51,7 @@ class AllSequences extends Component {
 const mapStateToProps = (state) => {
   return {
       poses: state.poses.poses,
-      sequences: state.sequences.sequences,
+      //sequences: state.sequences.sequences,
       user: state.auth.currentUser,
       categories: state.categories.categories
   }
@@ -53,7 +59,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSequences: (user) => dispatch(getSequences(user)),
+    //getSequences: (user) => dispatch(getSequences(user)),
     getCategories: (user) => dispatch(getCategories(user)),
     getPoses: () => dispatch(getPoses()),
     deleteSequence: (id) => dispatch(deleteSequence(id))
