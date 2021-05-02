@@ -10,6 +10,28 @@ class Api::V1::SequencesController < ApplicationController
         end
     end
 
+    def show
+        if current_user
+            sequence = Sequence.find(params[:id])
+            render json: {
+                status: 200,
+                sequence: {
+                    id: sequence.id,
+                    category: sequence.category,
+                    poses: sequence.poses,
+                    pose_in_seqs: sequence.pose_in_seqs.each{|pose_in_seq| {
+                        pose_order: pose_in_seq.pose_order,
+                        pose_id: pose_in_seq.pose_id,
+                        num_breaths: pose_in_seq.num_breaths,
+                        sequence_id: sequence.id
+                        }}
+                }
+            }
+        else
+            render json: {status: 422, errors: "Was not able to find sequence."}
+        end
+    end
+
     def create
         if current_user
             Rails.logger.debug params.inspect
@@ -39,9 +61,12 @@ class Api::V1::SequencesController < ApplicationController
         if current_user
             Rails.logger.debug params.inspect
             sequence = Sequence.find(params[:id])
-            sequence.attributes = seq_params
-            if sequence.save
+            #sequence.attributes = seq_params
+            #if sequence.save
+            if sequence.update(seq_params)
+                sequence.save
                 render json: {
+                    status: 200,
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
@@ -55,7 +80,7 @@ class Api::V1::SequencesController < ApplicationController
                             }}
                     }}
             else
-                render json: {errors: sequence.errors.full_messages}
+                render json: {status: 422, errors: sequence.errors.full_messages}
             end
         end
     end
