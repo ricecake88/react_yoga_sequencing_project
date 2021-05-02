@@ -31,8 +31,10 @@ export const deletePoseFromSeq = (id) => {
 
 export const addPoseToSeq = (id, pose_in_seq) => {
     console.log("addPoseToSeq");
+    console.log(id);
+    console.log(pose_in_seq);
     let config = {
-        method: 'CREATE',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -45,6 +47,7 @@ export const addPoseToSeq = (id, pose_in_seq) => {
             pose_order: pose_in_seq.pose_order
         })
     }
+
     return (dispatch) => {
         dispatch({type: 'START_ADD_POSE_TO_SEQ'})
         fetch(`${BACKEND_URL}/pose_in_seqs`, config)
@@ -52,6 +55,7 @@ export const addPoseToSeq = (id, pose_in_seq) => {
             if (response.ok) {
                 return response.json().then(json => {
                     console.log(json);
+                    debugger
                     dispatch({type: 'ADD_POSE_TO_SEQ'}, config)
                 }) 
             } else {
