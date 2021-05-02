@@ -3,7 +3,7 @@ class Api::V1::CategoriesController < ApplicationController
     def index
         Rails.logger.debug params.inspect
         if current_user
-            categories = Category.where(:user_id => params[:user_id])
+            categories = Category.where(:user_id => params[:user_id]).order(id: :DESC)
             render json: {categories: categories}
         else
             render json: {errors: "Error, no current_user"}
