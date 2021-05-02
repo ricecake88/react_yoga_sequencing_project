@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PoseShowInSeq from '../sequences/PoseShowInSeq';
+import PoseList from '../sequences/PoseList';
 import LoadingSpinner from '../LoadingSpinner';
+import { getSequences } from '../../actions/sequences';
 
 class SeqShow extends Component {
 
@@ -19,9 +21,11 @@ class SeqShow extends Component {
     componentDidMount = () => {
         console.log("SeqShow -> componentDidMount")
         console.log(this.props);
+        //this.props.getSequences(this.props.user)
         const sequence = this.props.sequences.find(sequence =>
             sequence.id === parseInt(this.props.match.params.id));
         console.log(sequence)
+        // set initial
         if (sequence) {
             this.sortPoses(sequence.pose_in_seqs)
             this.setState(prevState => ({
@@ -34,10 +38,6 @@ class SeqShow extends Component {
 
     componentWillUnmount() {
         clearTimeout(this.timeoutID)
-    }
-
-    onChange = () => {
-        console.log("on Change");
     }
 
     sortPoses = (posesInSeq) => {
@@ -54,35 +54,56 @@ class SeqShow extends Component {
         }
     }
 
-    displaySequence = (data) => {
-        console.log("displaySequence");
+    updateSequenceUponUpdate = () => {
+        const sequence = this.props.sequences.find(sequence =>
+            sequence.id === parseInt(this.props.match.params.id));
+        console.log(sequence)
+        // set initial
+        if (sequence) {
+            this.sortPoses(sequence.pose_in_seqs)
+            this.setState(prevState => ({
+                ...prevState,
+                sequence: sequence,
+                isLoaded: true
+            }))
+        }        
+    }
+
+    displaySequence2 = (data) => {
+        console.log("displaySequence2");
             console.log(data);
+            const sequence = this.props.sequences.find(sequence =>
+                sequence.id === parseInt(this.props.match.params.id));
+            console.log(sequence)
+            this.sortPoses(sequence.pose_in_seqs)
             return (
                     <div>
-                        Name: {data.sequence.name}<br></br>
-                        Category: {data.sequence.category.name}
-                        {data.sequence.pose_in_seqs.length !== 0 ?
-                            data.sequence.pose_in_seqs.map(pose =>
+                        Name: {sequence.name}<br></br>
+                        Category: {sequence.category.name}
+                        {sequence.pose_in_seqs.length !== 0 ?
+                            sequence.pose_in_seqs.map(pose =>
                                 <span key={pose.id}>{pose.name}</span>)
                         : null
                         }
-                        {/*<PoseShowInSeq pose_in_seqs={data.sequence.poses_in_seqs}/>*/}
-                        {data.sequence.pose_in_seqs.length !== 0 ?
-                            /*<PoseShowInSeq poses={this.props.poses} pose={data.sequence.pose_in_seqs[data.counter]} onChange={this.onChange}/>*/
-                            <PoseShowInSeq poses={this.props.poses} pose={data.sequence.pose_in_seqs[data.counter]} onChange={this.onChange}/>
+                        {sequence.pose_in_seqs.length !== 0 ?
+                            <PoseShowInSeq poses={this.props.poses} pose={sequence.pose_in_seqs[data.counter]}/>
                         : null}
-                        {data.sequence.pose_in_seqs.length !== 0  && data.counter === data.sequence.pose_in_seqs.length-1 ? "Last Pose" : ""}
+                        {sequence.pose_in_seqs.length !== 0  && data.counter === sequence.pose_in_seqs.length-1 ? "Last Pose" : ""}
                         <p>Time:{data.time}</p>
                         <button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
                         <button onClick={this.reset}>Reset</button>
+                         <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} />
                     </div>
             )
     }
-
+    
     render() {
+        console.log("Sequence Show");
+        console.log(this.props);
+        
         const {isLoaded, ...data} = this.state;
-        return isLoaded ? <div>
-            {this.displaySequence(data)}
+        return isLoaded && !this.props.requesting ? <div>
+            {this.displaySequence2(data)}
         </div> : <LoadingSpinner />
     }
 
@@ -167,14 +188,22 @@ class SeqShow extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getSequences: (user) => dispatch(getSequences(user))
+    }
+}
 const mapStateToProps = (state) => {
     console.log("seqShow -> mapStateToProps")
+    console.log(state);
     return {
         sequences: state.sequences.sequences,
         categories: state.categories.categories,
-        poses: state.poses.poses
+        poses: state.poses.poses,
+        user: state.auth.currentUser,
+        requesting: state.sequences.requesting,
     }
 }
 
-export default connect(mapStateToProps) (SeqShow);
+export default connect(mapStateToProps, mapDispatchToProps) (SeqShow);
 

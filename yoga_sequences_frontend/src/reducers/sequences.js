@@ -2,16 +2,18 @@ export default function sequenceReducer(
     state = {
         sequences: [],
         errors: [],
+        selSequence: {},
         requesting: false
     }, action) {
-        //console.log(">>> sequenceReducer");
+        console.log(">>> sequenceReducer");
         //console.log(state);
-        //console.log(action);
+        console.log(action);
     switch(action.type) {
         case 'START_GET_ALL_SEQ':
             return {
                 ...state,
                 sequences: state.sequences,
+                selSequence: {},
                 requesting: true
             }
         case 'GET_ALL_SEQ':
@@ -19,14 +21,16 @@ export default function sequenceReducer(
                 ...state,
                 sequences: action.sequences,
                 errors: [],
+                selSequence: {},
                 requesting: false
             }
         case 'GET_ALL_SEQ_ERROR':
         case 'ADD_SEQ_ERROR':
         case 'ADD_CATEGORY_ERROR':
+        case 'EDIT_SEQ_ERROR':
             return {
                 ...state,
-                errors: [...state.errors, action.errors],
+                errors: [action.errors],
                 requesting: false
             }
         case 'START_ADD_SEQ':
@@ -46,27 +50,33 @@ export default function sequenceReducer(
             return {
                 ...state,
                 sequences: state.sequences,
+                selSequence: {},
                 requesting: true
             }
         case 'EDIT_SEQ':
-            const sequence = state.sequences[state.sequences.findIndex(sequence => sequence.id === action.sequence.id)]
-            console.log(sequence);
-            return {
+            const seqIdx = state.sequences.findIndex(seq => seq.id === action.sequence.id);
+            const stateNew = {
                 ...state,
-                sequences: state.sequences,
+                sequences: [...state.sequences.slice(0, seqIdx), action.sequence, ...state.sequences.slice(seqIdx+1)],
                 errors: [],
                 requesting: false
             }
+            console.log("IN EDIT SEQUENCE REDUCER ***************");
+            console.log(stateNew);
+            return stateNew
+
         case 'START_DELETE_SEQ':
             return {
                 ...state,
                 sequences: state.sequences,
+                selSequence: {},
                 requesting: true
             }
         case 'DELETE_SEQ':
             return {
                 ...state,
                 sequences: state.sequences.filter(sequence => sequence.id !== action.sequence.id),
+                selSequence: {},
                 errors: [],
                 requesting: false
             }
