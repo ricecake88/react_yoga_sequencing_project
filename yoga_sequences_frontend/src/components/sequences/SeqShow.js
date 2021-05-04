@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import PoseShowInSeq from '../sequences/PoseShowInSeq';
 import PoseList from '../sequences/PoseList';
 import LoadingSpinner from '../LoadingSpinner';
@@ -9,12 +10,12 @@ class SeqShow extends Component {
 
     state = {
         seconds_per_breath: 3,
-        num_breaths:  this.props.sequences.find(sequence =>
-            sequence.id === parseInt(this.props.match.params.id)).pose_in_seqs[0].num_breaths,
-        pose: {},
+       // num_breaths:  this.props.sequences.find(sequence =>
+        //    sequence.id === parseInt(this.props.match.params.id)).pose_in_seqs[0].num_breaths,
+        num_breaths: 1,
         sequence: {},
-        counter: 0,
-        time: 0,
+        counter: 0, // current pose index selection
+        time: 0, // for tracking of time passed for current pose
         isLoaded: false,
         pauseClicked: false,
         end: false
@@ -27,12 +28,17 @@ class SeqShow extends Component {
         const sequence = this.props.sequences.find(sequence =>
             sequence.id === parseInt(this.props.match.params.id));
         console.log(sequence)
+        let num_breaths = 1;
+        if (sequence && sequence.pose_in_seqs.length !== 0) {
+            num_breaths = sequence.pose_in_seqs[0].num_breaths
+        }
         // set initial
         if (sequence) {
             this.sortPoses(sequence.pose_in_seqs)
             this.setState(prevState => ({
                 ...prevState,
                 sequence: sequence,
+                num_breaths: num_breaths,
                 isLoaded: true
             }))
         }
@@ -72,11 +78,13 @@ class SeqShow extends Component {
     }
 
     poseInfo = (sequence, data) => {
-        if (sequence.pose_in_seqs.length !== 0  && data.end) {
+        if (sequence.pose_in_seqs.length !== 0  && data.counter === sequence.pose_in_seqs.length-1 && data.end) {
             return "You have reached the end of your yoga practice! Namaste!"
         } else {
+
             return (
                 <>
+                    <NavLink to={`/sequence/edit/${sequence.id}`}>Edit</NavLink>
                     Category: {sequence.category.name}
                     {sequence.pose_in_seqs.length !== 0 ?
                         sequence.pose_in_seqs.map(pose =>
@@ -85,49 +93,51 @@ class SeqShow extends Component {
                     {sequence.pose_in_seqs.length !== 0 ?
                         <PoseShowInSeq poses={this.props.poses} pose={sequence.pose_in_seqs[data.counter]}/>
                     : null}
-                    <div className="center">                                    
+                    {data.counter+1 < sequence.pose_in_seqs.length ?  "Next Pose" : "Last Pose"}
+                    {data.counter+1 < sequence.pose_in_seqs.length ?
+                        this.props.poses.find(pose => pose.id === sequence.pose_in_seqs[data.counter+1].pose_id).name
+                    : null }                    
+                    <div className="center">
                         <p>Time:{data.time}</p>
                         <span onClick={this.changePause}>
-                        {data.pauseClicked ? 
+                        {data.pauseClicked ?
                             <span className="material-icons click">pause</span>
                             : <span className="material-icons click">play_arrow</span>}
                         </span>
                         <span className="material-icons click" onClick={this.reset}>stop</span>
                     </div>
                 </>
-            )        
+            )
         }
     }
 
+    /* shows the pose in sequence and the list of poses */
     displaySequence = (data) => {
-        console.log("displaySequence2");
-            console.log(data);
-            const sequence = this.props.sequences.find(sequence =>
-                sequence.id === parseInt(this.props.match.params.id));
-            console.log(sequence)
-            this.sortPoses(sequence.pose_in_seqs)
-            if (sequence.pose_in_seqs.length !== 0  && data.end) {
+        //console.log("displaySequence2");
+        //console.log(data);
+        const sequence = this.props.sequences.find(sequence =>
+            sequence.id === parseInt(this.props.match.params.id));
+        //console.log(sequence)
+        this.sortPoses(sequence.pose_in_seqs)
+        return (
+                <div className="sequenceShowContainer">
+                    <div className="sequenceShowDiv">
+                        <div className="highlightPose">
+                            <h1 className="center">{sequence.name.toUpperCase()}</h1>
+                            {this.poseInfo(sequence, data)}
+                        </div>
+                        {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
+                        <button onClick={this.reset}>Reset</button>*/}
 
-            }
-            return (
-                    <div className="sequenceShowContainer">
-                        <div className="sequenceShowDiv">
-                            <div className="highlightPose">
-                                <h1 className="center">{sequence.name.toUpperCase()}</h1>
-                                {this.poseInfo(sequence, data)}
-                            </div>
-                            {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
-                            <button onClick={this.reset}>Reset</button>*/}
-                            <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
-                         </div>
-                    </div>
-            )
+                        <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
+                     </div>
+                </div>
+        )
     }
 
     render() {
-        console.log("Sequence Show");
-        console.log(this.props);
-
+        //console.log("Sequence Show");
+        //console.log(this.props);
         const {isLoaded, ...data} = this.state;
         return isLoaded && !this.props.requesting ? <div>
             {this.displaySequence(data)}
@@ -144,20 +154,24 @@ class SeqShow extends Component {
         this.setState({
                 ...this.state,
                 counter: 0,
-                num_breaths: this.state.sequence.pose_in_seqs[this.state.counter].num_breaths,
+                num_breaths: this.state.sequence.pose_in_seqs.length !== 0 ? this.state.sequence.pose_in_seqs[0].num_breaths : 1,
                 pauseClicked: false,
                 time: 0,
                 end: true
             })
     }
 
+    /* start timer from scratch or from pause based on the current pose */
     startPoseChange = () => {
-        console.log("startPose")
+        //console.log("startPose")
+
         // timeoutID that sets out the time before changing to the next pose
         this.timeoutID = setTimeout(this.changePose, (this.state.num_breaths*this.state.seconds_per_breath-this.state.time)*1000);
 
         // timer that counts per second
         this.intervalID = setInterval(this.timedCount, 1000)
+
+
         this.setState({
             ...this.state,
             pauseClicked: true,
@@ -168,15 +182,19 @@ class SeqShow extends Component {
         })
     }
 
+    /* clear the timer for the current pose */
     stopPoseChange = () => {
-        clearTimeout(this.timeoutID);
-        clearTimeout(this.intervalID);
+        if (this.timeoutID)
+            clearTimeout(this.timeoutID);
+        if (this.intervalID)
+            clearInterval(this.intervalID);
         this.setState({
             ...this.state,
             pauseClicked: false
         })
     }
 
+    /* switches timer from pause to continue */
     changePause = () => {
         if (this.state.pauseClicked) {
             this.stopPoseChange();
@@ -185,6 +203,7 @@ class SeqShow extends Component {
         }
     }
 
+    /* normal counter that counts per second */
     timedCount = () => {
         this.setState({
             ...this.state,
@@ -193,28 +212,31 @@ class SeqShow extends Component {
     }
 
     changePose = () => {
-        console.log("changePose")
-        console.log(this.state.sequence)
+        //console.log("changePose")
+        //console.log(this.state.sequence)
         if (this.state.sequence.pose_in_seqs && this.state.counter + 1 < this.state.sequence.pose_in_seqs.length) {
-            clearTimeout(this.timeoutID)
-            clearInterval(this.intervalID)
+            if (this.timeoutID)
+                clearTimeout(this.timeoutID);
+            if (this.intervalID)
+                clearInterval(this.intervalID);
             this.setState(prevState => ({
                 ...prevState,
                 counter: prevState.counter + 1,
                 num_breaths: prevState.sequence.pose_in_seqs[prevState.counter + 1].num_breaths,
+                pose: prevState.sequence.pose_in_seqs[prevState.counter + 1],
                 time: 0
             }))
             console.log(this.state);
             this.timeoutID = setTimeout(this.changePose, this.state.num_breaths*this.state.seconds_per_breath*1000)
             this.intervalID = setInterval(this.timedCount, 1000)
         } else if (this.state.sequence.pose_in_seqs) {
-            console.log("This is the end?");
+            //console.log("This is the end?");
             //clearTimeout(this.timeoutID)
             //clearInterval(this.intervalID)
             this.setState({
                 ...this.state,
                 counter: this.state.counter,
-                num_breaths: this.state.sequence.pose_in_seqs[this.state.counter].num_breaths,
+                num_breaths: this.state.sequence.pose_in_seqs.length ? this.state.sequence.pose_in_seqs[this.state.counter].num_breaths : 1,
                 pauseClicked: false,
                 end: true
             })
@@ -223,27 +245,24 @@ class SeqShow extends Component {
     }
 
     stopClock = () => {
-        clearTimeout(this.timeoutID);
-        clearInterval(this.intervalID);
+        if (this.timeoutID)
+            clearTimeout(this.timeoutID);
+        if (this.intervalID)
+            clearInterval(this.intervalID);
         this.setState({
             ...this.state,
-            counter: 0,
-            num_breaths: this.state.sequence.pose_in_seqs[0].num_breaths,
+            //counter: 0,
+            num_breaths: this.state.sequence.pose_in_seqs.length ? this.state.sequence.pose_in_seqs[this.state.counter].num_breaths : 1,
             pauseClicked: false,
             time: 0,
             end: true
-        })        
+        })
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        //getSequences: (user) => dispatch(getSequences(user))
-    }
-}
 const mapStateToProps = (state) => {
-    console.log("seqShow -> mapStateToProps")
-    console.log(state);
+    //console.log("seqShow -> mapStateToProps")
+    //console.log(state);
     return {
         sequences: state.sequences.sequences,
         categories: state.categories.categories,
@@ -253,5 +272,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (SeqShow);
+export default connect(mapStateToProps) (SeqShow);
 
