@@ -7,9 +7,9 @@ import { addSequence } from '../../actions/sequences';
 import { editSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq'
 import PoseAdd from './PoseAdd';
-import { checkAuth } from "../../actions/auth";
+//import { checkAuth } from "../../actions/auth";
 import LoadingSpinner from '../LoadingSpinner';
-import SeqListNew from '../../components/sequences/SeqListNew';
+import SeqListNew from '../sequences/SeqListNew';
 
 class SeqFormNew extends Component {
 
@@ -19,7 +19,8 @@ class SeqFormNew extends Component {
         category_id: '',
         pose_id: 0,
         pose_in_seqs: [],
-        isLoaded: false
+        isLoaded: false,
+        errors: []
     }
 
     componentDidMount = () => {
@@ -81,7 +82,18 @@ class SeqFormNew extends Component {
                 })
             }
             else if (this.props.match.path === "/sequence/edit/:id") {
-               this.props.editSequence(sequence)
+               this.props.editSequence(sequence);
+               //if (this.props.errors.length === 0)
+               //     this.props.history.push('/sequences/new2')
+               //else {
+                    this.setState({
+                    name: '',
+                    category_id: "",
+                    pose_in_seqs: [],
+                    pose_id: 0,
+                    sequence: {}
+               })
+           //}
             }
 
         }
@@ -180,31 +192,33 @@ class SeqFormNew extends Component {
         console.log(">>> SequenceFormNew -> SeqForm")
         console.log(this.props);
         console.log(this.state);
-        //debugger
         //Sequence.create!(:id => 1, :name => "Testing 2", :user_id => 2, :category_id => 4, :pose_in_seqs_attributes => [{:pose_id => 0, :num_breaths => 2, :pose_order => 1}, {:pose_id => 1, :num_breaths => 3, :pose_order => 0}]
         const route = this.props.match.path.split("/")[2];
-        //console.log(route + "route")
+        console.log(route + "route")
+
         return (
             this.state.isLoaded ?
-        <div>
+        <div className="genericContainer">
+            <div className="genericInnerContainer">
             {route === "add" ? <h1>Create a New Sequence</h1> : <h1>Edit Sequence</h1>}
              {this.props.errors.length !== 0 ? this.props.errors[0].map((error,index) => <div key={index} className="errors">{error}<br/></div>) : null }
             <form onSubmit={this.onSubmit}>
                 <label htmlFor="name"> Sequence Name: </label>
                 <input type="name" name="name" onChange={this.onChange} value={this.state.name}/><br/>
 
+                <label htmlFor="category">Category: </label>
                 <select value={this.state.category_id} name="category_id" onChange={this.onChange}>
                     <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
                 </select>
                 <SeqCategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
-                <label htmlFor="AddPose">Add a Pose</label>
 
-                <PoseAdd route={this.props.route} poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
+                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
                 {(route === "add") ?
                     <input type="submit" value="Create A New Sequence"></input>
                 : <input type="submit" value="Save Changes"></input>}
             </form>
-            <SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/>
+            {route === "add" ? <SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/> : null}
+            </div>
         </div> : <LoadingSpinner/>
         )
     }
@@ -220,7 +234,8 @@ function mapStateToProps(state) {
         categories: state.categories.categories,
         user: state.auth.currentUser,
         auth: state.auth,
-        errors: state.sequences.errors
+        errors: state.sequences.errors,
+        loggedIn: state.auth.loggedIn
      }
 }
 
@@ -231,7 +246,7 @@ function mapDispatchToProps(dispatch) {
         addSequence: (sequence) => dispatch(addSequence(sequence)),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
         deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
-        dispatchCheckAuth: () => dispatch(checkAuth()),
+        //dispatchCheckAuth: () => dispatch(checkAuth()),
         //getSequences: (user) => dispatch(getSequences(user))
     }
 }
