@@ -36,10 +36,12 @@ class CategoryContainer extends Component {
         //console.log(this.props.categories)
         //console.log("After categories")
         return this.state.isLoaded ?
-                <div>
-                    {this.props.errors.map((error,index) => <div key={index}>{error}</div>)}
-                    <CategoryAdd addCategory={this.addCategory} />
-                    <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
+                <div className="genericContainer">
+                    <div className="genericInnerContainer">
+                        {this.props.errors.map((error,index) => <div key={index}>{error}</div>)}
+                        <CategoryAdd addCategory={this.addCategory} />
+                        <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
+                    </div>
                 </div>
             : <LoadingSpinner />
     }
