@@ -3,14 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getSequences, deleteSequence } from '../../actions/sequences'
 import LoadingSpinner from '../LoadingSpinner'
-
-
+import SeqFormNew from '../sequences/SeqFormNew';
+import Login from "../../components/auth/Login";
 //import SeqForm from '../sequences/SeqForm';
 
 class SeqListNew extends Component {
 
     state = {
-        isLoaded: false
+        isLoaded: false,
+        isEdit: false
     }
 
     componentDidMount = () => {
@@ -23,32 +24,45 @@ class SeqListNew extends Component {
         this.props.deleteSequence(id)
       }
 
+    edit = (id) => {
+        console.log(id);
+        this.setState({
+            isEdit: true
+        })
+    }
+
     //TODO - get Sequences move it from the SeqContainer to SeqList
     render() {
         console.log("SeqList");
         console.log(this.props);
         return (
-            !this.props.seqRequesting && this.state.isLoaded ?
-                this.props.sequences.length !== 0 ?
-                    <div>
-                      <div className="sequenceContainer">
-                        <h1>MY SEQUENCES</h1>
-                        <div className="sequenceContainerGrid">
-                            <div className="header">Name</div>
-                            <div className="header">Delete</div>
-                            <div className="header">Edit</div>
-                            {this.props.sequences.map(seq => {
-                                return <Fragment key={seq.id}>
-                                    {/*<div className="head"><NavLink to={`/sequence/${seq.id}`}>{seq.name}</NavLink></div>*/}
-                                    <NavLink to={`/sequence/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
+            this.props.loggedIn ?
+                !this.props.seqRequesting && this.state.isLoaded ?
+                    this.props.sequences.length !== 0 ?
+                        <div className="sequenceContainer">
+                            <h1>ALL SEQUENCES</h1>
+                            <div className="sequenceContainerGrid">
+                                <div className="header">Name</div>
+                                <div className="header">Delete</div>
+                                <div className="header">Edit</div>
+                                {this.props.sequences.map(seq => {
+                                    {/*return <Fragment key={seq.id}>
+                                             <NavLink to={`/sequence/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
                                     <div className="head"><span onClick={() => this.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
                                     <div className="head"><NavLink to={`/sequence/edit/${seq.id}`} ><span className="material-icons edit">edit</span></NavLink></div>
-                                </Fragment>
-                            })}
+                            </Fragment>*/}
+                                    return <Fragment key={seq.id}>
+                                    {/*<div className="head"><NavLink to={`/sequence/${seq.id}`}>{seq.name}</NavLink></div>*/}
+                                        <NavLink to={`/sequence/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
+                                        <div className="head"><span onClick={() => this.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
+                                        <div className="head"><NavLink to={`/sequence/edit/${seq.id}`} ><span className="material-icons edit" onClick={() => this.edit(seq.id)}>edit</span></NavLink></div>
+                                    </Fragment>
+                                })}
+                            </div>
                         </div>
-                      </div>
-                    </div> : null
+                    : null
                 : <LoadingSpinner />
+            : <Login />
         )
     }
 }
@@ -64,7 +78,8 @@ const mapStateToProps = (state) => {
     return {
         sequences: state.sequences.sequences,
         seqRequesting: state.sequences.requesting,
-        user: state.auth.currentUser
+        user: state.auth.currentUser,
+        loggedIn: state.auth.loggedIn
     }
 }
 
