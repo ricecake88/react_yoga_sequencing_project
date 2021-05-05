@@ -96,7 +96,7 @@ class SeqShow extends Component {
                     {data.counter+1 < sequence.pose_in_seqs.length ?  "Next Pose" : "Last Pose"}
                     {data.counter+1 < sequence.pose_in_seqs.length ?
                         this.props.poses.find(pose => pose.id === sequence.pose_in_seqs[data.counter+1].pose_id).name
-                    : null }                    
+                    : null }
                     <div className="center">
                         <p>Time:{data.time}</p>
                         <span onClick={this.changePause}>
@@ -123,7 +123,9 @@ class SeqShow extends Component {
                 <div className="sequenceShowContainer">
                     <div className="sequenceShowDiv">
                         <div className="highlightPose">
-                            <h1 className="center">{sequence.name.toUpperCase()}</h1>
+                            <NavLink to={`/sequence/${sequence.id}`} className="no-ul" onClick={this.reset}>
+                                <h1 className="center">{sequence.name.toUpperCase()}</h1>
+                            </NavLink>
                             {this.poseInfo(sequence, data)}
                         </div>
                         {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
@@ -144,24 +146,29 @@ class SeqShow extends Component {
         </div> : <LoadingSpinner />
     }
 
+    /* reset the sequence after user presses stop */
     reset = () => {
+
+        // clears out the timers
         if (this.timeoutID) {
             clearTimeout(this.timeoutID);
         }
         if (this.intervalID) {
             clearInterval(this.intervalID);
         }
+
+        // reset all values back to initial start value
         this.setState({
-                ...this.state,
-                counter: 0,
-                num_breaths: this.state.sequence.pose_in_seqs.length !== 0 ? this.state.sequence.pose_in_seqs[0].num_breaths : 1,
-                pauseClicked: false,
-                time: 0,
-                end: true
-            })
+            ...this.state,
+            counter: 0,
+            num_breaths: this.state.sequence.pose_in_seqs.length !== 0 ? this.state.sequence.pose_in_seqs[0].num_breaths : 1,
+            pauseClicked: false,
+            time: 0,
+            end: true
+        })
     }
 
-    /* start timer from scratch or from pause based on the current pose */
+    /* start timer from scratch or from pause based on the current pose by user's click to start/restart */
     startPoseChange = () => {
         //console.log("startPose")
 
@@ -171,30 +178,34 @@ class SeqShow extends Component {
         // timer that counts per second
         this.intervalID = setInterval(this.timedCount, 1000)
 
-
+        // set state to back to pauseClicked to true
         this.setState({
             ...this.state,
             pauseClicked: true,
             //counter: 0,
             //num_breaths: this.state.sequence.pose_in_seqs[this.state.counter].num_breaths,
             //time: 0,
-            end: false
+            //end: false
         })
     }
 
-    /* clear the timer for the current pose */
+    /* clear the timer for the current pose to pause everything upon user's click for pause*/
     stopPoseChange = () => {
+
+        //clear timers and intervals
         if (this.timeoutID)
             clearTimeout(this.timeoutID);
         if (this.intervalID)
             clearInterval(this.intervalID);
+
+        // set pause Clicked state back to false
         this.setState({
             ...this.state,
             pauseClicked: false
         })
     }
 
-    /* switches timer from pause to continue */
+    /* toggles timer from pause to continue */
     changePause = () => {
         if (this.state.pauseClicked) {
             this.stopPoseChange();
@@ -211,14 +222,21 @@ class SeqShow extends Component {
         })
     }
 
+    /* update state based on next pose information*/
     changePose = () => {
         //console.log("changePose")
         //console.log(this.state.sequence)
+
+        // check if there are any poses in the sequence and check whether or not it's at the last pose
         if (this.state.sequence.pose_in_seqs && this.state.counter + 1 < this.state.sequence.pose_in_seqs.length) {
+
+            // clear timers associated with previous pose
             if (this.timeoutID)
                 clearTimeout(this.timeoutID);
             if (this.intervalID)
                 clearInterval(this.intervalID);
+
+            // update state to next pose
             this.setState(prevState => ({
                 ...prevState,
                 counter: prevState.counter + 1,
@@ -226,13 +244,17 @@ class SeqShow extends Component {
                 pose: prevState.sequence.pose_in_seqs[prevState.counter + 1],
                 time: 0
             }))
-            console.log(this.state);
+            //console.log(this.state);
+
+            //set new timers based on updated values of current pose
             this.timeoutID = setTimeout(this.changePose, this.state.num_breaths*this.state.seconds_per_breath*1000)
             this.intervalID = setInterval(this.timedCount, 1000)
         } else if (this.state.sequence.pose_in_seqs) {
             //console.log("This is the end?");
             //clearTimeout(this.timeoutID)
             //clearInterval(this.intervalID)
+
+            //update state to the last pose
             this.setState({
                 ...this.state,
                 counter: this.state.counter,
@@ -240,19 +262,26 @@ class SeqShow extends Component {
                 pauseClicked: false,
                 end: true
             })
+
+            // clear timers and update state
             this.stopClock();
         }
     }
 
+    /* function called once the sequence finishes */
     stopClock = () => {
+
+        // clear timers 
         if (this.timeoutID)
             clearTimeout(this.timeoutID);
         if (this.intervalID)
             clearInterval(this.intervalID);
+
+        // update state to end the sequence and reset the time
         this.setState({
             ...this.state,
             //counter: 0,
-            num_breaths: this.state.sequence.pose_in_seqs.length ? this.state.sequence.pose_in_seqs[this.state.counter].num_breaths : 1,
+            //num_breaths: this.state.sequence.pose_in_seqs.length ? this.state.sequence.pose_in_seqs[this.state.counter].num_breaths : 1,
             pauseClicked: false,
             time: 0,
             end: true
@@ -269,6 +298,7 @@ const mapStateToProps = (state) => {
         poses: state.poses.poses,
         user: state.auth.currentUser,
         requesting: state.sequences.requesting,
+        isLoggedIn: state.auth.isLoggedIn
     }
 }
 
