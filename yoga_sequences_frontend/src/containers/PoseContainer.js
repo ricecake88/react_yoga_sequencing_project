@@ -54,10 +54,12 @@ class PoseContainer extends Component {
             
             {/*display the drop down select for all the poses, requires list of all poses and the
             callback to update the state based on selection */}
-            <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
+            <div className="poseDescription">
+                <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
 
-            {/*display the Pose */}
-            {this.displayPose()}
+                {/*display the Pose */}
+                {this.displayPose()}
+            </div>
         </> : <LoadingSpinner />
     }
 }
