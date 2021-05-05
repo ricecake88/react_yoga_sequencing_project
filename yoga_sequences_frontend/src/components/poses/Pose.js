@@ -5,14 +5,14 @@ const Pose = ({pose}) => {
     return (
         <div>
             <p>
-            Name: {pose.name}<br/>
-            Sanskrit: {pose.sanskrit}<br/>
-            Category: {pose.category}<br/>
-            Tags: {pose.tags.map(tag => <span key={uuid()}>#{tag} </span>)}<br/>
-            Video: {pose.video}<br/>
-            Image: {pose.image}<br/>
-            URL: {pose.url}<br/>
-            Description: {pose.description}<br/>
+            <span className="label">Name</span>: {pose.name}<br/>
+            <span className="label">Sanskrit</span>: {pose.sanskrit}<br/>
+            <span className="label">Category</span>: {pose.category}<br/>
+            <span className="label">Tags</span>: {pose.tags.map(tag => <span key={uuid()}>#{tag} </span>)}<br/>
+            <span className="label">Video</span>: {pose.video}<br/>
+            <span className="label">Image</span>: {pose.image}<br/>
+            <span className="label">URL</span>: {pose.url}<br/>
+            <span className="label">Description</span>: {pose.description}<br/>
             </p>
         </div>
     )
