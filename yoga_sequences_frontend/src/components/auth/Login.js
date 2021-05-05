@@ -26,9 +26,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-      >
+      <form onSubmit={this.handleSubmit}>
         <h1>Log In</h1>
         <p>{this.state.error && "Invalid email or password"}</p>
         <fieldset>
