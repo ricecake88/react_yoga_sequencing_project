@@ -4,11 +4,13 @@ import CategoryList from '../components/categories/CategoryList'
 import { getCategories, deleteCategory, addCategory } from '../actions/categories';
 import LoadingSpinner from '../components/LoadingSpinner';
 import CategoryAdd from '../components/categories/CategoryAdd';
+import Error from '../components/errors/Error';
 
 class CategoryContainer extends Component {
 
     state = {
-        isLoaded: false
+        isLoaded: false,
+        errors: this.props.errors
     }
 
     componentDidMount = () => {
@@ -38,7 +40,7 @@ class CategoryContainer extends Component {
         return this.state.isLoaded ?
                 <div className="genericContainer">
                     <div className="genericInnerContainer">
-                        {this.props.errors.map((error,index) => <div key={index}>{error}</div>)}
+                        {this.props.errors.map((error,index) => <Error key={index} error={error}/>)}
                         <CategoryAdd addCategory={this.addCategory} />
                         <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
                     </div>
