@@ -50,8 +50,8 @@ class CategoryContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(">>CategoryContainer -> mapStateToProps");
-    console.log(state);
+    //console.log(">>CategoryContainer -> mapStateToProps");
+    //console.log(state);
     return {
         categories: state.categories.categories,
         user: state.auth.currentUser,
