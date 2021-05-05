@@ -3,11 +3,11 @@
 
 body {
     margin: 0;
-    font-family: 'Oswald', serif;
+    font-family: 'Roboto Slab', serif;
     margin-right: auto;
     margin-left: auto;
     background-color: rgb(59, 63, 75);
-    color: white;
+    color: black;
     background-image: url('./assets/background-yoga5.jpg');
     background-size: auto;
     background-repeat: no-repeat;
@@ -15,21 +15,15 @@ body {
 h1 {
     font-family: 'Jost', serif;
     font-size: 14pt;
-    color: rgb(85, 36, 17)
+    color: rgb(85, 36, 17);
 }
 
-form,select,input,p {
+form,select,input,p, select {
     font-family: 'Roboto Slab', serif;
     color: black;
 }
 .label {
     font-weight: bold;
-}
-
-.link {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size:12pt;
-    color: black;
 }
 
 .navbar {
@@ -48,18 +42,23 @@ form,select,input,p {
     margin-left: auto;
 }
 
+.linkdiv {
+    padding: 5px;
+}
+
 .link {
     font-family: 'Jost', sans-serif;
+}
+
+.no-ul {
     text-decoration: none;
 }
+
 .openLinks {
     text-align:left;
     display: inline-block;
     border: 5px solid red;
     margin-left:5px;
-}
-.linkdiv {
-    padding: 5px;
 }
 
 .openLink {
@@ -68,6 +67,11 @@ form,select,input,p {
     padding: 10px;
     text-transform: uppercase;
 }
+
+.openLink:hover, .authLink:hover {
+    color: brown
+}
+
 .activeLink {
     text-align:right;
     /*display:inline;*/
@@ -89,8 +93,8 @@ form,select,input,p {
 .sequenceContainer {
     margin-left: auto;
     margin-right: auto;
-    opacity: 50%;
-    border: 5px solid red
+    opacity: 60%;
+    /*border: 5px solid red*/
 }
 
 .sequenceContainerGrid {
@@ -98,7 +102,7 @@ form,select,input,p {
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 75% 10% 10%;
-    border: 5px solid green;
+    /*border: 5px solid green;*/
 }
 
 .sequenceContainer .header, .sequenceContainer .head, .sequenceContainer .cell {
@@ -127,7 +131,13 @@ form,select,input,p {
     font-family: 'Jost', sans-serif;
 }
 
+/* ---------- sequence show CSS styles -------- */
 .sequenceShowContainer {
+    margin: 10px;
+   /* font-family: Jost, sans-serif;*/
+}
+
+.genericContainer {
     margin: 10px;
    /* font-family: Jost, sans-serif;*/
 }
@@ -135,8 +145,8 @@ form,select,input,p {
 .sequenceShowDiv, .poseDescription {
     background-color: beige;
     padding: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    opacity: 80%;
+    /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+    opacity: 60%;
     color: black;
     margin-left: auto;
     margin-right: auto;
@@ -144,12 +154,25 @@ form,select,input,p {
     border: 1px solid gray;
 }
 
+.genericInnerContainer {
+    background-color: beige;
+    opacity: 60%;
+    color:black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border: 1px solid gray;
+    padding: 10px;
+}
 .highlightPose {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
+label {
+    font-weight: bold
+}
 .center {
     text-align: center;
 }
