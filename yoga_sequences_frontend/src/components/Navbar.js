@@ -14,27 +14,34 @@ class Navbar extends React.Component {
     if (authChecked) {
       return loggedIn ? (
         <>
-          <NavLink
-            className='p-4 block sm:inline-block'
+         {/* <NavLink
+            className='p-4 block sm:inline-block link'
             activeClassName='text-blue-900'
             exact
             to='/sequences'
           >
-            All Sequences |
-          </NavLink>
-          <NavLink exact to='/sequences/new'>
-           Create a Sequence
-          </NavLink> |
-          <NavLink exact to='/categories'>
+            All Sequences
+         </NavLink>*/}
+          <NavLink exact to='/sequences/new'
+           className='authLink link no-ul'>
+           +
+         </NavLink>
+          <NavLink exact to='/categories'
+           className='authLink link no-ul'>
             Categories
-          </NavLink> | <br/>
+         </NavLink>
+          <NavLink exact to='/sequences/new2'
+           className='authLink link no-ul'
+          >
+            Sequences
+          </NavLink>
           {currentUser.email}
           <Logout />
         </>
       ) : (
         <>
           <NavLink
-            className='p-4 inline-block'
+            className='p-4 inline-block link'
             activeClassName='text-blue-900'
             exact
             to='/signup'
@@ -42,7 +49,8 @@ class Navbar extends React.Component {
             Sign Up
           </NavLink>
           <NavLink
-            className='p-4 inline-block'
+
+            className='p-4 inline-block link'
             activeClassName='text-blue-900'
             exact
             to='/login'
@@ -57,23 +65,28 @@ class Navbar extends React.Component {
   }
 render() {
   return (
-    <nav className='bg-blue-50 text-blue-500'>
-      <div className='w-11/12 max-w-6xl mx-auto grid sm:grid-cols-3 md:grid-cols-4'>
-        <div className='sm:col-span-2 md:col-span-3'>
+    <nav className='navbar'>
+      <div className='navbarContainer'>
+        <div className='openLinks'>
           <NavLink
-            className='p-4 block sm:inline-block'
-            activeClassName='text-blue-900'
+            //className='p-4 block sm:inline-block'
+            //activeClassName='text-blue-900'
+            className="openLink link no-ul"
+            activeClassName="activeLink"
             exact
             to='/'
           >
-            NormalRoute
+            Normal Route
           </NavLink>
 
-          <NavLink exact to='/poses'>
+          <NavLink
+            className="openLink link no-ul"
+            activeClassName="activeLink link"
+            exact to='/poses'>
             Poses
           </NavLink>
         </div>
-        <div className='sm:text-right'>
+        <div className='authLinks link'>
           {this.renderAuthLinks()}
         </div>
       </div>
