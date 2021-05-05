@@ -26,13 +26,16 @@ class PoseSelector extends Component {
 
         return (
             <>
+               {this.props.select === "addToSeq" ?
+               <label htmlFor="pose">Add a Pose: </label> :
+               <label htmlFor="pose">Choose a Pose: </label>}
             {this.props.poses.length !== 0 ?
                 <select name="pose_id" onChange={this.onChange} value={this.state.pose_id}>
                     <option disabled value="">Select a Pose</option>
                     {this.props.poses.map(pose => <option key={pose.id} value={pose.id}>{pose.name}</option>)}
                 </select> : null}
             </>)
-       
+
     }
 
     /* eventually... change to search by category or search via another way */
