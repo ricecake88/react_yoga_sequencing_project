@@ -29,9 +29,9 @@ class Api::V1::CategoriesController < ApplicationController
         category = Category.find(params[:id])
         Category.set_deleted_category_to_uncategorized(category.id, current_user)
         if category.delete
-            render json: {category: category}
+            render json: {status: 200, category: category}
         else
-            render json: {errors: category.errors.full_messages}
+            render json: {status: 422, errors: category.errors.full_messages}
         end
     end
 
