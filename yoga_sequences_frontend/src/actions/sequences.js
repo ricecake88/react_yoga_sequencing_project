@@ -30,6 +30,39 @@ export const getSequences = (user) => {
 }
 
 
+export const getSequence = (id) => {
+    console.log("getSequences()");
+    let config = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': getToken()
+        }
+    };
+    return (dispatch) => {
+        dispatch({type: 'START_GET_SEQ'});
+        fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        .then(response => {
+            if (response.ok) {
+                return response.json().then(json => {
+                    console.log(json);
+                    if (json.status == 200)
+                        dispatch({type: 'GET_SEQ', sequence: json.sequence})
+                    else
+                        dispatch({type: 'GET_SEQ_ERR', errors: json.errors})
+                })
+            } else {
+                return response.json().then(errors => {
+                    dispatch({type: 'GET_SEQ_ERR', errors: [errors.error]})
+                    return Promise.reject(errors)
+                })
+            }
+        })
+    }
+}
+
+
 export const addSequence = (sequence) => {
     console.log("action addSequence")
     console.log(sequence);
@@ -62,7 +95,8 @@ export const addSequence = (sequence) => {
                 })
             } else {
                 return response.json().then(errors => {
-                    dispatch({type: "ADD_SEQ_ERROR", errors: errors})
+                    dispatch({type: "ADD_SEQ_ERROR", errors: [errors.error]})
+                    return Promise.reject(errors)
                 })
             }
         })
@@ -94,7 +128,7 @@ export const deleteSequence = (id) => {
                 })
             } else {
                 return response.json().then(errors => {
-                    Promise.reject(errors)
+                    return Promise.reject(errors)
                 })
             }
         })
@@ -133,7 +167,7 @@ export const editSequence = (sequence) => {
                 })
             } else {
                 return response.json().then(errors => {
-                    Promise.reject(errors)
+                    return Promise.reject(errors)
                 })
             }
         })

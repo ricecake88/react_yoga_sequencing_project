@@ -12,23 +12,29 @@ class Api::V1::SequencesController < ApplicationController
 
     def show
         if current_user
+            Rails.logger.debug params.inspect
             sequence = Sequence.find(params[:id])
-            render json: {
-                status: 200,
-                sequence: {
-                    id: sequence.id,
-                    category: sequence.category,
-                    poses: sequence.poses,
-                    pose_in_seqs: sequence.pose_in_seqs.each{|pose_in_seq| {
-                        pose_order: pose_in_seq.pose_order,
-                        pose_id: pose_in_seq.pose_id,
-                        num_breaths: pose_in_seq.num_breaths,
-                        sequence_id: sequence.id
-                        }}
+            if sequence
+                render json: {
+                    status: 200,
+                    sequence: {
+                        id: sequence.id,
+                        name: sequence.name,
+                        category: sequence.category,
+                        poses: sequence.poses,
+                        pose_in_seqs: sequence.pose_in_seqs.each{|pose_in_seq| {
+                            pose_order: pose_in_seq.pose_order,
+                            pose_id: pose_in_seq.pose_id,
+                            num_breaths: pose_in_seq.num_breaths,
+                            sequence_id: sequence.id
+                            }}
+                    }
                 }
-            }
+            else
+                render json: {status: 422, errors: "Was not able to find sequence"}
+            end
         else
-            render json: {status: 422, errors: "Was not able to find sequence."}
+            render json: {status: 401, errors: "Not Authorized."}
         end
     end
 

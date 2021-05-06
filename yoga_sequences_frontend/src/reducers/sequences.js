@@ -24,13 +24,28 @@ export default function sequenceReducer(
                 selSequence: {},
                 requesting: false
             }
+        case 'START_GET_SEQ':
+            return {
+                ...state,
+                sequences: state.sequences,
+                selSequence: {},
+                requesting: true
+            }
+        case 'GET_SEQ':
+            return {
+                ...state,
+                sequences: state.sequences,
+                selSequence: action.sequence,
+                requesting: false
+            }
+        case 'GET_SEQ_ERROR':
         case 'GET_ALL_SEQ_ERROR':
         case 'ADD_SEQ_ERROR':
         case 'ADD_CATEGORY_ERROR':
         case 'EDIT_SEQ_ERROR':
             return {
                 ...state,
-                errors: [action.errors],
+                errors: action.errors,
                 requesting: false
             }
         case 'START_ADD_SEQ':
