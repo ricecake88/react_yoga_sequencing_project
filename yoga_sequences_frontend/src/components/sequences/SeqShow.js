@@ -27,7 +27,7 @@ class SeqShow extends Component {
         since this before componentDidMount, otherwise the state never changes */
     static getDerivedStateFromProps(props, current_state) {
         console.log("in getDerivedStateFromProps")
-        if (current_state.sequence !== props.sequence) {
+        if (props.sequences.length === 0 && current_state.sequence !== props.sequence) {
             return {
                 ...current_state,
                 sequence: props.sequence
@@ -52,6 +52,7 @@ class SeqShow extends Component {
                 isLoaded: true
             })
         } else {
+            console.log("iterating")
             // if user access the sequence from the sequence list
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
@@ -212,7 +213,7 @@ class SeqShow extends Component {
                     sequence.id === parseInt(this.props.match.params.id));
         }
 
-        // sort the poses if they and sequence exists
+        // sort the poses if the sequence exists
         if (Object.keys(sequence).length !== 0 && sequence.pose_in_seqs.length !== 0)
             this.sortPoses(sequence.pose_in_seqs);
 
