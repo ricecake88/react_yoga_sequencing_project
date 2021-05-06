@@ -4,9 +4,9 @@ class Api::V1::CategoriesController < ApplicationController
         Rails.logger.debug params.inspect
         if current_user
             categories = Category.where(:user_id => params[:user_id]).order(id: :DESC)
-            render json: {categories: categories}
+            render json: {status: 200, categories: categories, errors: []}
         else
-            render json: {errors: "Error, no current_user"}
+            render json: {status: 401, errors: "Error, no current_user"}
         end
     end
 
@@ -31,7 +31,7 @@ class Api::V1::CategoriesController < ApplicationController
         if category.delete
             render json: {category: category}
         else
-            render json: {errors: category.errors}
+            render json: {errors: category.errors.full_messages}
         end
     end
 
