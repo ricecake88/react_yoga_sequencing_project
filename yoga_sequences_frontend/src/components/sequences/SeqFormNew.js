@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import Categories from './Categories';
+import Categories2 from './Categories2';
 import { connect } from 'react-redux';
 import SeqCategoryAdd from './SeqCategoryAdd';
-import { addCategory } from '../../actions/categories';
+import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
-import { editSequence } from '../../actions/sequences';
+import { editSequence, getSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq'
 import PoseAdd from './PoseAdd';
+import { getPoses } from '../../actions/poses';
 //import { checkAuth } from "../../actions/auth";
 import LoadingSpinner from '../LoadingSpinner';
 import SeqListNew from '../sequences/SeqListNew';
+import Error from '../errors/Error';
+import { ImFolderPlus } from 'react-icons/im';
 
 class SeqFormNew extends Component {
 
@@ -20,13 +24,65 @@ class SeqFormNew extends Component {
         pose_id: 0,
         pose_in_seqs: [],
         isLoaded: false,
-        errors: []
+        errors: [],
+        saved: false
+    }
+
+
+    static getDerivedStateFromProps (props, current_state) {
+        console.log("getDerivedStateFromProps")
+        console.log(props);
+        if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.path === "/sequences/edit/:id") {
+            console.log("Should not be in here")
+            let name, category_id = '';
+            let pose_in_seqs = [];
+            if (Object.keys(props.sequence).length !== 0) {
+                name = props.sequence.name;
+                category_id = props.sequence.category.id;
+                if (props.sequence.pose_in_seqs.length !== 0) {
+                    pose_in_seqs = props.sequence.pose_in_seqs
+                    SeqFormNew.sortPoses2(props.sequence.pose_in_seqs)
+                }
+            }
+            return {
+                ...current_state,
+                sequence: props.sequence,
+                name: name,
+                category_id: category_id,
+                pose_in_seqs: pose_in_seqs
+            }
+        } else return current_state
     }
 
     componentDidMount = () => {
         console.log("components/sequences/SeqFormNew ->component did mount");
         console.log(this.props);
-        if (this.props.match.path === "/sequence/edit/:id") {
+        console.log(this.state);
+        let id = this.props.match.params.id;
+        this.props.getPoses();
+        if (this.props.sequences.length === 0 && this.props.match.path === "/sequences/edit/:id" ){
+            console.log("Should not be in here")
+            this.props.getSequence(this.props.match.params.id);
+            let name, category_id = '';
+            let pose_in_seqs = [];
+            if (Object.keys(this.props.sequence).length !== 0) {
+                name = this.props.sequence.name;
+                category_id = this.props.sequence.category.id;
+                if (this.props.sequence.pose_in_seqs.length !== 0) {
+                    pose_in_seqs = this.props.sequence.pose_in_seqs
+                    this.sortPoses(this.props.sequence.pose_in_seqs)
+                }
+            }
+            this.setState(prevState => ({
+                    ...prevState,
+                    sequence: this.props.sequence,
+                    //name: name,
+                    category_id: category_id,
+                    pose_in_seqs: pose_in_seqs,
+                    isLoaded: true
+                }))
+           console.log(this.state);
+        } else if  (this.props.match.path === "/sequences/edit/:id") {
             if (this.props.sequences.length !== 0) {
                 const sequence = this.props.sequences.find(sequence => sequence.id === parseInt(this.props.match.params.id))
 
@@ -78,22 +134,17 @@ class SeqFormNew extends Component {
                     category_id: "",
                     pose_in_seqs: [],
                     pose_id: 0,
-                    sequence: {}
+                    sequence: {},
                 })
             }
-            else if (this.props.match.path === "/sequence/edit/:id") {
+            else if (this.props.match.path === "/sequences/edit/:id") {
                this.props.editSequence(sequence);
-               //if (this.props.errors.length === 0)
-               //     this.props.history.push('/sequences/new2')
-               //else {
-                    this.setState({
-                    name: '',
-                    category_id: "",
-                    pose_in_seqs: [],
-                    pose_id: 0,
-                    sequence: {}
+               console.log(this.props.errors);
+               console.log(this.props)
+               this.setState({
+                    ...this.state,
+                    saved: true
                })
-           //}
             }
 
         }
@@ -188,6 +239,25 @@ class SeqFormNew extends Component {
         }
     }
 
+
+    static sortPoses2 = (posesInSeq) => {
+        if (posesInSeq.length !== 0) {
+            posesInSeq.sort((a, b) => {
+                if (a.pose_order < b.pose_order) {
+                    return -1;
+                }
+                if (a.pose_order > b.pose_order) {
+                    return 1;
+                }
+            return 0;
+            })
+        }
+    }
+
+    componentWillUnMount = () => {
+        console.log("Sequence Form Unmounted");
+    }
+
     render() {
         console.log(">>> SequenceFormNew -> SeqForm")
         console.log(this.props);
@@ -197,29 +267,36 @@ class SeqFormNew extends Component {
         console.log(route + "route")
 
         return (
-            this.state.isLoaded ?
-        <div className="genericContainer">
-            <div className="genericInnerContainer">
-            {route === "add" ? <h1>Create a New Sequence</h1> : <h1>Edit Sequence</h1>}
-             {this.props.errors.length !== 0 ? this.props.errors[0].map((error,index) => <div key={index} className="errors">{error}<br/></div>) : null }
-            <form onSubmit={this.onSubmit}>
-                <label htmlFor="name"> Sequence Name: </label>
-                <input type="name" name="name" onChange={this.onChange} value={this.state.name}/><br/>
+            this.props.auth.loggedIn && this.props.user ?
+                this.state.isLoaded ?
+                    <div className="genericContainer">
+                        <div className="genericInnerContainer">
+                            {route === "add" ? <h1>Create a New Sequence</h1> : <h1>Edit Sequence</h1>}
+                            {this.props.errors.length !== 0 ?
+                                this.props.errors.map((error,index) => <Error key={index} className="errors" error={error}/>)
+                            : this.state.saved ? "Saved" : null}
+                            <form onSubmit={this.onSubmit}>
+                                <label htmlFor="name"> Sequence Name: </label>
+                                <input type="name" name="name" onChange={this.onChange} value={this.state.name}/><br/>
 
-                <label htmlFor="category">Category: </label>
-                <select value={this.state.category_id} name="category_id" onChange={this.onChange}>
-                    <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
-                </select>
-                <SeqCategoryAdd user={this.props.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
+                                <label htmlFor="category">Category: </label>
+                                {<select value={this.state.category_id} name="category_id" onChange={this.onChange}>
+                                    <Categories categories={this.props.categories} addCategory={this.props.addCategory}/>
+                                </select>}
+                                <Categories2 user={this.props.user} addCategory={this.props.addCategory } id={this.state.category_id} onChange={this.onChange}/>
+                                <SeqCategoryAdd user={this.props.user} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
 
-                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
-                {(route === "add") ?
-                    <input type="submit" value="Create A New Sequence"></input>
-                : <input type="submit" value="Save Changes"></input>}
-            </form>
-            {route === "add" ? <SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/> : null}
-            </div>
-        </div> : <LoadingSpinner/>
+                                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
+                                {(route === "add") ?
+                                    <input type="submit" value="Create A New Sequence"></input>
+                                : <input type="submit" value="Save Changes"></input>}
+                            </form>
+                        {/*{route === "add" ? <SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/> : null}*/}
+                        {/*<SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/>*/}
+                        </div>
+                    </div>
+                : null
+            : null
         )
     }
 }
@@ -235,17 +312,27 @@ function mapStateToProps(state) {
         user: state.auth.currentUser,
         auth: state.auth,
         errors: state.sequences.errors,
-        loggedIn: state.auth.loggedIn
+        loggedIn: state.auth.loggedIn,
+        requesting: state.sequences.requesting,
+        sequence: state.sequences.selSequence
      }
 }
 
 function mapDispatchToProps(dispatch) {
     //console.log("\tCategories >> mapDispatchToProps");
     return {
+
+        // functions required
         addCategory: (category) => dispatch(addCategory(category)),
         addSequence: (sequence) => dispatch(addSequence(sequence)),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
         deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
+        getPoses: () => dispatch(getPoses()),
+
+        // functions that get called upon refresh or direct page
+        getSequence: (id) => dispatch(getSequence(id)),
+        getCategories: (user) => dispatch(getCategories(user))
+
         //dispatchCheckAuth: () => dispatch(checkAuth()),
         //getSequences: (user) => dispatch(getSequences(user))
     }
