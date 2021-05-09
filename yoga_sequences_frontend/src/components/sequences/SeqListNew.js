@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { BrowserRouter, NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getSequences, deleteSequence } from '../../actions/sequences'
 import LoadingSpinner from '../LoadingSpinner'
-import SeqFormNew from '../sequences/SeqFormNew';
+//import SeqFormNew from '../sequences/SeqFormNew';
 import Login from "../../components/auth/Login";
-//import SeqForm from '../sequences/SeqForm';
 
 class SeqListNew extends Component {
 
@@ -15,7 +14,7 @@ class SeqListNew extends Component {
     }
 
     componentDidMount = () => {
-        this.props.getSequences(this.props.user);
+        //this.props.getSequences(this.props.user);
         this.setState({
             isLoaded: true
         })
@@ -46,22 +45,16 @@ class SeqListNew extends Component {
                                 <div className="header">Delete</div>
                                 <div className="header">Edit</div>
                                 {this.props.sequences.map(seq => {
-                                    {/*return <Fragment key={seq.id}>
-                                             <NavLink to={`/sequence/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
-                                    <div className="head"><span onClick={() => this.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
-                                    <div className="head"><NavLink to={`/sequence/edit/${seq.id}`} ><span className="material-icons edit">edit</span></NavLink></div>
-                            </Fragment>*/}
                                     return <Fragment key={seq.id}>
-                                    {/*<div className="head"><NavLink to={`/sequence/${seq.id}`}>{seq.name}</NavLink></div>*/}
-                                        <NavLink to={`/sequence/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
+                                        <NavLink to={`/sequences/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
                                         <div className="head"><span onClick={() => this.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
-                                        <div className="head"><NavLink to={`/sequence/edit/${seq.id}`} ><span className="material-icons edit" onClick={() => this.edit(seq.id)}>edit</span></NavLink></div>
+                                        <div className="head"><NavLink to={`/sequences/edit/${seq.id}`} ><span className="material-icons edit" onClick={() => this.edit(seq.id)}>edit</span></NavLink></div>
                                     </Fragment>
                                 })}
                             </div>
                         </div>
                     : null
-                : <LoadingSpinner />
+                : null
             : <Login />
         )
     }
@@ -69,7 +62,7 @@ class SeqListNew extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getSequences: (user) => dispatch(getSequences(user)),
+        //getSequences: (user) => dispatch(getSequences(user)),
         deleteSequence: (id) => dispatch(deleteSequence(id)),
     }
 }
