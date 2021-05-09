@@ -47,7 +47,7 @@ export const getSequence = (id) => {
             if (response.ok) {
                 return response.json().then(json => {
                     console.log(json);
-                    if (json.status == 200)
+                    if (json.status === 200)
                         dispatch({type: 'GET_SEQ', sequence: json.sequence})
                     else
                         dispatch({type: 'GET_SEQ_ERR', errors: json.errors})

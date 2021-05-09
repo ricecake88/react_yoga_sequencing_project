@@ -14,12 +14,27 @@ export const getCategories = (user) => {
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
         fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
-        .then(response =>  response.json())
-        .then(json => {
-            dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
-        });
+        .then(response =>  {
+            if (response.ok) {
+                return response.json().then(json => {
+                    console.log(json)
+                    if (json.status === 200)
+                        dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
+                    else
+                        dispatch({ type: 'GET_CATEGEORIES_ERR'})
+                })
+            } else {
+                return response.json().then(errors => {
+                    dispatch({ type: 'GET_CATEGEORIES_ERR'})
+                    return Promise.reject(errors)
+                })
+            }
+        })
+
     };
 }
+
+
 
 export const addCategory = (category) => {
     //console.log("\tAction >> add Category");
@@ -74,8 +89,10 @@ export const deleteCategory = (id) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                   // console.log(json);
-                    dispatch({type: 'DELETE_CATEGORY', category: json.category})
+                    if (json.status === 200)
+                        dispatch({type: 'DELETE_CATEGORY', category: json.category})
+                    else
+                        dispatch({type: 'DELETE_CATEGORY_ERR'})
                 })
             } else {
                 return response.json().then((errors) => {
