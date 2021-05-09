@@ -32,26 +32,31 @@ class SeqFormNew extends Component {
     static getDerivedStateFromProps (props, current_state) {
         console.log("getDerivedStateFromProps")
         console.log(props);
-        if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.path === "/sequences/edit/:id") {
-            console.log("Should not be in here")
-            let name, category_id = '';
-            let pose_in_seqs = [];
-            if (Object.keys(props.sequence).length !== 0) {
+        console.log(current_state);
+
+        // on refresh or direct URL
+        if (props.sequences.length === 0 && props.match.path === "/sequences/edit/:id") {
+            // sequence from getSequence is returned and sequence for state has not yet been set
+            // do this once
+            if (Object.keys(props.sequence).length !== 0 && Object.keys(current_state.sequence).length === 0) {
+                console.log("Setting it up initially")
+                let name, category_id = '';
+                let pose_in_seqs = [];
                 name = props.sequence.name;
                 category_id = props.sequence.category.id;
                 if (props.sequence.pose_in_seqs.length !== 0) {
                     pose_in_seqs = props.sequence.pose_in_seqs
                     SeqFormNew.sortPoses2(props.sequence.pose_in_seqs)
                 }
-            }
-            return {
-                ...current_state,
-                sequence: props.sequence,
-                name: name,
-                category_id: category_id,
-                pose_in_seqs: pose_in_seqs
-            }
-        } else return current_state
+                return {
+                    ...current_state,
+                    sequence: props.sequence,
+                    name: name,
+                    category_id: category_id,
+                    pose_in_seqs: pose_in_seqs
+                }
+            } else return current_state;
+        } else return current_state;
     }
 
     componentDidMount = () => {
@@ -156,6 +161,7 @@ class SeqFormNew extends Component {
         console.log("onClickAddPose2");
         console.log(event.target.value)
         const pose = this.props.poses.find(pose => pose.id === parseInt(event.target.value));
+        console.log(pose);
         // creating a new pose object
         let pose_in_seq = {
             name: pose.name,
