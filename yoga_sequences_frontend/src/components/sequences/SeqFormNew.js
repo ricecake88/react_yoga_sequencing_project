@@ -75,7 +75,7 @@ class SeqFormNew extends Component {
                 category_id = this.props.sequence.category.id;
                 if (this.props.sequence.pose_in_seqs.length !== 0) {
                     pose_in_seqs = this.props.sequence.pose_in_seqs
-                    this.sortPoses(this.props.sequence.pose_in_seqs)
+                    SeqFormNew.sortPoses2(this.props.sequence.pose_in_seqs)
                 }
             }
             this.setState(prevState => ({
@@ -92,7 +92,7 @@ class SeqFormNew extends Component {
                 const sequence = this.props.sequences.find(sequence => sequence.id === parseInt(this.props.match.params.id))
 
                 // sort poses in the sequence by pose order
-                this.sortPoses(sequence.pose_in_seqs);
+                SeqFormNew.sortPoses2(sequence.pose_in_seqs);
                 this.setState({
                     sequence: sequence,
                     name: sequence.name,
