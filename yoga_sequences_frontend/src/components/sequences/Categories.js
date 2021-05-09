@@ -25,7 +25,7 @@ class Categories extends Component {
         {/*<select value={this.state.name} name="name" onChange={this.onChange}>*/}
             <option disabled value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ?
-              this.props.categories.map(category => {
+              this.props.categories.sort((a,b) => b.id - a.id).map(category => {
                  return (category.name === "Uncategorized" ?
                   <option key={category.id} value={category.id} disabled>Uncategorized</option> :
                   <option key={category.id} value={category.id}>{category.name}</option>)
