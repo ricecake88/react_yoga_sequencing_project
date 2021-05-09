@@ -5,6 +5,7 @@ import PoseList from '../sequences/PoseList';
 import LoadingSpinner from '../LoadingSpinner';
 import { getSequence } from '../../actions/sequences';
 import SeqInfo from '../sequences/SeqInfo';
+import { getPoses } from '../../actions/poses';
 
 class SeqShow extends Component {
 
@@ -26,10 +27,15 @@ class SeqShow extends Component {
         since this before componentDidMount, otherwise the state never changes */
     static getDerivedStateFromProps(props, current_state) {
         console.log("in getDerivedStateFromProps")
+        console.log(props)
         if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.id !== "add" ) {
+            SeqShow.sortPoses(props.sequence.pose_in_seqs)
+            console.log(props.sequence.pose_in_seqs)
             return {
                 ...current_state,
-                sequence: props.sequence
+                sequence: {
+                    ...props.sequence
+                }
             }
         } else {
             return current_state;
@@ -45,6 +51,7 @@ class SeqShow extends Component {
         if (this.props.sequences.length === 0 && this.props.match.params.id !== "add" && this.props.match.url === `/sequences/${id}`) {
             console.log("Call getSequence");
             this.props.getSequence(parseInt(this.props.match.params.id))
+            this.props.getPoses();
             this.setState({
                 ...this.state,
                 sequence: this.props.sequence,
@@ -62,13 +69,18 @@ class SeqShow extends Component {
             }
             // set initial
             if (sequence) {
-                this.sortPoses(sequence.pose_in_seqs)
+                SeqShow.sortPoses(sequence.pose_in_seqs)
                 this.setState(prevState => ({
                     ...prevState,
                     sequence: sequence,
                     num_breaths: num_breaths,
                     isLoaded: true
                 }))
+            } else {
+                this.setState({
+                    ...this.state,
+                    isLoaded: true
+                })
             }
         }
     }
@@ -83,8 +95,8 @@ class SeqShow extends Component {
         }
     }
 
-    sortPoses = (posesInSeq) => {
-        if (!posesInSeq && posesInSeq.length !== 0) {
+    static sortPoses = (posesInSeq) => {
+        if (posesInSeq.length !== 0) {
             posesInSeq.sort((a, b) => {
                 if (a.pose_order < b.pose_order) {
                     return -1;
@@ -103,7 +115,7 @@ class SeqShow extends Component {
         console.log(sequence)
         // set initial
         if (sequence) {
-            this.sortPoses(sequence.pose_in_seqs)
+            SeqShow.sortPoses(sequence.pose_in_seqs)
             this.setState(prevState => ({
                 ...prevState,
                 sequence: sequence,
@@ -129,8 +141,10 @@ class SeqShow extends Component {
         }
 
         // sort the poses if the sequence exists
-        if (Object.keys(sequence).length !== 0 && sequence.pose_in_seqs.length !== 0)
-            this.sortPoses(sequence.pose_in_seqs);
+        if (Object.keys(sequence).length !== 0 && sequence.pose_in_seqs.length !== 0) {
+            console.log("Sorted Poses")
+            SeqShow.sortPoses(sequence.pose_in_seqs);
+        }
 
         return (
             (sequence !== undefined && Object.keys(sequence).length !== 0 )?
@@ -155,7 +169,7 @@ class SeqShow extends Component {
         return isLoaded ?
             <div>
                 {this.display(data)}
-            </div> : null
+            </div> : <LoadingSpinner /> 
     }
     /* reset the sequence after user presses stop */
     reset = () => {
@@ -303,7 +317,10 @@ class SeqShow extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getSequence: (id) => dispatch(getSequence(id))
+        getSequence: (id) => dispatch(getSequence(id)),
+
+        // Used when reloading and going directly to link
+        getPoses: () => dispatch(getPoses())
     }
 }
 
