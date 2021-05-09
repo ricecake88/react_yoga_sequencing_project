@@ -155,7 +155,7 @@ class SeqShow extends Component {
         return isLoaded ?
             <div>
                 {this.display(data)}
-            </div> : <LoadingSpinner />
+            </div> : null
     }
     /* reset the sequence after user presses stop */
     reset = () => {
