@@ -54,7 +54,7 @@ class PoseContainer extends Component {
         // if the pose exists, update the pose with the latest related information
         // based on the select
         if (Object.keys(this.state.pose).length !== 0) {
-            return <Pose key={this.state.value} pose={this.state.pose} />
+            return <Pose key={this.state.pose_id} pose={this.state.pose} />
         }
     }
 
