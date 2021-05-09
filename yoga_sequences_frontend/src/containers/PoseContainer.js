@@ -12,9 +12,19 @@ class PoseContainer extends Component {
         pose_id: 0,
 
         // pose related to pose_id
-        pose: this.props.poses.length !==0 ? this.props.poses.find(pose => pose.id === 0) : {},
+        pose: {},
         isLoaded: false
 
+    }
+
+    static getDerivedStateFromProps = (props, currentState) => {
+        if (props.poses.length !== 0 && props.match.url == '/poses') {
+            return {
+                ...currentState,
+                pose_id: 0,
+                pose: props.poses.find(pose => pose.id === 0),
+            }
+        }
     }
 
     updateValue = (val) => {
