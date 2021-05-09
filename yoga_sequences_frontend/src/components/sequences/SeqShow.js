@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, NavLink } from 'react-router-dom';
-import PoseShowInSeq from '../sequences/PoseShowInSeq';
 import PoseList from '../sequences/PoseList';
 import LoadingSpinner from '../LoadingSpinner';
 import { getSequence } from '../../actions/sequences';
@@ -53,11 +52,10 @@ class SeqShow extends Component {
                 isLoaded: true
             })
         } else {
-            console.log("iterating")
+            console.log("not on reload")
             // if user access the sequence from the sequence list
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
-            console.log(sequence)
             let num_breaths = 1;
             if (sequence && sequence.pose_in_seqs.length !== 0) {
                 num_breaths = sequence.pose_in_seqs[0].num_breaths
@@ -114,90 +112,6 @@ class SeqShow extends Component {
         }
     }
 
-    poseInfo = (sequence, data) => {
-        if (sequence.pose_in_seqs.length !== 0  && data.counter === sequence.pose_in_seqs.length-1 && data.end) {
-            return "You have reached the end of your yoga practice! Namaste!"
-        } else {
-
-            return (
-                <>
-                    <NavLink to={`/sequences/edit/${sequence.id}`}>Edit</NavLink>
-                    Category: {sequence.category.name}
-                    {sequence.pose_in_seqs.length !== 0 ?
-                        sequence.pose_in_seqs.map(pose =>
-                            <span key={pose.id}>{pose.name}</span>)
-                    : null}
-                    {sequence.pose_in_seqs.length !== 0 ?
-                        <PoseShowInSeq poses={this.props.poses} pose={sequence.pose_in_seqs[data.counter]}/>
-                    : null}
-                    {data.counter+1 < sequence.pose_in_seqs.length ?  "Next Pose" : "Last Pose"}
-                    {data.counter+1 < sequence.pose_in_seqs.length ?
-                        this.props.poses.find(pose => pose.id === sequence.pose_in_seqs[data.counter+1].pose_id).name
-                    : null }
-                    <div className="center">
-                        <p>Time:{data.time}</p>
-                        <span onClick={this.changePause}>
-                        {data.pauseClicked ?
-                            <span className="material-icons click">pause</span>
-                            : <span className="material-icons click">play_arrow</span>}
-                        </span>
-                        <span className="material-icons click" onClick={this.reset}>stop</span>
-                    </div>
-                </>
-            )
-        }
-    }
-
-    displaySequenceDirectPath = (data) => {
-        console.log("displaySequenceDirectPath")
-        console.log(this.state)
-        console.log(this.props)
-        const sequence = this.state.sequence;
-        return (
-            (sequence !== undefined && Object.keys(sequence).length !== 0 )?
-            <div className="sequenceShowContainer">
-                <div className="sequenceShowDiv">
-                    <div className="highlightPose">
-                        <NavLink to={`/sequence/${sequence.id}`} className="no-ul" onClick={this.reset}>
-                            <h1 className="center">{sequence !== undefined ? sequence.name.toUpperCase() : null}</h1>
-                        </NavLink>
-                        <SeqInfo sequence={sequence} data={data} changePause={this.changePause} reset={this.reset} poses={sequence.poses} />
-                    </div>
-                    {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
-                    <button onClick={this.reset}>Reset</button>*/}
-
-                    <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
-                 </div>
-            </div> : null
-        )
-    }
-
-    /* shows the pose in sequence and the list of poses */
-    displaySequence = (data) => {
-        //console.log("displaySequence2");
-        //console.log(data);
-        const sequence = this.props.sequences.find(sequence =>
-            sequence.id === parseInt(this.props.match.params.id));
-        //console.log(sequence)
-        this.sortPoses(sequence.pose_in_seqs)
-        return (
-                <div className="sequenceShowContainer">
-                    <div className="sequenceShowDiv">
-                        <div className="highlightPose">
-                            <NavLink to={`/sequence/${sequence.id}`} className="no-ul" onClick={this.reset}>
-                                <h1 className="center">{sequence.name.toUpperCase()}</h1>
-                            </NavLink>
-                            {this.poseInfo(sequence, data)}
-                        </div>
-                        {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
-                        <button onClick={this.reset}>Reset</button>*/}
-
-                        <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
-                     </div>
-                </div>
-        )
-    }
-
     display = (data) => {
         console.log("in display")
         console.log(this.props);
@@ -228,8 +142,6 @@ class SeqShow extends Component {
                         </NavLink>
                         <SeqInfo sequence={sequence} data={data} changePause={this.changePause} reset={this.reset} poses={sequence.poses} />
                     </div>
-                    {/*<button onClick={this.changePause}>{data.pauseClicked ? 'Pause' : 'Start'}</button>
-                    <button onClick={this.reset}>Reset</button>*/}
 
                     <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
                  </div>
@@ -237,17 +149,6 @@ class SeqShow extends Component {
         )
 
     }
-    //render() {
-    //    //console.log("Sequence Show");
-    //    //console.log(this.props);
-    //    const {isLoaded, ...data} = this.state;
-    //    return isLoaded && !this.props.requesting ?
-    //            <div>
-    //                {this.props.sequences.length === 0 && this.props.match.path === '/sequences/:id' && Object.keys(this.state.sequence).length !== 0 ?
-    //                    this.displaySequenceDirectPath(data)
-    //                : this.displaySequence(data)}
-    //            </div> : <LoadingSpinner />
-    //}
 
     render() {
         const {isLoaded, ...data} = this.state;
