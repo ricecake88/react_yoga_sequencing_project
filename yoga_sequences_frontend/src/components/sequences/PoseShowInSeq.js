@@ -20,12 +20,3 @@ class PoseShowInSeq extends Component {
 
 
 export default connect() (PoseShowInSeq);
-
-/*const SeqShow = ({match}) => {
-    console.log(match)
-    return <div>
-        Selected: {match.params.id}
-    </div>
-}
-
-export default SeqShow;*/
