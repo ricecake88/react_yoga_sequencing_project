@@ -22,7 +22,7 @@ class Navbar extends React.Component {
           >
             All Sequences
          </NavLink>*/}
-          <NavLink exact to='/sequences/new'
+          <NavLink exact to='/sequences/add'
            className='authLink link no-ul'>
            +
          </NavLink>
@@ -30,7 +30,7 @@ class Navbar extends React.Component {
            className='authLink link no-ul'>
             Categories
          </NavLink>
-          <NavLink exact to='/sequences/new2'
+          <NavLink exact to='/sequences'
            className='authLink link no-ul'
           >
             Sequences
