@@ -7,7 +7,8 @@ import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
 import LoadingSpinner from '../components/LoadingSpinner';
-
+import SeqFormNew from '../components/sequences/SeqFormNew';
+import SeqShow from '../components/sequences/SeqShow';
 
 class SeqNewContainer extends Component {
 
@@ -27,16 +28,19 @@ class SeqNewContainer extends Component {
 
     render() {
         console.log(">>>SeqContainer->render()")
+        console.log(this.props)
         console.log(this.props.poses)
         console.log(this.props.sequences)
         const { isLoaded } = this.state;
         return (
             isLoaded ?
-            <div>
-                {/*<SeqForm route={"Add"} />*/}
-                <SeqListNew poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories}/>
-                <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>
-            </div> : <LoadingSpinner />
+                <div>
+                    {/*<SeqForm route={"Add"} />*/}
+                    {/*{this.props.location.status !== undefined ? <div>{this.props.location.status}</div> : null}*/}
+                    <SeqListNew poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories}/>
+                    <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>
+                </div>
+            : null
         )
     }
 }
@@ -46,16 +50,15 @@ const mapStateToProps = (state) => {
         poses: state.poses.poses,
         sequences: state.sequences.sequences,
         user: state.auth.currentUser,
-        categories: state.categories.categories
+        categories: state.categories.categories,
+        loggedIn: state.auth.loggedIn
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         getPoses: () => dispatch(getPoses()),
         getSequences: (user) => dispatch(getSequences(user)),
-        getCategories: (user) => dispatch(getCategories(user)),
-
-
+        getCategories: (user) => dispatch(getCategories(user))
     }
 }
 
