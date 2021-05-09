@@ -27,7 +27,7 @@ class SeqShow extends Component {
         since this before componentDidMount, otherwise the state never changes */
     static getDerivedStateFromProps(props, current_state) {
         console.log("in getDerivedStateFromProps")
-        if (props.sequences.length === 0 && current_state.sequence !== props.sequence) {
+        if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.id !== "add" ) {
             return {
                 ...current_state,
                 sequence: props.sequence
@@ -39,10 +39,11 @@ class SeqShow extends Component {
 
     componentDidMount = () => {
         console.log("SeqShow -> componentDidMount")
-        console.log(this.props);
-
+        let id = this.props.match.params.id;
+        console.log(id);
+        console.log(this.props.match)
         // if user refreshes the page
-        if (this.props.sequences.length === 0 && this.props.match.path === '/sequences/:id') {
+        if (this.props.sequences.length === 0 && this.props.match.params.id !== "add" && this.props.match.url === `/sequences/${id}`) {
             console.log("Call getSequence");
             this.props.getSequence(parseInt(this.props.match.params.id))
             this.setState({
