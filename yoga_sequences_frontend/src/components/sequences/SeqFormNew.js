@@ -140,6 +140,7 @@ class SeqFormNew extends Component {
                     pose_in_seqs: [],
                     pose_id: 0,
                     sequence: {},
+                    saved: true
                 })
             }
             else if (this.props.match.path === "/sequences/edit/:id") {
