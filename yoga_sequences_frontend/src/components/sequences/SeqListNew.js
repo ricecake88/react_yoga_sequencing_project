@@ -53,7 +53,7 @@ class SeqListNew extends Component {
                                 })}
                             </div>
                         </div>
-                    : null
+                    : <div>No Sequences Found.</div>
                 : null
             : <Login />
         )
