@@ -18,7 +18,7 @@ class Api::V1::CategoriesController < ApplicationController
                 category.user = current_user
                 render json: {category: category}, status: 200
             else
-                render json: {errors: category.errors.full_messages}, status: 422
+                render json: {errors: category.errors.full_messages.first}, status: 422
             end
         end
     end
@@ -30,7 +30,7 @@ class Api::V1::CategoriesController < ApplicationController
             if category.delete
                 render json: {category: category}, status: 200
             else
-                render json: {errors: category.errors.full_messages}
+                render json: {errors: category.errors.full_messages.first}
             end
         end
     end
