@@ -25,7 +25,7 @@ class CategoryAdd extends Component {
         <>
             <form onSubmit={this.onSubmit}>
                 <label htmlFor="category">Add Category</label>
-                <input type="text" name="category" value={this.state.category} onChange={this.onChange}/>
+                <input type="text" name="category" value={this.state.category} onChange={this.onChange} onClick={this.props.onClick}/>
                 <button>Add</button>
             </form>
         </>)

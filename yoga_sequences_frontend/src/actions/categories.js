@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '.';
+import {  AUTHENTICATED, NOT_AUTHENTICATED, BACKEND_URL } from '.';
 import { getToken } from './auth';
 
 export const getCategories = (user) => {
@@ -17,16 +17,14 @@ export const getCategories = (user) => {
         .then(response =>  {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json)
-                    if (json.status === 200)
-                        dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
-                    else
-                        dispatch({ type: 'GET_CATEGEORIES_ERR'})
+                    console.log(json);
+                    dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
                 })
             } else {
-                return response.json().then(errors => {
-                    dispatch({ type: 'GET_CATEGEORIES_ERR'})
-                    return Promise.reject(errors)
+                return response.json().then(json => {
+                    console.log(json)
+                    dispatch({ type: 'ERROR', error: json.errors})
+                    //return Promise.reject(error)
                 })
             }
         })
@@ -54,19 +52,19 @@ export const addCategory = (category) => {
         fetch(`${BACKEND_URL}/categories`, config)
         .then(response => {
             if (response.ok) {
-                return response.json().then(json => {
-                        if (json.status === 200)
-                            dispatch({ type: 'ADD_CATEGORY', category: json.category})
-                        else
-                            dispatch({ type: 'ADD_CATEGORY_ERROR', errors: json.errors})
-                    }
+                return response.json().then(json =>
+                     dispatch({ type: 'ADD_CATEGORY', category: json.category})
                 )
             } else {
-                return response.json().then((errors) => {
-                    // NEED to write an action to handle errors
-                    //dispatch({type: NOT_AUTHENTICATED});
-                    return Promise.reject(errors);
-                });
+                if (response.status === 401) {
+                    // send to unauthorization
+                    dispatch({ type: NOT_AUTHENTICATED });
+                } else {
+                    return response.json().then((json) => {
+                        dispatch({ type: 'ERROR', error: json.errors})
+                        //return Promise.reject(errors);
+                    });
+                }
             }
         })
     }
@@ -89,15 +87,17 @@ export const deleteCategory = (id) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    if (json.status === 200)
-                        dispatch({type: 'DELETE_CATEGORY', category: json.category})
-                    else
-                        dispatch({type: 'DELETE_CATEGORY_ERR'})
+                   dispatch({type: 'DELETE_CATEGORY', category: json.category})
                 })
             } else {
-                return response.json().then((errors) => {
-                    return Promise.reject(errors);
-                })
+                if (response.status === 401)
+                    dispatch({type: NOT_AUTHENTICATED})
+                else {
+                    return response.json().then((errors) => {
+                        dispatch({type: 'ERROR', errors: errors.error})
+                        //return Promise.reject(errors);
+                    })
+                }
             }
         })
     }

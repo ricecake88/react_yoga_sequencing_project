@@ -5,12 +5,12 @@ import { getCategories, deleteCategory, addCategory } from '../actions/categorie
 import LoadingSpinner from '../components/LoadingSpinner';
 import CategoryAdd from '../components/categories/CategoryAdd';
 import Error from '../components/errors/Error';
+import { clearErrorMessage } from '../actions/errors';
 
 class CategoryContainer extends Component {
 
     state = {
         isLoaded: false,
-        errors: this.props.errors
     }
 
     componentDidMount = () => {
@@ -18,12 +18,12 @@ class CategoryContainer extends Component {
         //console.log(this.props)
 
         //retrieve all the categories
-        this.props.getCategories(this.props.user);
+        this.props.getCategories(this.props.auth.currentUser);
 
         // once categories are retrieved then set state to
         // isLoaded
         this.setState({
-           isLoaded: true
+           isLoaded: true,
         })
     }
 
@@ -33,29 +33,40 @@ class CategoryContainer extends Component {
         this.props.addCategory(category)
     }
 
+    onClick = () => {
+        this.props.clearErrors();
+    }
+
     render() {
-        //console.log(">>>CategoryContainer -> render")
+        console.log(">>>CategoryContainer -> render")
         //console.log(this.props.categories)
         //console.log("After categories")
-        return this.state.isLoaded ?
+        console.log(this.props)
+        return (
+            this.state.isLoaded && !this.state.requesting ?
                 <div className="genericContainer">
                     <div className="genericInnerContainer">
-                        {this.props.errors.map((error,index) => <Error key={index} error={error}/>)}
-                        <CategoryAdd addCategory={this.addCategory} />
+                        {/*his.props.errors.map((error,index) => <Error key={index} error={error}/>)*/}
+                        <Error error={this.props.error}/>
+                        <CategoryAdd addCategory={this.addCategory} onClick={this.onClick}/>
                         <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
-                    </div>
-                </div>
+                     </div>
+                 </div>
             : <LoadingSpinner />
+        )
     }
 }
 
 const mapStateToProps = (state) => {
-    //console.log(">>CategoryContainer -> mapStateToProps");
-    //console.log(state);
+    console.log(">>CategoryContainer -> mapStateToProps");
+    console.log(state);
     return {
         categories: state.categories.categories,
-        user: state.auth.currentUser,
-        errors: state.categories.errors
+        //user: state.auth.currentUser,
+        error: state.error.error,
+        auth: state.auth,
+        //errors: state.categories.errors,
+        //global_errors: state.errors
     }
 }
 
@@ -63,7 +74,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getCategories: (user) => dispatch(getCategories(user)),
         deleteCategory: (user) => dispatch(deleteCategory(user)),
-        addCategory: (category) => dispatch(addCategory(category))
+        addCategory: (category) => dispatch(addCategory(category)),
+        clearErrors: () => dispatch(clearErrorMessage())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (CategoryContainer);
