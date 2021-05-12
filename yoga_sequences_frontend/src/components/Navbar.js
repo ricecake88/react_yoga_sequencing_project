@@ -3,14 +3,19 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Logout from './auth/Logout';
 import { checkAuth } from '../actions/auth';
+import { clearErrorMessage } from '../actions/errors'
 
 
 class Navbar extends React.Component {
   componentDidMount() {
     this.props.dispatchCheckAuth();
   }
+  onClick = () => {
+    this.props.clearErrorMessage();
+  }
   renderAuthLinks() {
-    const { authChecked, loggedIn, currentUser } = this.props;
+    console.log(this.props);
+    const { authChecked, clearErrorMessage, loggedIn, currentUser } = this.props;
     if (authChecked) {
       return loggedIn ? (
         <>
@@ -65,7 +70,7 @@ class Navbar extends React.Component {
   }
 render() {
   return (
-    <nav className='navbar'>
+    <nav className='navbar' onClick={this.onClick}>
       <div className='navbarContainer'>
         <div className='openLinks'>
           <NavLink
@@ -101,7 +106,8 @@ const mapStateToProps = ({ auth: { authChecked, loggedIn, currentUser } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchCheckAuth: () => dispatch(checkAuth())
+    dispatchCheckAuth: () => dispatch(checkAuth()),
+    clearErrorMessage: () => dispatch(clearErrorMessage())
   };
 };
 
