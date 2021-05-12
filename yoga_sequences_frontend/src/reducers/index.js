@@ -1,16 +1,18 @@
 import { combineReducers } from 'redux';
-import authReducer from './auth';
-import categoryReducer from './categories';
-import poseReducer from './poses';
-import sequenceReducer from './sequences';
-import poseInSeqReducer from './poseInSeq';
+import authReducer from '../reducers/auth';
+import categoryReducer from '../reducers/categories';
+import poseReducer from '../reducers/poses';
+import sequenceReducer from '../reducers/sequences';
+import poseInSeqReducer from '../reducers/poseInSeq';
+import errorReducer from '../reducers/errors';
 
 const rootReducer = combineReducers({
     auth: authReducer,
     categories: categoryReducer,
     poses: poseReducer,
     sequences: sequenceReducer,
-    poseInSequences: poseInSeqReducer
+    poseInSequences: poseInSeqReducer,
+    error: errorReducer
 })
 
 export default rootReducer;
