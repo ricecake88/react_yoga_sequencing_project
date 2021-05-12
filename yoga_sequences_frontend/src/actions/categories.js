@@ -1,4 +1,4 @@
-import {  AUTHENTICATED, NOT_AUTHENTICATED, BACKEND_URL } from '.';
+import {  NOT_AUTHENTICATED, BACKEND_URL } from '.';
 import { getToken } from './auth';
 
 export const getCategories = (user) => {
@@ -93,8 +93,8 @@ export const deleteCategory = (id) => {
                 if (response.status === 401)
                     dispatch({type: NOT_AUTHENTICATED})
                 else {
-                    return response.json().then((errors) => {
-                        dispatch({type: 'ERROR', errors: errors.error})
+                    return response.json().then((json) => {
+                        dispatch({type: 'ERROR', errors: json.errors})
                         //return Promise.reject(errors);
                     })
                 }

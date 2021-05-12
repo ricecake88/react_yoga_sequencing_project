@@ -1,5 +1,6 @@
-import { BACKEND_URL } from '.';
+import {  NOT_AUTHENTICATED, BACKEND_URL } from '.';
 import { getToken } from './auth';
+import { handleServerError } from './errors';
 
 export const getSequences = (user) => {
     console.log("getSequences()");
@@ -17,13 +18,10 @@ export const getSequences = (user) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
                     dispatch({type: 'GET_ALL_SEQ', sequences: json.sequences})
                 })
             } else {
-                return response.json().then(errors => {
-                    return Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -46,17 +44,10 @@ export const getSequence = (id) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
-                    if (json.status === 200)
                         dispatch({type: 'GET_SEQ', sequence: json.sequence})
-                    else
-                        dispatch({type: 'GET_SEQ_ERR', errors: json.errors})
                 })
             } else {
-                return response.json().then(errors => {
-                    dispatch({type: 'GET_SEQ_ERR', errors: [errors.error]})
-                    return Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -88,16 +79,10 @@ export const addSequence = (sequence) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    if (json.status === 200)
                         dispatch({type: 'ADD_SEQ', sequence: json.sequence})
-                    else
-                        dispatch({type: "ADD_SEQ_ERROR", errors: json.errors})
                 })
             } else {
-                return response.json().then(errors => {
-                    dispatch({type: "ADD_SEQ_ERROR", errors: [errors.error]})
-                    return Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -123,13 +108,10 @@ export const deleteSequence = (id) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
                     dispatch({type: 'DELETE_SEQ', sequence: json.sequence})
                 })
             } else {
-                return response.json().then(errors => {
-                    return Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -159,16 +141,10 @@ export const editSequence = (sequence) => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
-                    if (json.status === 200)
                         dispatch({type: 'EDIT_SEQ', sequence: json.sequence})
-                    else
-                        dispatch({type: 'EDIT_SEQ_ERROR', errors: json.errors})
                 })
             } else {
-                return response.json().then(errors => {
-                    return Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }

@@ -45,10 +45,10 @@ class CategoryContainer extends Component {
         return (
             this.state.isLoaded && !this.state.requesting ?
                 <div className="genericContainer">
-                    <div className="genericInnerContainer">
+                    <div className="genericInnerContainer" onClick={this.onClick}>
                         {/*his.props.errors.map((error,index) => <Error key={index} error={error}/>)*/}
                         <Error error={this.props.error}/>
-                        <CategoryAdd addCategory={this.addCategory} onClick={this.onClick}/>
+                        <CategoryAdd addCategory={this.addCategory} />
                         <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
                      </div>
                  </div>

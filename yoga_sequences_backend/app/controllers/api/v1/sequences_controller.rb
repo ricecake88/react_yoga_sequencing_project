@@ -4,9 +4,7 @@ class Api::V1::SequencesController < ApplicationController
     def index
         if current_user
             sequences = Sequence.where(:user_id => current_user.id)
-            render json: {:sequences => sequences}.to_json({:include => [:pose_in_seqs, :poses, :category]})
-        else
-            render json: {errors: "Not Authorized."}
+            render json: {:sequences => sequences}.to_json({:include => [:pose_in_seqs, :poses, :category]}), status: 200
         end
     end
 
@@ -16,7 +14,6 @@ class Api::V1::SequencesController < ApplicationController
             sequence = Sequence.find(params[:id])
             if sequence
                 render json: {
-                    status: 200,
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
@@ -29,12 +26,10 @@ class Api::V1::SequencesController < ApplicationController
                             sequence_id: sequence.id
                             }}
                     }
-                }
+                }, status: 200
             else
-                render json: {status: 422, errors: "Was not able to find sequence"}
+                render json: {errors: "Was not able to find sequence"}, status: 404
             end
-        else
-            render json: {status: 401, errors: "Not Authorized."}
         end
     end
 
@@ -44,7 +39,6 @@ class Api::V1::SequencesController < ApplicationController
             sequence = Sequence.new(seq_params)
             if sequence.save
                 render json: {
-                    status: 200,
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
@@ -56,9 +50,9 @@ class Api::V1::SequencesController < ApplicationController
                             num_breaths: pose_in_seq.num_breaths,
                             sequence_id: sequence.id
                             }}
-                    }}
+                    }}, status: 200
             else
-                render json: {status: 422, errors: sequence.errors.full_messages}
+                render json: {errors: sequence.errors.full_messages.first}, status: 422
             end
         end
     end
@@ -72,7 +66,6 @@ class Api::V1::SequencesController < ApplicationController
             if sequence.update(seq_params)
                 sequence.save
                 render json: {
-                    status: 200,
                     sequence: {
                         id: sequence.id,
                         name: sequence.name,
@@ -84,9 +77,9 @@ class Api::V1::SequencesController < ApplicationController
                             num_breaths: pose_in_seq.num_breaths,
                             sequence_id: sequence.id
                             }}
-                    }}
+                    }}, status: 200
             else
-                render json: {status: 422, errors: sequence.errors.full_messages}
+                render json: {errors: sequence.errors.full_messages.first}, status: 422
             end
         end
     end
@@ -95,9 +88,9 @@ class Api::V1::SequencesController < ApplicationController
         Rails.logger.debug params.inspect
         sequence = Sequence.find(params[:id])
         if sequence.delete
-            render json: { sequence: sequence}
+            render json: { sequence: sequence}, status: 200
         else
-            render json: { errors: sequence.errors.full_messages}
+            render json: { errors: sequence.errors.full_messages.first}, status: 400
         end
     end
 
