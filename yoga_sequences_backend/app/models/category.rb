@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-    validates_presence_of :name
+    validates :name, presence: true, format: {with: /\A[\w\s]+\s*[\w\s\.&!\-]*\Z/ }
     validates_uniqueness_of :name, scope: :user_id
     belongs_to :user
 

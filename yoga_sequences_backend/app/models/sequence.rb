@@ -1,6 +1,7 @@
 class Sequence < ApplicationRecord
+    
+    validates :name, presence: true, format: {with: /\A[\w\s]+\s*[\w\s\.&!\-]*\Z/ }
     validates_uniqueness_of :name, scope: :user_id
-    validates_presence_of :name
 
     belongs_to :category
     belongs_to :user
