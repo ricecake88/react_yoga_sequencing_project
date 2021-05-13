@@ -1,5 +1,6 @@
-import {  NOT_AUTHENTICATED, BACKEND_URL } from '.';
+import { BACKEND_URL } from '.';
 import { getToken } from './auth';
+import { handleServerError } from './errors';
 
 export const getCategories = (user) => {
     //console.log(">>> in actions/sequences -> getCategories");
@@ -21,11 +22,7 @@ export const getCategories = (user) => {
                     dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
                 })
             } else {
-                return response.json().then(json => {
-                    console.log(json)
-                    dispatch({ type: 'ERROR', error: json.errors})
-                    //return Promise.reject(error)
-                })
+                return handleServerError(response, dispatch)
             }
         })
 
@@ -56,15 +53,7 @@ export const addCategory = (category) => {
                      dispatch({ type: 'ADD_CATEGORY', category: json.category})
                 )
             } else {
-                if (response.status === 401) {
-                    // send to unauthorization
-                    dispatch({ type: NOT_AUTHENTICATED });
-                } else {
-                    return response.json().then((json) => {
-                        dispatch({ type: 'ERROR', error: json.errors})
-                        //return Promise.reject(errors);
-                    });
-                }
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -90,14 +79,7 @@ export const deleteCategory = (id) => {
                    dispatch({type: 'DELETE_CATEGORY', category: json.category})
                 })
             } else {
-                if (response.status === 401)
-                    dispatch({type: NOT_AUTHENTICATED})
-                else {
-                    return response.json().then((json) => {
-                        dispatch({type: 'ERROR', errors: json.errors})
-                        //return Promise.reject(errors);
-                    })
-                }
+                return handleServerError(response, dispatch)
             }
         })
     }

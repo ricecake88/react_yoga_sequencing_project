@@ -1,5 +1,6 @@
 import { BACKEND_URL } from '.';
 import { getToken } from './auth';
+import { handleServerError } from './errors';
 
 export const getPoses = () => {
     let config = {
@@ -21,9 +22,7 @@ export const getPoses = () => {
                     dispatch({type: 'GET_POSES', poses: json.poses})
                 })
             } else {
-                return response.json().then((errors) => {
-                    return Promise.reject(errors);
-                })
+                return handleServerError(response, dispatch)
             }
         })
 

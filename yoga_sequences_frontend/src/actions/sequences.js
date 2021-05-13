@@ -1,4 +1,4 @@
-import {  NOT_AUTHENTICATED, BACKEND_URL } from '.';
+import { BACKEND_URL } from '.';
 import { getToken } from './auth';
 import { handleServerError } from './errors';
 

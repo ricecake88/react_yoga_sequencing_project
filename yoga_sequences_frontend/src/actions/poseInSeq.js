@@ -1,5 +1,6 @@
 import { BACKEND_URL } from '.';
 import { getToken } from './auth';
+import { handleServerError } from './errors';
 
 export const deletePoseFromSeq = (id) => {
     console.log("deletePoseFromSeq")
@@ -21,9 +22,7 @@ export const deletePoseFromSeq = (id) => {
                     dispatch({type: 'DELETE_POSEINSEQ'}, json.poseInSeq)
                 })
             } else {
-                return response.json().then(errors => {
-                    Promise.reject(errors)
-                })
+                return handleServerError(response, dispatch)
             }
         })
     }
@@ -59,9 +58,7 @@ export const addPoseToSeq = (id, pose_in_seq) => {
                     dispatch({type: 'ADD_POSE_TO_SEQ'}, config)
                 }) 
             } else {
-                return response.json().then(errors => {
-                    Promise.reject(errors)
-                })                
+                return handleServerError(response, dispatch)             
             }
         })
     }
