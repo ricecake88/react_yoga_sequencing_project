@@ -18,13 +18,16 @@ class SeqNewContainer extends Component {
 
     componentDidMount = () => {
         this.props.getPoses();
-        this.props.getSequences(this.props.user);
-        this.props.getCategories(this.props.user);
+        this.props.getSequences(this.props.auth.currentUser);
+        this.props.getCategories(this.props.auth.currentUser);
         this.setState({
             isLoaded: true
         })
     }
 
+    onDelete = (id) => {
+        this.props.deleteSequence(id)
+      }
 
     render() {
         console.log(">>>SeqContainer->render()")
@@ -35,9 +38,7 @@ class SeqNewContainer extends Component {
         return (
             isLoaded ?
                 <div>
-                    {/*<SeqForm route={"Add"} />*/}
-                    {/*{this.props.location.status !== undefined ? <div>{this.props.location.status}</div> : null}*/}
-                    <SeqListNew poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories}/>
+                    <SeqListNew poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories} onDelete={this.onDelete}/>
                     <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>
                 </div>
             : null
@@ -49,16 +50,18 @@ const mapStateToProps = (state) => {
     return {
         poses: state.poses.poses,
         sequences: state.sequences.sequences,
-        user: state.auth.currentUser,
         categories: state.categories.categories,
-        loggedIn: state.auth.loggedIn
+        loggedIn: state.auth.loggedIn,
+        auth: state.auth,
+        error: state.error.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         getPoses: () => dispatch(getPoses()),
         getSequences: (user) => dispatch(getSequences(user)),
-        getCategories: (user) => dispatch(getCategories(user))
+        getCategories: (user) => dispatch(getCategories(user)),
+        deleteSequence: (id) => dispatch(deleteSequence(id)),
     }
 }
 
