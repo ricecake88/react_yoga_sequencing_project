@@ -5,9 +5,9 @@ export default function sequenceReducer(
         selSequence: {},
         requesting: false
     }, action) {
-        console.log(">>> sequenceReducer");
+        //console.log(">>> sequenceReducer");
         //console.log(state);
-        console.log(action);
+        //console.log(action);
     switch(action.type) {
         case 'START_GET_ALL_SEQ':
             return {
@@ -38,16 +38,6 @@ export default function sequenceReducer(
                 selSequence: action.sequence,
                 requesting: false
             }
-        case 'GET_SEQ_ERROR':
-        case 'GET_ALL_SEQ_ERROR':
-        case 'ADD_SEQ_ERROR':
-        case 'ADD_CATEGORY_ERROR':
-        case 'EDIT_SEQ_ERROR':
-            return {
-                ...state,
-                errors: action.errors,
-                requesting: false
-            }
         case 'START_ADD_SEQ':
             return {
                 ...state,
@@ -76,9 +66,6 @@ export default function sequenceReducer(
                 errors: [],
                 requesting: false
             }
-            console.log("IN EDIT SEQUENCE REDUCER ***************");
-            console.log(stateNew);
-            return stateNew
 
         case 'START_DELETE_SEQ':
             return {
