@@ -6,7 +6,7 @@ class Api::V1::CategoriesController < ApplicationController
             categories = Category.where(:user_id => params[:user_id]).order(id: :DESC)
             render json: {categories: categories}, status: 200
         else
-            render json: {errors: "Unauthorized"}, status: 401
+            render json: {error: "Unauthorized"}, status: 401
         end
     end
 
@@ -18,7 +18,7 @@ class Api::V1::CategoriesController < ApplicationController
                 category.user = current_user
                 render json: {category: category}, status: 200
             else
-                render json: {errors: category.errors.full_messages.first}, status: 422
+                render json: {error: category.errors.full_messages.first}, status: 422
             end
         end
     end
@@ -30,7 +30,7 @@ class Api::V1::CategoriesController < ApplicationController
             if category.delete
                 render json: {category: category}, status: 200
             else
-                render json: {errors: category.errors.full_messages.first}
+                render json: {error: category.errors.full_messages.first}, status: 400
             end
         end
     end

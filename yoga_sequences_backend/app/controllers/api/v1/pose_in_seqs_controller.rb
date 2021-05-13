@@ -8,16 +8,16 @@ class Api::V1::PoseInSeqsController < ApplicationController
         if pose.save!
             render json: { pose: pose }
         else
-            render json: { errors: pose.errors }
+            render json: { error: pose.errors }, status: 422
         end
     end
 
     def destroy
         poseInSeq = PoseInSeq.find(params[:id])
         if poseInSeq.destroy
-            render json: {poseInSeq: poseInSeq}
+            render json: {poseInSeq: poseInSeq}, status: 200
         else
-            render json: {errors: poseInSeq.errors}
+            render json: {error: poseInSeq.errors}, status: 400
         end
     end
 
