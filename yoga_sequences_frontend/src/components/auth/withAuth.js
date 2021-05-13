@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { checkAuth } from "../../actions/auth";
 import LoadingSpinner from "../LoadingSpinner";
 import Login from "./Login";
+import { clearErrorMessage } from "../../actions/errors";
 
 function withAuth(WrappedComponent) {
   class Wrapper extends React.Component {
@@ -14,6 +15,7 @@ function withAuth(WrappedComponent) {
       if (!this.props.authChecked) {
         return <LoadingSpinner />;
       } else if (!this.props.loggedIn) {
+        {this.props.clearErrorMessage()}
         return (
           <>
             <Login />
@@ -34,7 +36,8 @@ function withAuth(WrappedComponent) {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-      dispatchCheckAuth: () => dispatch(checkAuth())
+      dispatchCheckAuth: () => dispatch(checkAuth()),
+      clearErrorMessage: () => dispatch(clearErrorMessage())
     };
   };
 
