@@ -18,7 +18,7 @@ class PoseContainer extends Component {
     }
 
     static getDerivedStateFromProps = (props, currentState) => {
-        if (props.poses.length !== 0 && props.match.url == '/poses') {
+        if (props.poses.length !== 0 && props.match.url === '/poses') {
             return {
                 ...currentState,
                 pose_id: 0,
