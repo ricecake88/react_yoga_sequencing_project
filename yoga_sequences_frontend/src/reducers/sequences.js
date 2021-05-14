@@ -13,15 +13,14 @@ export default function sequenceReducer(
             return {
                 ...state,
                 sequences: state.sequences,
-                selSequence: {},
+                //selSequence: {},
                 requesting: true
             }
         case 'GET_ALL_SEQ':
             return {
                 ...state,
                 sequences: action.sequences,
-                errors: [],
-                selSequence: {},
+                //selSequence: {},
                 requesting: false
             }
         case 'START_GET_SEQ':
@@ -48,7 +47,6 @@ export default function sequenceReducer(
             return {
                 ...state,
                 sequences: [...state.sequences, action.sequence],
-                errors: [],
                 requesting: false
             }
         case 'START_EDIT_SEQ':
@@ -63,7 +61,7 @@ export default function sequenceReducer(
             const stateNew = {
                 ...state,
                 sequences: [...state.sequences.slice(0, seqIdx), action.sequence, ...state.sequences.slice(seqIdx+1)],
-                errors: [],
+                selSequence: action.sequence,
                 requesting: false
             }
             return stateNew;
@@ -71,15 +69,14 @@ export default function sequenceReducer(
             return {
                 ...state,
                 sequences: state.sequences,
-                selSequence: {},
+                //selSequence: {},
                 requesting: true
             }
         case 'DELETE_SEQ':
             return {
                 ...state,
                 sequences: state.sequences.filter(sequence => sequence.id !== action.sequence.id),
-                selSequence: {},
-                errors: [],
+                //selSequence: {},
                 requesting: false
             }
         default:
