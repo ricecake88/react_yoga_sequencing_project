@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PoseList from './PoseList';
 import LoadingSpinner from '../LoadingSpinner';
 import { getSequence } from '../../actions/sequences';
