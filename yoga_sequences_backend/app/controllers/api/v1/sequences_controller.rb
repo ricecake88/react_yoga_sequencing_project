@@ -11,7 +11,7 @@ class Api::V1::SequencesController < ApplicationController
     def show
         if current_user
             Rails.logger.debug params.inspect
-            sequence = Sequence.find(params[:id])
+            sequence = Sequence.find_by(:id => params[:id], :user_id => current_user.id)
             if sequence
                 render json: {
                     sequence: {
