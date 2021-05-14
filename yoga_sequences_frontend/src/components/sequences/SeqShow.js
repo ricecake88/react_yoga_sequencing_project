@@ -28,6 +28,7 @@ class SeqShow extends Component {
     static getDerivedStateFromProps(props, current_state) {
         console.log("in getDerivedStateFromProps")
         console.log(props)
+        console.log(current_state)
         if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.id !== "add" ) {
             SeqShow.sortPoses(props.sequence.pose_in_seqs)
             console.log(props.sequence.pose_in_seqs)
@@ -63,13 +64,14 @@ class SeqShow extends Component {
             // if user access the sequence from the sequence list
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
-            let num_breaths = 1;
-            if (sequence && sequence.pose_in_seqs.length !== 0) {
-                num_breaths = sequence.pose_in_seqs[0].num_breaths
-            }
+
             // set initial
             if (sequence) {
                 SeqShow.sortPoses(sequence.pose_in_seqs)
+                let num_breaths = 1;
+                if (sequence && sequence.pose_in_seqs.length !== 0) {
+                    num_breaths = sequence.pose_in_seqs[0].num_breaths
+                }
                 this.setState(prevState => ({
                     ...prevState,
                     sequence: sequence,
@@ -151,7 +153,7 @@ class SeqShow extends Component {
             <div className="sequenceShowContainer">
                 <div className="sequenceShowDiv">
                     <div className="highlightPose">
-                        <NavLink to={`/sequence/${sequence.id}`} className="no-ul" onClick={this.reset}>
+                        <NavLink to={`/sequences/${sequence.id}`} className="no-ul" onClick={this.reset}>
                             <h1 className="center">{sequence !== undefined ? sequence.name.toUpperCase() : null}</h1>
                         </NavLink>
                         <SeqInfo sequence={sequence} data={data} changePause={this.changePause} reset={this.reset} poses={sequence.poses} />
@@ -188,8 +190,7 @@ class SeqShow extends Component {
             counter: 0,
             num_breaths: this.state.sequence.pose_in_seqs.length !== 0 ? this.state.sequence.pose_in_seqs[0].num_breaths : 1,
             pauseClicked: false,
-            time: 0,
-            end: true
+            time: 0
         })
     }
 
@@ -286,7 +287,6 @@ class SeqShow extends Component {
                 counter: this.state.counter,
                 num_breaths: this.state.sequence.pose_in_seqs.length ? this.state.sequence.pose_in_seqs[this.state.counter].num_breaths : 1,
                 pauseClicked: false,
-                end: true
             })
 
             // clear timers and update state
