@@ -6,7 +6,8 @@ class Categories2 extends Component {
 
 
   componentDidMount = () => {
-    this.props.getCategories(this.props.user);
+
+    //this.props.getCategories(this.props.user);
   }
 
  /* onChange = (event) => {
@@ -26,9 +27,9 @@ class Categories2 extends Component {
         console.log(this.props.categories)
         console.log(Object.keys(this.props.categories).length)
         return (
-        <>
+        <> 
         <div>
-        <select value={this.props.id} name="category_id" onChange={this.props.onChange}>
+        <select value={this.props.id} name="category_id" onChange={this.props.onChange} onClick={this.props.onClick}>
             <option disabled value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ?
               this.props.categories.sort((a,b) => b.id - a.id).map(category => {
@@ -39,7 +40,6 @@ class Categories2 extends Component {
             <option value="Add Category">Add Category</option>
             </select>
         </div>
-            {/*<CategoryAdd user={this.props.currentUser} addTrue={this.state.name} name="name" addCategory={this.props.addCategory} onChange={this.onChange}/>*/}
         </>
         )
   };
@@ -54,13 +54,13 @@ class Categories2 extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        categories: state.categories.categories
+        //categories: state.categories.categories
     }
 }
 
 const mapDispatchToProps =(dispatch) => {
     return {
-        getCategories: (user) => dispatch(getCategories(user))
+        //getCategories: (user) => dispatch(getCategories(user))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Categories2);
