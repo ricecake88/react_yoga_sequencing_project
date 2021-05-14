@@ -7,7 +7,7 @@ import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
 import LoadingSpinner from '../components/LoadingSpinner';
-import SeqFormNew from '../components/sequences/SeqFormNew';
+//import SeqFormNew from '../components/sequences/SeqFormNew';
 import SeqShow from '../components/sequences/SeqShow';
 
 class SeqNewContainer extends Component {
