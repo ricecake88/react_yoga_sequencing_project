@@ -25,8 +25,8 @@ class PoseAdd extends Component {
         console.log(this.props)
         return (
         <>
-            <PoseSelector poses={this.props.poses} updateValue={this.updateValue} select="addToSeq"/>
-                <button onClick={this.props.onClick} value={this.state.pose_id}>+</button><br/>
+            <PoseSelector poses={this.props.poses} updateValue={this.updateValue} select="addToSeq" onClick={this.props.onClick}/>
+                <button onClick={this.props.onClickAddPose} value={this.state.pose_id}>+</button><br/>
 
             {(this.props.addedPoses.length !== 0) ?
                 <PoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag} onChange={this.props.onChange}/> : null
