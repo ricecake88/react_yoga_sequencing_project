@@ -19,9 +19,7 @@ class SeqListNew extends Component {
             isLoaded: true
         })
     }
-    onDelete = (id) => {
-        this.props.deleteSequence(id)
-      }
+
 
     edit = (id) => {
         console.log(id);
@@ -47,7 +45,7 @@ class SeqListNew extends Component {
                                 {this.props.sequences.map(seq => {
                                     return <Fragment key={seq.id}>
                                         <NavLink to={`/sequences/${seq.id}`}><div className="head">{seq.name}</div></NavLink>
-                                        <div className="head"><span onClick={() => this.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
+                                        <div className="head"><span onClick={() => this.props.onDelete(seq.id)} className="material-icons delete">delete_outline</span></div>
                                         <div className="head"><NavLink to={`/sequences/edit/${seq.id}`} ><span className="material-icons edit" onClick={() => this.edit(seq.id)}>edit</span></NavLink></div>
                                     </Fragment>
                                 })}
@@ -63,7 +61,7 @@ class SeqListNew extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         //getSequences: (user) => dispatch(getSequences(user)),
-        deleteSequence: (id) => dispatch(deleteSequence(id)),
+        //deleteSequence: (id) => dispatch(deleteSequence(id)),
     }
 }
 
