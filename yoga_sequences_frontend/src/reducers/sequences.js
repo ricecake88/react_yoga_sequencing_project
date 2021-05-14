@@ -66,7 +66,7 @@ export default function sequenceReducer(
                 errors: [],
                 requesting: false
             }
-
+            return stateNew;
         case 'START_DELETE_SEQ':
             return {
                 ...state,
