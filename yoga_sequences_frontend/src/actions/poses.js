@@ -1,5 +1,4 @@
 import { BACKEND_URL } from '.';
-import { getToken } from './auth';
 import { handleServerError } from './errors';
 
 export const getPoses = () => {
