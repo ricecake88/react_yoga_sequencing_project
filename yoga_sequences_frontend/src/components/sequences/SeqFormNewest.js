@@ -66,7 +66,7 @@ class SeqFormNew extends Component {
         console.log(this.props);
         console.log(this.state);
         let id = this.props.match.params.id;
-        this.props.getPoses();
+        //this.props.getPoses();
 
         // came through direct
         if (this.props.sequences.length === 0 && this.props.match.path === "/sequences/edit/:id" ){
@@ -331,7 +331,7 @@ function mapDispatchToProps(dispatch) {
         addSequence: (sequence) => dispatch(addSequence(sequence)),
         editSequence: (sequence) => dispatch(editSequence(sequence)),
         deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
-        getPoses: () => dispatch(getPoses()),
+        //getPoses: () => dispatch(getPoses()),
 
         // functions also needed upon refresh or directly accessed
         getSequence: (id) => dispatch(getSequence(id)),
