@@ -20,23 +20,20 @@ class SeqFormContainer extends Component {
 
     componentDidMount = () => {
         this.props.getPoses();
-        this.props.getSequences(this.props.user);
-        this.props.getCategories(this.props.user);
+        this.props.getSequences(this.props.auth.currentUser);
+        this.props.getCategories(this.props.auth.currentUser);
         this.setState({
             isLoaded: true
         })
     }
 
-    onClick = () => {
-        console.log("onClick")
-        this.props.clearErrorMessage()
-    }
+
 
     render() {
         console.log(">>>SeqFormContainer->render()")
-        console.log(this.props)
-        console.log(this.props.poses)
-        console.log(this.props.sequences)
+        //console.log(this.props)
+        //console.log(this.props.poses)
+        //console.log(this.props.sequences)
         const { isLoaded } = this.state;
         return (
             isLoaded ?
@@ -47,10 +44,13 @@ class SeqFormContainer extends Component {
                     {/*<SeqListNewest poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories} match={this.props.match}/>
                     <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>*/}
                     <SeqFormNewest 
+                        sequences={this.props.sequences}
                         categories={this.props.categories} 
                         poses={this.props.poses} 
                         match={this.props.match} 
-                        onClick={this.onClick}
+                        //onClick={this.onClick}
+                        clearErrorMessage={this.props.clearErrorMessage}
+                        //message={this.props.message}
                     />
                 </div>
             : null
@@ -62,11 +62,12 @@ const mapStateToProps = (state) => {
     return {
         poses: state.poses.poses,
         sequences: state.sequences.sequences,
-        user: state.auth.currentUser,
+        //user: state.auth.currentUser,
         categories: state.categories.categories,
-        loggedIn: state.auth.loggedIn,
+        //loggedIn: state.auth.loggedIn,
         auth: state.auth,
-        error: state.error.error
+        error: state.error.error,
+        //message: state.sequences.message
     }
 }
 const mapDispatchToProps = (dispatch) => {
