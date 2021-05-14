@@ -6,12 +6,14 @@ export const clearErrorMessage =() => {
 
 export const handleServerError = (response, dispatch) => {
     return response.json().then(json => {
+        console.log("in handleServerError")
+        console.log(response)
         dispatch({type: 'ERROR', error: json.error})
-        if (response.status == 401)
-            Promise.reject(dispatch({type: NOT_AUTHENTICATED})).catch(err => console.log("Caught Promise!"))
+        if (response.status === 401)
+            return Promise.reject(dispatch({type: NOT_AUTHENTICATED}))
         else 
-            //return Promise.reject(json)
-            Promise.reject(dispatch({type: 'ERROR', error: json.error})).catch(err => console.log("Caught Promise!"))
+            //Promise.reject(dispatch({type: 'ERROR', error: json.error})).catch(err => console.log("Caught Promise!"))           
+            return Promise.reject(dispatch({type: 'ERROR', error: json.error}))
         })
 
 }
