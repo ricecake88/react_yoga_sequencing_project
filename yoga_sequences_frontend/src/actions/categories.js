@@ -14,7 +14,7 @@ export const getCategories = (user) => {
     }
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
-        fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
+        return fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
         .then(response =>  {
             if (response.ok) {
                 return response.json().then(json => {
@@ -46,7 +46,7 @@ export const addCategory = (category) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_ADD_CATEGORY'});
-        fetch(`${BACKEND_URL}/categories`, config)
+        return fetch(`${BACKEND_URL}/categories`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json =>
@@ -72,7 +72,7 @@ export const deleteCategory = (id) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_DELETE_CATEGORY'});
-        fetch(`${BACKEND_URL}/categories/${id}`, config)
+        return fetch(`${BACKEND_URL}/categories/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {

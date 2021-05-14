@@ -49,12 +49,10 @@ export const addPoseToSeq = (id, pose_in_seq) => {
 
     return (dispatch) => {
         dispatch({type: 'START_ADD_POSE_TO_SEQ'})
-        fetch(`${BACKEND_URL}/pose_in_seqs`, config)
+        return fetch(`${BACKEND_URL}/pose_in_seqs`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
-                    debugger
                     dispatch({type: 'ADD_POSE_TO_SEQ'}, config)
                 }) 
             } else {

@@ -3,7 +3,7 @@ import { getToken } from './auth';
 import { handleServerError } from './errors';
 
 export const getSequences = (user) => {
-    console.log("getSequences()");
+    //console.log("getSequences()");
     let config = {
         method: 'GET',
         headers: {
@@ -14,7 +14,7 @@ export const getSequences = (user) => {
     };
     return (dispatch) => {
         dispatch({type: 'START_GET_ALL_SEQ'});
-        fetch(`${BACKEND_URL}/sequences?user_id=${user.id}`, config)
+        return fetch(`${BACKEND_URL}/sequences?user_id=${user.id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -29,7 +29,7 @@ export const getSequences = (user) => {
 
 
 export const getSequence = (id) => {
-    console.log("getSequences()");
+    //console.log("getSequence()");
     let config = {
         method: 'GET',
         headers: {
@@ -55,8 +55,8 @@ export const getSequence = (id) => {
 
 
 export const addSequence = (sequence) => {
-    console.log("action addSequence")
-    console.log(sequence);
+    //console.log("action addSequence")
+    //console.log(sequence);
     let config = {
         method: 'POST',
         headers: {
@@ -72,7 +72,6 @@ export const addSequence = (sequence) => {
         })
     };
 
-    console.log(config)
     return (dispatch) => {
         dispatch({type: 'START_ADD_SEQ'});
         return fetch(`${BACKEND_URL}/sequences`, config)
@@ -90,8 +89,8 @@ export const addSequence = (sequence) => {
 }
 
 export const deleteSequence = (id) => {
-    console.log("action addSequence")
-    console.log(id);
+    //console.log("action addSequence")
+    //console.log(id);
     let config = {
         method: 'DELETE',
         headers: {
@@ -101,7 +100,6 @@ export const deleteSequence = (id) => {
         }
      };
 
-    console.log(config)
     return (dispatch) => {
         dispatch({type: 'START_DELETE_SEQ'});
         return fetch(`${BACKEND_URL}/sequences/${id}`, config)
@@ -118,8 +116,8 @@ export const deleteSequence = (id) => {
 }
 
 export const editSequence = (sequence) => {
-    console.log("action editSequence")
-    console.log(sequence);
+    //console.log("action editSequence")
+    //console.log(sequence);
     let config = {
         method: 'PATCH',
         headers: {
@@ -134,7 +132,7 @@ export const editSequence = (sequence) => {
             pose_in_seqs_attributes: sequence.pose_in_seqs
         })
     };
-    console.log(config);
+    //console.log(config);
     return (dispatch) => {
         dispatch({type: 'START_EDIT_SEQ'});
         return fetch(`${BACKEND_URL}/sequences/${sequence.id}`, config)

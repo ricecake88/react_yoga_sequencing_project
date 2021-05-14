@@ -7,14 +7,12 @@ export const getPoses = () => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': getToken()
+            'Content-Type': 'application/json'
         }
     }
-    console.log(config)
     return (dispatch) => {
         dispatch({type: 'START_GET_POSES'});
-        fetch(`${BACKEND_URL}/poses`, config)
+        return fetch(`${BACKEND_URL}/poses`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
