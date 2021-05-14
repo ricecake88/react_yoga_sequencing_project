@@ -9,8 +9,8 @@ class PoseSelector extends Component {
     }
 
     onChange = (event) => {
-        console.log("PoseSelector -> onChange")
-        console.log(event.target.value);
+        //console.log("PoseSelector -> onChange")
+        //console.log(event.target.value);
         event.preventDefault();
         this.setState({
             pose_id: event.target.value
@@ -20,16 +20,16 @@ class PoseSelector extends Component {
     }
 
     display = () => {
-        console.log("in display")
-        console.log(this.state)
-        console.log(this.props.poses)
+        //console.log("in display")
+        //console.log(this.state)
+        //console.log(this.props.poses)
 
         return (
             <>
                {this.props.select === "addToSeq" ?
                <label htmlFor="pose">Add a Pose: </label> :
                <label htmlFor="pose">Choose a Pose: </label>}
-            {this.props.poses.length !== 0 ?
+            {this.props.poses.length !== 0 ? // TO-DO Can this.state.pose_id be handled completely from PoseContainer?
                 <select name="pose_id" onChange={this.onChange} value={this.state.pose_id} onClick={this.props.onClick}>
                     <option disabled value="">Select a Pose</option>
                     {this.props.poses.map(pose => <option key={pose.id} value={pose.id}>{pose.name}</option>)}
@@ -40,9 +40,9 @@ class PoseSelector extends Component {
 
     /* eventually... change to search by category or search via another way */
     render() {
-        console.log("PoseSelector -> render()")
-        console.log(this.props);
-        console.log(this.state);
+        //console.log("PoseSelector -> render()")
+        //console.log(this.props);
+        //console.log(this.state);
         return (
             <>
                 {this.display()}
