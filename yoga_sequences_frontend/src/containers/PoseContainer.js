@@ -17,21 +17,27 @@ class PoseContainer extends Component {
 
     }
 
+    // set initial pose to the first one after componentDidMount
+    // and retrieving list of poses 
     static getDerivedStateFromProps = (props, currentState) => {
-        if (props.poses.length !== 0 && props.match.url === '/poses') {
+
+        // when pose has not been set yet, set up the initial pose
+        // only once
+        if (Object.keys(currentState.pose).length === 0 && props.poses.length !== 0 && props.match.url === '/poses') {
             return {
                 ...currentState,
                 pose_id: 0,
                 pose: props.poses.find(pose => pose.id === 0),
             }
-        }
+        } return currentState;
     }
 
     updateValue = (val) => {
-        //console.log("updating Value")
-        //console.log(this.props.poses)
+        console.log("updating Value")
+        console.log(val)
         //updated pose based on selection
         this.setState({
+            ...this.state,
             pose_id: parseInt(val),
             pose: this.props.poses.length !==0 ? this.props.poses.find(pose => pose.id === parseInt(val)) : {}
         })
@@ -50,7 +56,8 @@ class PoseContainer extends Component {
     }
 
     displayPose = () => {
-        //console.log("displayPose")
+        console.log("displayPose")
+        console.log(this.state.pose_id);
         // if the pose exists, update the pose with the latest related information
         // based on the select
         if (Object.keys(this.state.pose).length !== 0) {
