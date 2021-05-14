@@ -40,7 +40,7 @@ export const getSequence = (id) => {
     };
     return (dispatch) => {
         dispatch({type: 'START_GET_SEQ'});
-        fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        return fetch(`${BACKEND_URL}/sequences/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -75,7 +75,7 @@ export const addSequence = (sequence) => {
     console.log(config)
     return (dispatch) => {
         dispatch({type: 'START_ADD_SEQ'});
-        fetch(`${BACKEND_URL}/sequences`, config)
+        return fetch(`${BACKEND_URL}/sequences`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -104,7 +104,7 @@ export const deleteSequence = (id) => {
     console.log(config)
     return (dispatch) => {
         dispatch({type: 'START_DELETE_SEQ'});
-        fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        return fetch(`${BACKEND_URL}/sequences/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -137,7 +137,7 @@ export const editSequence = (sequence) => {
     console.log(config);
     return (dispatch) => {
         dispatch({type: 'START_EDIT_SEQ'});
-        fetch(`${BACKEND_URL}/sequences/${sequence.id}`, config)
+        return fetch(`${BACKEND_URL}/sequences/${sequence.id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
