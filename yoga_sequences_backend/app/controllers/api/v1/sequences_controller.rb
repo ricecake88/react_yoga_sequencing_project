@@ -28,7 +28,7 @@ class Api::V1::SequencesController < ApplicationController
                     }
                 }, status: 200
             else
-                render json: {error: "Was not able to find sequence"}, status: 404
+                render json: {error: "Sequence not found"}, status: 404
             end
         end
     end
@@ -52,7 +52,7 @@ class Api::V1::SequencesController < ApplicationController
                             }}
                     }}, status: 200
             else
-                render json: {error: sequence.errors.full_messages.first}, status: 422
+                render json: {error: sequence.errors.full_messages.first }, status: 422
             end
         end
     end
@@ -79,7 +79,7 @@ class Api::V1::SequencesController < ApplicationController
                             }}
                     }}, status: 200
             else
-                render json: {error: sequence.errors.full_messages.first}, status: 422
+                render json: {error: sequence.errors.full_messages.first }, status: 422
             end
         end
     end
@@ -88,9 +88,9 @@ class Api::V1::SequencesController < ApplicationController
         Rails.logger.debug params.inspect
         sequence = Sequence.find(params[:id])
         if sequence.delete
-            render json: { sequence: sequence}, status: 200
+            render json: { sequence: sequence }, status: 200
         else
-            render json: { error: sequence.errors.full_messages.first}, status: 400
+            render json: { error: sequence.errors.full_messages.first }, status: 400
         end
     end
 
