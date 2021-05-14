@@ -179,7 +179,7 @@ class SeqShowContainer extends Component {
         return isLoaded ?
             <div>
                 {this.display(data)}
-            </div> : <LoadingSpinner /> 
+            </div> : <LoadingSpinner />
     }
     // /* reset the sequence after user presses stop */
     // reset = () => {
