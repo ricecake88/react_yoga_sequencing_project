@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import PoseList from './PoseList';
-import LoadingSpinner from '../LoadingSpinner';
+//import LoadingSpinner from '../LoadingSpinner';
 import { getSequence } from '../../actions/sequences';
 import SeqInfo from './SeqInfo';
-import { getPoses } from '../../actions/poses';
+//import { getPoses } from '../../actions/poses';
+//import { checkAuth } from '../../actions/auth';
 
 class SeqShowNewest extends Component {
 
     state = {
-        seconds_per_breath: 3,
+        seconds_per_breath: 3, // TO-DO: Configurable setting by user
        // num_breaths:  this.props.sequences.find(sequence =>
         //    sequence.id === parseInt(this.props.match.params.id)).pose_in_seqs[0].num_breaths,
         num_breaths: 1,
@@ -24,22 +25,22 @@ class SeqShowNewest extends Component {
 
 
     /* used when user refreshes the page and we need to get the sequence from props
-        since this before componentDidMount, otherwise the state never changes */
+       otherwise the state never changes since this is repeatedly called */
     static getDerivedStateFromProps(props, current_state) {
-        console.log("in getDerivedStateFromProps")
-        console.log(props)
-        console.log(current_state)
-        //debugger
-        if (props.sequences.length === 0 && Object.keys(props.sequence).length !== 0 && props.match.id !== "add" ) {
-            if (Object.keys(props.sequence).length !== 0)
+        //console.log("in getDerivedStateFromProps")
+        //console.log(props)
+        //console.log(current_state)
+        if (Object.keys(current_state.sequence).length === 0 && 
+            Object.keys(props.sequence).length !== 0 && 
+            props.match.id !== "add" ) {
                 SeqShowNewest.sortPoses(props.sequence.pose_in_seqs)
-            //console.log(props.sequence.pose_in_seqs)
-            return {
-                ...current_state,
-                sequence: {
-                    ...props.sequence
+                console.log("SHOW -> SETTING UP INITIAL SEQUENCE ONCE")
+                return {
+                    ...current_state,
+                    sequence: {
+                        ...props.sequence
+                    }
                 }
-            }
         } else {
             return current_state;
         }
@@ -48,22 +49,29 @@ class SeqShowNewest extends Component {
     componentDidMount = () => {
         //console.log("SeqShow -> componentDidMount")
         let id = this.props.match.params.id;
-        //console.log(id);
-        //console.log(this.props.match)
-        // if user refreshes the page
-        if (this.props.sequences.length === 0 && this.props.match.params.id !== "add" && this.props.match.url === `/sequences/${id}`) {
-            //console.log("Call getSequence");
+
+        // if user refreshes the page or arrives here directly
+        if (this.props.sequences.length === 0 && 
+            this.props.match.params.id !== "add" && 
+            this.props.match.url === `/sequences/${id}`) {
+            console.log("SHOW -> REFRESH/DIRECT")
+
+            // make request to server to retrieve sequence
             this.props.getSequence(parseInt(this.props.match.params.id))
-            this.props.getPoses();
-            this.setState({
-                ...this.state,
-                sequence: this.props.sequence,
-                num_breaths: this.props.sequence.pose_in_seqs !== undefined && this.props.sequence.pose_in_seqs.length !== 0 ? this.props.sequence.pose_in_seqs[0].num_breaths:1,
-                isLoaded: true
+            .then(response => {
+                this.setState({
+                    ...this.state,
+                    sequence: this.props.sequence,
+                    num_breaths: this.props.sequence.pose_in_seqs !== undefined && this.props.sequence.pose_in_seqs.length !== 0 ? this.props.sequence.pose_in_seqs[0].num_breaths:1,
+                    isLoaded: true
+                })
             })
+            .catch(err => console.log("Caught!"))
         } else {
-            //console.log("not on reload")
-            // if user access the sequence from the sequence list
+            console.log("SHOW -> NAVIGATE FROM LIST")
+
+            // if user accesses the sequence from the sequence list
+            // find the sequence based on path id from sequence list
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
 
@@ -90,7 +98,7 @@ class SeqShowNewest extends Component {
     }
 
     componentWillUnmount() {
-        // clears out the timers
+        // clear out the timers
         if (this.timeoutID) {
             clearTimeout(this.timeoutID);
         }
@@ -99,6 +107,8 @@ class SeqShowNewest extends Component {
         }
     }
 
+    /* class method that sorts the in order
+        of pose order */
     static sortPoses = (posesInSeq) => {
         if (posesInSeq.length !== 0) {
             posesInSeq.sort((a, b) => {
@@ -113,26 +123,12 @@ class SeqShowNewest extends Component {
         }
     }
 
-    // updateSequenceUponUpdate = () => {
-    //     const sequence = this.props.sequences.find(sequence =>
-    //         sequence.id === parseInt(this.props.match.params.id));
-    //     console.log(sequence)
-    //     // set initial
-    //     if (sequence) {
-    //         SeqShowNewest.sortPoses(sequence.pose_in_seqs)
-    //         this.setState(prevState => ({
-    //             ...prevState,
-    //             sequence: sequence,
-    //             isLoaded: true
-    //         }))
-    //     }
-    // }
-
     display = (data) => {
         console.log("in display")
         console.log(this.props);
         console.log(this.state);
         let sequence = {};
+        //TO-DO: How to prevent from displaying 
 
         // get state sequence if user refreshed or went directly to this page
         if (this.props.sequences.length === 0 && this.props.match.path === '/sequences/:id' && Object.keys(this.state.sequence).length !== 0)
@@ -142,27 +138,33 @@ class SeqShowNewest extends Component {
         if (this.props.sequences.length !== 0) {
             sequence = this.props.sequences.find(sequence =>
                     sequence.id === parseInt(this.props.match.params.id));
-        }
 
-        // sort the poses if the sequence exists
-        if (Object.keys(sequence).length !== 0 && sequence.pose_in_seqs.length !== 0) {
-            //console.log("Sorted Poses")
-            SeqShowNewest.sortPoses(sequence.pose_in_seqs);
+            // sort the poses if the sequence exists
+            if (sequence !== undefined && Object.keys(sequence).length !== 0 && sequence.pose_in_seqs.length !== 0) {
+                //console.log("Sorted Poses")
+                SeqShowNewest.sortPoses(sequence.pose_in_seqs);
+            }
         }
 
         return (
             (sequence !== undefined && Object.keys(sequence).length !== 0 )?
                 <div className="sequenceShowDiv">
-                    <div className="highlightPose">
-                        <NavLink to={`/sequences/${sequence.id}`} className="no-ul" onClick={this.reset}>
-                            <h1 className="center">{sequence !== undefined ? sequence.name.toUpperCase() : null}</h1>
-                        </NavLink>
-                        <br/>
-                        <NavLink to={`/sequences/edit/${sequence.id}`}><span className="material-icons click">edit</span></NavLink>
-                        <SeqInfo sequence={sequence} data={data} changePause={this.changePause} reset={this.reset} poses={sequence.poses} />
+                    <div className="highlightPose">   
+                        <h1 className="center">
+                            <NavLink to={`/sequences/${sequence.id}`} className="no-ul heading" onClick={this.reset}>{sequence.name.toUpperCase()}</NavLink>&nbsp;
+                            <NavLink to={`/sequences/edit/${sequence.id}`}><span className="material-icons edit">edit</span></NavLink>
+                        </h1>
+                        <SeqInfo 
+                            sequence={sequence} 
+                            data={data} 
+                            changePause={this.changePause}
+                            reset={this.reset}
+                            poses={sequence.poses} />
+                        <PoseList 
+                            posesInSeq={sequence.pose_in_seqs}
+                            poses={this.props.poses}
+                            current={data.counter}/>                            
                     </div>
-
-                    <PoseList posesInSeq={sequence.pose_in_seqs} poses={this.props.poses} current={data.counter}/>
                  </div>
              : null
         )
@@ -174,8 +176,9 @@ class SeqShowNewest extends Component {
         return isLoaded ?
             <div>
                 {this.display(data)}
-            </div> : <LoadingSpinner />
+            </div> : null
     }
+
     /* reset the sequence after user presses stop */
     reset = () => {
 
@@ -325,8 +328,9 @@ const mapDispatchToProps = (dispatch) => {
 
         // Used when reloading and going directly to link
         // otherwise just uses poses passed in
-        getPoses: () => dispatch(getPoses()),
+       // getPoses: () => dispatch(getPoses()),
 
+       //checkAuth: () => dispatch(checkAuth()),
         // Used when reloading and going directly to link
         getSequence: (id) => dispatch(getSequence(id))
     }
@@ -336,15 +340,12 @@ const mapStateToProps = (state) => {
     //console.log("seqShow -> mapStateToProps")
     //console.log(state);
     return {
-        //sequences: state.sequences.sequences,
+        sequences: state.sequences.sequences,
 
         // needed for when user goes directly to page
         sequence: state.sequences.selSequence,
-        //categories: state.categories.categories,
-        poses: state.poses.poses,
-        //user: state.auth.currentUser,
-        requesting: state.sequences.requesting,
-        //loggedIn: state.auth.loggedIn
+
+        //requesting: state.sequences.requesting,
     }
 }
 
