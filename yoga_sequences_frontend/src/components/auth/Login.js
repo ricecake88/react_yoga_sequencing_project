@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/auth";
+import { clearErrorMessage } from "../../actions/errors"
 
 class Login extends React.Component {
   state = {
@@ -10,6 +11,7 @@ class Login extends React.Component {
   };
 
   handleChange = (event) => {
+    this.props.clearErrorMessage();
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -24,6 +26,13 @@ class Login extends React.Component {
       .catch(() => this.setState({ error: true }));
   };
 
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state,callback)=>{
+        return;
+    };
+}
+  
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -64,7 +73,8 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchLoginUser: (credentials) => dispatch(loginUser(credentials))
+    dispatchLoginUser: (credentials) => dispatch(loginUser(credentials)),
+    clearErrorMessage: () => dispatch(clearErrorMessage())
   };
 };
 
