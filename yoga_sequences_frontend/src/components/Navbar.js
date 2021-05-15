@@ -15,18 +15,10 @@ class Navbar extends React.Component {
   }
   renderAuthLinks() {
     console.log(this.props);
-    const { authChecked, clearErrorMessage, loggedIn, currentUser } = this.props;
+    const { authChecked, loggedIn, currentUser } = this.props;
     if (authChecked) {
       return loggedIn ? (
         <>
-         {/* <NavLink
-            className='p-4 block sm:inline-block link'
-            activeClassName='text-blue-900'
-            exact
-            to='/sequences'
-          >
-            All Sequences
-         </NavLink>*/}
           <NavLink exact to='/sequences/add'
            className='authLink link no-ul'>
            +
