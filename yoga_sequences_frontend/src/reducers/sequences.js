@@ -1,7 +1,6 @@
 export default function sequenceReducer(
     state = {
         sequences: [],
-        errors: [],
         selSequence: {},
         requesting: false
     }, action) {
@@ -77,6 +76,13 @@ export default function sequenceReducer(
                 ...state,
                 sequences: state.sequences.filter(sequence => sequence.id !== action.sequence.id),
                 //selSequence: {},
+                requesting: false
+            }
+        case 'CLEAR_STORE':
+            return {
+                ...state,
+                sequences: [],
+                selSequence: {},
                 requesting: false
             }
         default:

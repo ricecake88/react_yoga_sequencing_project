@@ -38,6 +38,12 @@ export default function categoryReducer(state={categories: [], requesting: false
                 categories: state.categories.filter(category => category.id !== action.category.id),
                 requesting: false
             }
+        case 'CLEAR_STORE':
+            return {
+                ...state,
+                categories: [],
+                requesting: false
+            }
         default:
             return state;
     }
