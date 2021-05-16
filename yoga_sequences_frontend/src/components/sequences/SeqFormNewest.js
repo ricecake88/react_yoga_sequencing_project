@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
-//import Categories from './Categories_OLD';
-import Categories2 from './Categories2';
 import { connect } from 'react-redux';
-import SeqCategoryAdd from './SeqCategoryAdd';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
 import { editSequence, getSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq'
-import PoseAdd from './PoseAdd';
-import { getPoses } from '../../actions/poses';
-//import { checkAuth } from "../../actions/auth";
-import LoadingSpinner from '../LoadingSpinner';
-import SeqListNew from './SeqListNew';
-import Error from '../errors/Error';
-import clearErrorMessage from '../../actions/errors';
-import { ImFolderPlus } from 'react-icons/im';
-import Login from '../auth/Login';
 import Form from './Form';
 
 class SeqFormNewest extends Component {
@@ -313,56 +301,33 @@ class SeqFormNewest extends Component {
         return (
             /*this.props.auth.loggedIn && this.props.auth.currentUser ?*/
                 this.state.isLoaded ?
-                    <div className="genericContainer">
-                        <div className="genericInnerContainer">
-                            {/*{route === "add" ? <h1>Create a New Sequence</h1> : <h1>Edit Sequence</h1>}
-                            {this.props.error !== null ? <Error className="errors" error={this.props.error}/>
-                             : this.state.saved ? "Saved Sequence" : null}
-                            <form onSubmit={this.onSubmit}>
-                                <label htmlFor="name"> Sequence Name: </label>
-                                <input type="name" name="name" onChange={this.onChange} value={this.state.name} onClick={this.props.onClick}/><br/>
+                    <Form
+                        route={route}
+                        error={this.props.error}
 
-                                <label htmlFor="category">Category: </label>
-                                <Categories2 user={this.props.auth.currentUser} addCategory={this.props.addCategory } id={this.state.category_id} onChange={this.onChange}/>
-                                <SeqCategoryAdd user={this.props.auth.currentUser} addTrue={this.state.category_id} name="category_id" addCategory={this.props.addCategory} onChange={this.onChange}/><br/>
+                        /* this needs to change */
+                        message={this.state.message}
 
-                                <PoseAdd poses={this.props.poses} onClick={this.onClickAddPose} addedPoses={this.state.pose_in_seqs} delete={this.onClickDeletePose} onBlur={this.onBlur} onDrag={this.handleOnDragEnd} onChange={this.onChange} /><br/>
-                                {(route === "add") ?
-                                    <input type="submit" value="Create A New Sequence"></input>
-                                : <input type="submit" value="Save Changes"></input>}
-                            </form>*/}
-                            <Form
-                                route={route}
-                                error={this.props.error}
+                        // form props
+                        onSubmit={this.onSubmit}
+                        onChange={this.onChange}
+                        name={this.state.name}
+                        onClick={this.onClick}
+                        auth={this.props.auth}
 
-                                /* this needs to change */
-                                message={this.state.message}
-
-                                // form props
-                                onSubmit={this.onSubmit}
-                                onChange={this.onChange}
-                                name={this.state.name}
-                                onClick={this.onClick}
-                                auth={this.props.auth}
-
-                                // category props
-                                categories={this.props.categories}
-                                category_id={this.state.category_id}
-                                addCategory={this.props.addCategory}
-
-                                // pose props
-                                poses={this.props.poses}
-                                onClickAddPose={this.onClickAddPose}
-                                pose_in_seqs={this.state.pose_in_seqs}
-                                onClickDeletePose={this.onClickDeletePose}
-                                onBlur={this.onBlur}
-                                handleOnDragEnd={this.handleOnDragEnd}
-                            />
-
-                        {/*{route === "add" ? <SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/> : null}*/}
-                        {/*<SeqListNew poses={this.props.poses} delete={this.onDelete} sequences={this.props.sequences} categories={this.props.categories}/>*/}
-                        </div>
-                    </div>
+                        // category props
+                        categories={this.props.categories}
+                        category_id={this.state.category_id}
+                        addCategory={this.props.addCategory}
+                        
+                        // pose props
+                        poses={this.props.poses}
+                        onClickAddPose={this.onClickAddPose}
+                        pose_in_seqs={this.state.pose_in_seqs}
+                        onClickDeletePose={this.onClickDeletePose}
+                        onBlur={this.onBlur}
+                        handleOnDragEnd={this.handleOnDragEnd}
+                    />
                 : null
             /*: <Login />*/
         )

@@ -49,9 +49,7 @@ class Login extends React.Component {
             placeholder="name@domain.com"
             onChange={this.handleChange}
             value={this.state.email}
-          />
-        </fieldset>
-        <fieldset>
+          /><br/>
           <label htmlFor='password'>
             Password:
           </label>
@@ -61,12 +59,12 @@ class Login extends React.Component {
             id='password'
             onChange={this.handleChange}
             value={this.state.password}
-          />
-        </fieldset>
+          /><br/>
+        </fieldset>            
         <input
           type='submit'
           value='Log In'
-        />
+        />      
       </form>
     );
   }

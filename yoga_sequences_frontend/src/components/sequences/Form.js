@@ -19,7 +19,6 @@ const Form  = (props) => {
         <form onSubmit={props.onSubmit}>
             <label htmlFor="name"> Sequence Name: </label>
             <input type="name" name="name" onChange={props.onChange} value={props.name} onClick={()=>props.onClick()}/><br/>
-            <label htmlFor="category">Category: </label>
             <Categories2 
                 user={props.auth.currentUser}
                 categories={props.categories}

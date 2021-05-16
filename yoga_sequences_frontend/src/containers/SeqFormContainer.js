@@ -1,15 +1,15 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import { NavLink, BrowserRouter, Router, Route, Switch } from "react-router-dom";
+//import { NavLink, BrowserRouter, Router, Route, Switch } from "react-router-dom";
 //import SeqFormNew from '../components/sequences/SeqFormNew';
-import SeqList from '../components/sequences/SeqListNew';
-import { getSequences, deleteSequence} from '../actions/sequences'
+//import SeqList from '../components/sequences/SeqListNew';
+import { getSequences } from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
-import Error from '../components/errors/Error';
+//import Error from '../components/errors/Error';
 import LoadingSpinner from '../components/LoadingSpinner';
 import SeqFormNewest from '../components/sequences/SeqFormNewest';
-import SeqShow from '../components/sequences/SeqShow';
+//import SeqShow from '../components/sequences/SeqShow_OLD';
 import { clearErrorMessage } from '../actions/errors';
 
 class SeqFormContainer extends Component {
@@ -53,7 +53,7 @@ class SeqFormContainer extends Component {
                         //message={this.props.message}
                     />
                 </div>
-            : null
+            : <LoadingSpinner />
         )
     }
 }

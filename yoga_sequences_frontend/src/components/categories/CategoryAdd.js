@@ -14,18 +14,21 @@ class CategoryAdd extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.addCategory(this.state.category);
+        this.props.addCategory(this.state.category)
         this.setState({
             category: ''
         })
     }
 
     render() {
-        return (
+        return (//TO-DO: STYLING
         <>
             <form onSubmit={this.onSubmit}>
                 <label htmlFor="category">Add Category</label>
-                <input type="text" name="category" value={this.state.category} onChange={this.onChange} onClick={this.props.onClick}/>
+                <input type="text" name="category" 
+                    value={this.state.category} 
+                    onChange={this.onChange} 
+                    onClick={this.props.onClick}/>
                 <button>Add</button>
             </form>
         </>)

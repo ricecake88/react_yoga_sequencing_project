@@ -20,15 +20,15 @@ class Navbar extends React.Component {
       return loggedIn ? (
         <>
           <NavLink exact to='/sequences/add'
-           className='authLink link no-ul'>
+           className='link no-ul'>
            +
          </NavLink>
           <NavLink exact to='/categories'
-           className='authLink link no-ul'>
+           className='link no-ul'>
             Categories
          </NavLink>
           <NavLink exact to='/sequences'
-           className='authLink link no-ul'
+           className='link no-ul'
           >
             Sequences
           </NavLink>
@@ -38,8 +38,8 @@ class Navbar extends React.Component {
       ) : (
         <>
           <NavLink
-            className='p-4 inline-block link'
-            activeClassName='text-blue-900'
+            className='no-ul link'
+            activeClassName='activeLink'
             exact
             to='/signup'
           >
@@ -47,8 +47,8 @@ class Navbar extends React.Component {
           </NavLink>
           <NavLink
 
-            className='p-4 inline-block link'
-            activeClassName='text-blue-900'
+            className='no-ul link'
+            activeClassName='activeLink'
             exact
             to='/login'
           >
@@ -68,7 +68,7 @@ render() {
           <NavLink
             //className='p-4 block sm:inline-block'
             //activeClassName='text-blue-900'
-            className="openLink link no-ul"
+            className="link no-ul"
             activeClassName="activeLink"
             exact
             to='/'
@@ -77,13 +77,13 @@ render() {
           </NavLink>
 
           <NavLink
-            className="openLink link no-ul"
-            activeClassName="activeLink link"
+            className="link no-ul"
+            activeClassName="activeLink"
             exact to='/poses'>
             Poses
           </NavLink>
         </div>
-        <div className='authLinks link'>
+        <div className='authLinks'>
           {this.renderAuthLinks()}
         </div>
       </div>

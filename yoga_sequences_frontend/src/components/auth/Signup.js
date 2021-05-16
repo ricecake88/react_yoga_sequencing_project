@@ -26,7 +26,6 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div className="genericContainer">
       <form
         onSubmit={this.handleSubmit}
       >
@@ -42,9 +41,7 @@ class Signup extends React.Component {
             id='email'
             onChange={this.handleChange}
             value={this.state.email}
-          />
-        </fieldset>
-        <fieldset>
+          /><br/>
           <label htmlFor='password'>
             Password:
           </label>
@@ -61,7 +58,6 @@ class Signup extends React.Component {
           value='Sign Up'
         />
       </form>
-      </div>
     );
   }
 }

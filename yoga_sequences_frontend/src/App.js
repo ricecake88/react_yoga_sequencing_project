@@ -10,7 +10,7 @@ import withAuth from './components/auth/withAuth';
 import SeqNewContainer from './containers/SeqNewContainer';
 import CategoryContainer from './containers/CategoryContainer';
 import PoseContainer from './containers/PoseContainer';
-import SeqShow from './components/sequences/SeqShow';
+//import SeqShow from './components/sequences/SeqShow';
 //import SeqFormNew from './components/sequences/SeqFormNew';
 import SeqFormContainer from './containers/SeqFormContainer';
 import SeqShowContainer from './containers/SeqShowContainer';
@@ -21,29 +21,23 @@ function App() {
     <div className="App">
       <Router>
       <Navbar />
-      <Switch>
-          <Route exact path='/' component={NormalRoute} />
-          {/*<Route exact path='/sequences' component={withAuth(AllSequences)}/>*/}
-          {/*<Route exact path='/sequences/new' component={withAuth(SeqContainer)}/>*/}
-          <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
-          <Route exact path='/poses' component={PoseContainer}/>
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/login' component={Login} />
-          <Route exact path="/sequences" component={withAuth(SeqNewContainer)}/>
-          <Route exact path="/sequences/add" component={withAuth(SeqFormContainer)}/>
-          <Route exact path="/sequences/edit/:id" component={withAuth(SeqFormContainer)}/>
-
-          {/*<Route exact path="/sequences/add2" render={(props) => <SeqFormNew {...props} />}/>*/}
-          <Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>
-          {/*<Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>*/}
-  {/*<Route exact path="/sequences/edit2/:id" render={(props) => <SeqFormNew {...props} />}/>*/}
-
-          {/*<Route path="/sequences" component={withAuth(SeqNewContainer)}/>
-            <Route path="/sequences/add" render={(props) => <SeqFormNew {...props} />}/>
-            <Route path="/sequences/:id" component={withAuth(SeqShow)}/>
-  <Route exact path="/sequences/edit/:id" render={(props) => <SeqFormNew {...props} />}/>*/}
-      </Switch>
-
+      <div className="genericContainer">
+        <div className="genericInnerContainer">
+          <Switch>
+              <Route exact path='/' component={NormalRoute} />
+              {/*<Route exact path='/sequences' component={withAuth(AllSequences)}/>*/}
+              {/*<Route exact path='/sequences/new' component={withAuth(SeqContainer)}/>*/}
+              <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
+              <Route exact path='/poses' component={PoseContainer}/>
+              <Route exact path='/signup' component={Signup} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path="/sequences" component={withAuth(SeqNewContainer)}/>
+              <Route exact path="/sequences/add" component={withAuth(SeqFormContainer)}/>
+              <Route exact path="/sequences/edit/:id" component={withAuth(SeqFormContainer)}/>
+              <Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>
+          </Switch>
+        </div>
+      </div>
       </Router>
     </div>
   );

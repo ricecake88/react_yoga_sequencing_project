@@ -67,17 +67,17 @@ class PoseContainer extends Component {
 
     render() {
         const { isLoaded } = this.state;
-        return isLoaded ? <>
+        return isLoaded ? <div className="genericContainer">
             
             {/*display the drop down select for all the poses, requires list of all poses and the
             callback to update the state based on selection */}
-            <div className="poseDescription">
+            <div className="genericInnerContainer">
                 <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
 
                 {/*display the Pose */}
                 {this.displayPose()}
             </div>
-        </> : <LoadingSpinner />
+        </div> : <LoadingSpinner />
     }
 }
 

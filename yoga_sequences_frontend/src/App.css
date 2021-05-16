@@ -16,6 +16,7 @@ h1, .heading {
     font-family: 'Jost', serif;
     font-size: 18pt;
     color: rgb(85, 36, 17);
+    text-transform: uppercase;
 }
 
 /* navigation bar related CSS */
@@ -23,7 +24,7 @@ h1, .heading {
     background-color:rgb(255, 237, 236);
     font-size: 12pt;
     width: 100%;
-    height: 50px;
+    height: 60px;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid lightcoral;
@@ -35,15 +36,6 @@ h1, .heading {
     margin-left: auto;
 }
 
-.linkdiv {
-    padding: 5px;
-}
-
-.link {
-    font-family: 'Jost', sans-serif;
-}
-
-
 .no-ul {
     text-decoration: none;
 }
@@ -53,17 +45,22 @@ h1, .heading {
     display: inline-block;
     border: 5px solid red;
     margin-left:5px;
-}
-
-.openLink {
-    color: darkgray;
-    width: 100px;
     padding: 10px;
-    text-transform: uppercase;
 }
 
-.openLink:hover, .authLink:hover {
-    color: brown
+.authLinks {
+    display: block;
+    border: 5px solid greenyellow;
+    float: right;
+    padding: 10px;
+}
+.link {
+    font-family: 'Jost', sans-serif;
+    color: rgb(93, 93, 93);
+    /*width: 100px; */
+    /*padding: 10px;*/
+    padding: 0px 10px;
+    text-transform: uppercase;
 }
 
 .activeLink {
@@ -72,26 +69,45 @@ h1, .heading {
     border: 5px solid black;
     color:red;
 }
-.authLinks {
-    display: block;
-    border: 2px solid greenyellow;
-    float: right;
+.link:hover {
+    color: brown;
 }
-.authLink {
+
+/*.openLink {
+    color: darkgray;
+    width: 100px;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.openLink:hover, .authLink:hover, link:hover {
+    color: brown
+}*/
+
+/*.link:hover {
+    color:brown;
+}*/
+
+/*.authLink {
     color: rgb(93, 93, 93);
     padding: 15px;
     text-transform: uppercase;
 
-}
+}*/
 
 /* Form related CSS */
-form,select,input,p, select {
+form, select, input, select {
     font-family: 'Roboto Slab', serif;
     color: black;
+    padding: 3px;
+    margin: 5px;
 }
 
-label {
-    font-weight: bold
+form > label {
+    font-weight: bold;
+    padding: 3px;
+    border: 1px solid black;
+    margin: 5px;
 }
 
 /*** below two need to be updated with colors */
@@ -129,7 +145,6 @@ input:focus, select:focus {
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 75% 10% 10%;
-
 }
 
 .sequenceContainerGrid2 {
@@ -137,8 +152,8 @@ input:focus, select:focus {
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 80% 20%;
-
 }
+
 
 .genericInnerContainer .header, .genericInnerContainer .head, .genericInnerContainer .cell {
     height: 25px;
@@ -221,4 +236,7 @@ input:focus, select:focus {
 
 .click {
     cursor: pointer;
+}
+button:hover {
+    border: 1px solid blue;
 }

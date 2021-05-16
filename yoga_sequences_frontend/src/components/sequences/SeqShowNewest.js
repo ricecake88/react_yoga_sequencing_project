@@ -124,42 +124,41 @@ class SeqShowNewest extends Component {
         }
     }
 
-    display = (data) => {
-        let sequence = {};
+    display = (state) => {
+        //let sequence = {};
 
-        sequence= this.state.sequence;
+        //sequence= this.state.sequence;
+        const {sequence, ...data} = state;
         if (Object.keys(sequence).length !== 0) {
             if (sequence.pose_in_seqs.length !== 0)
                 SeqShowNewest.sortPoses(sequence.pose_in_seqs);
             return (
-                <div className="genericInnerContainer">
-                    <div className="highlightPose">   
-                        <h1 className="center">
-                            {/* name of sequence */}
-                            <NavLink to={`/sequences/${sequence.id}`} 
-                                className="no-ul heading"
-                                title="Show Sequence"
-                                onClick={this.reset}>
-                                    {sequence.name.toUpperCase()}
-                            </NavLink>
-                            &nbsp;
-                            {/* edit link */}
-                            <NavLink to={`/sequences/edit/${sequence.id}`} title="Edit">
-                                <span className="material-icons edit">edit</span>
-                            </NavLink>
-                        </h1>
-                        <SeqInfo 
-                            sequence={sequence} 
-                            data={data}
-                            changePause={this.changePause}
-                            reset={this.reset}
-                            poses={sequence.poses} />
-                        <SeqPoseList 
-                            posesInSeq={sequence.pose_in_seqs}
-                            poses={this.props.poses}
-                            current={data.counter}/>                            
-                    </div>
-                 </div>                
+                <div className="highlightPose">   
+                    <h1 className="center">
+                        {/* name of sequence */}
+                        <NavLink to={`/sequences/${sequence.id}`} 
+                            className="no-ul heading"
+                            title="Show Sequence"
+                            onClick={this.reset}>
+                                {sequence.name.toUpperCase()}
+                        </NavLink>
+                        &nbsp;
+                        {/* edit link */}
+                        <NavLink to={`/sequences/edit/${sequence.id}`} title="Edit">
+                            <span className="material-icons edit">edit</span>
+                        </NavLink>
+                    </h1>
+                    <SeqInfo 
+                        sequence={sequence} 
+                        data={data}
+                        changePause={this.changePause}
+                        reset={this.reset}
+                        poses={sequence.poses} />
+                    <SeqPoseList 
+                        posesInSeq={sequence.pose_in_seqs}
+                        poses={this.props.poses}
+                        current={data.counter}/>                            
+                </div>              
             )
         } else {
             return null

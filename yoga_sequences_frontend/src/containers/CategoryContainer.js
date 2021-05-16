@@ -18,7 +18,8 @@ class CategoryContainer extends Component {
         //console.log(this.props)
 
         //retrieve all the categories
-        this.props.getCategories(this.props.auth.currentUser);
+        this.props.getCategories(this.props.auth.currentUser)
+        .catch(err => console.log("getCategories -> " + err.error));
 
         // once categories are retrieved then set state to
         // isLoaded
@@ -31,26 +32,30 @@ class CategoryContainer extends Component {
         // dispatch add category
         // category is string
         this.props.addCategory(category)
+        .catch(err => console.log("addCategory -> " + err.error));
     }
 
     onClick = () => {
         this.props.clearErrors();
     }
 
+
+    
     render() {
-        console.log(">>>CategoryContainer -> render")
+        //console.log(">>>CategoryContainer -> render")
         //console.log(this.props.categories)
         //console.log("After categories")
-        console.log(this.props)
+        //console.log(this.props)
         return (
             this.state.isLoaded && !this.state.requesting ?
-                <div className="genericContainer">
-                    <div className="genericInnerContainer" onClick={this.onClick}>
-                        {/*his.props.errors.map((error,index) => <Error key={index} error={error}/>)*/}
-                        <Error error={this.props.error}/>
-                        <CategoryAdd addCategory={this.addCategory} />
-                        <CategoryList categories={this.props.categories} deleteCategory={this.props.deleteCategory} user={this.props.user}/>
-                     </div>
+                <div onClick={this.onClick}>
+                    <h1>Categories</h1>
+                    <Error error={this.props.error}/>
+                    <CategoryAdd addCategory={this.addCategory} />
+                    <CategoryList 
+                        categories={this.props.categories} 
+                        deleteCategory={this.props.deleteCategory} 
+                        user={this.props.auth.currentUser}/>
                  </div>
             : <LoadingSpinner />
         )
@@ -58,8 +63,8 @@ class CategoryContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(">>CategoryContainer -> mapStateToProps");
-    console.log(state);
+    //console.log(">>CategoryContainer -> mapStateToProps");
+    //console.log(state);
     return {
         categories: state.categories.categories,
         //user: state.auth.currentUser,

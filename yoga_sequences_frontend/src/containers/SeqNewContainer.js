@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import { NavLink, BrowserRouter, Router, Route, Switch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 //import SeqFormNew from '../components/sequences/SeqFormNew';
 import SeqListNew from '../components/sequences/SeqListNew';
 import { getSequences, deleteSequence} from '../actions/sequences'
@@ -8,8 +8,9 @@ import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
 import LoadingSpinner from '../components/LoadingSpinner';
 //import SeqFormNew from '../components/sequences/SeqFormNew';
-import SeqShow from '../components/sequences/SeqShow';
+//import SeqShow from '../components/sequences/SeqShow';
 
+// TO-DO: Add in categories and select sequence by category
 class SeqNewContainer extends Component {
 
     state = {
@@ -38,10 +39,14 @@ class SeqNewContainer extends Component {
         return (
             isLoaded ?
                 <div>
-                    <SeqListNew poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories} onDelete={this.onDelete}/>
+                    <SeqListNew 
+                        poses={this.props.poses}
+                        sequences={this.props.sequences}
+                        categories={this.props.categories}
+                        onDelete={this.onDelete}/>
                     <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>
                 </div>
-            : null
+            : <LoadingSpinner />
         )
     }
 }

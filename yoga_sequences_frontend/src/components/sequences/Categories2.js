@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux'
-import { getCategories } from '../../actions/categories';
+//import { getCategories } from '../../actions/categories';
 
 class Categories2 extends Component {
 
-
+  //TO-DO Reduce this to a functional component
   componentDidMount = () => {
 
     //this.props.getCategories(this.props.user);
@@ -17,18 +17,18 @@ class Categories2 extends Component {
         })
   }*/
 
-  onSubmit = (event) => {
-    event.preventDefault();
-  }
+  //onSubmit = (event) => {
+  //  event.preventDefault();
+  //}
 
   display() {
-        console.log(">>>Categories2")
-        console.log(this.props)
-        console.log(this.props.categories)
-        console.log(Object.keys(this.props.categories).length)
+        //console.log(">>>Categories2")
+        //console.log(this.props)
+        //console.log(this.props.categories)
+        //console.log(Object.keys(this.props.categories).length)
         return (
-        <> 
-        <div>
+        <>
+        <label htmlFor="category">Category: </label>
         <select value={this.props.id} name="category_id" onChange={this.props.onChange} onClick={this.props.onClick}>
             <option disabled value="">Select a Category</option>
             {Object.keys(this.props.categories).length !== 0 ?
@@ -39,7 +39,6 @@ class Categories2 extends Component {
               }) : null}
             <option value="Add Category">Add Category</option>
             </select>
-        </div>
         </>
         )
   };
