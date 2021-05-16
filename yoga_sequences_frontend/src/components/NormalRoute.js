@@ -3,7 +3,11 @@ import React from "react";
 export default function NormalRoute() {
   return (
     <div>
-      This is a normal route. It should be accessible to anyone, whether they're logged in or not.
+      <div>Welcome to Yoga Sequencing!</div>
+
+      <div>Design your own sequence.</div>
+      
+      {/*NOT CURRENTLY IMPLEMENTED <div>Default Sequences would go here (as a starting point)</div>*/}
     </div>
   )
 }
