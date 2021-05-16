@@ -14,9 +14,6 @@ class CategoryContainer extends Component {
     }
 
     componentDidMount = () => {
-        //console.log(">>>CategoryContainer -> componentDidMount")
-        //console.log(this.props)
-
         //retrieve all the categories
         this.props.getCategories(this.props.auth.currentUser)
         .catch(err => console.log("getCategories -> " + err.error));
@@ -29,8 +26,6 @@ class CategoryContainer extends Component {
     }
 
     addCategory = (category) => {
-        // dispatch add category
-        // category is string
         this.props.addCategory(category)
         .catch(err => console.log("addCategory -> " + err.error));
     }
@@ -38,14 +33,8 @@ class CategoryContainer extends Component {
     onClick = () => {
         this.props.clearErrors();
     }
-
-
     
     render() {
-        //console.log(">>>CategoryContainer -> render")
-        //console.log(this.props.categories)
-        //console.log("After categories")
-        //console.log(this.props)
         return (
             this.state.isLoaded && !this.state.requesting ?
                 <div onClick={this.onClick}>
