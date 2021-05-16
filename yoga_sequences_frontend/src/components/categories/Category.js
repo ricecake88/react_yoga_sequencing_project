@@ -1,15 +1,18 @@
 import React from 'react';
 
 const Category = (props) => {
-    //console.log("in Category");
-    //console.log(props)
-    return <div>
-        {props.category.name === "Uncategorized" ?
-            <li>Uncategorized</li>
-        :
-            <li>{props.category.name}
-                <button onClick={() => props.deleteCategory(props.category.id)}>X</button>
-            </li>}
-        </div>
+    return (
+        <>
+            <div className="head">
+                {props.category.name === "Uncategorized" ?
+                     <span className="gray">Uncategorized</span>
+                : props.category.name}</div>
+            <div className="head">
+                {props.category.name === "Uncategorized" ? 
+                    null 
+                : <span onClick={() => props.deleteCategory(props.category.id)} className="material-icons delete">delete_outline</span>}
+            </div>
+        </>
+    )
 }
 export default Category;

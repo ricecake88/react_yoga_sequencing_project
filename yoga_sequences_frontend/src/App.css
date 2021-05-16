@@ -67,7 +67,8 @@ h1, .heading {
     text-align:right;
     /*display:inline;*/
     border: 5px solid black;
-    color:red;
+    color: brown;
+    font-weight: bold;
 }
 .link:hover {
     color: brown;
@@ -103,11 +104,14 @@ form, select, input, select {
     margin: 5px;
 }
 
-form > label {
+form label {
     font-weight: bold;
     padding: 3px;
     border: 1px solid black;
     margin: 5px;
+}
+form fieldset {
+    border: 1px pink solid;
 }
 
 /*** below two need to be updated with colors */
@@ -186,18 +190,6 @@ input:focus, select:focus {
     margin-right: auto;
 }
 
-.center {
-    text-align: center;
-}
-
-.big {
-    font-size: 30px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.next-text {
-    text-align: right;
-}
 .genericInnerContainer .selectedPose {
     color: red;
     font-weight: bold;
@@ -221,6 +213,7 @@ input:focus, select:focus {
 .delete, .edit {
     color: grey;
 }
+
 /* styling related to onDelete */
 .delete:hover, .edit:hover {
     color: rgb(95, 27, 6);
@@ -239,4 +232,26 @@ input:focus, select:focus {
 }
 button:hover {
     border: 1px solid blue;
+}
+
+/* common styling */
+.center {
+    text-align: center;
+}
+
+.big {
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ar {
+    text-align: right;
+}
+
+.propertyFieldName {
+    font-weight:bold;
+}
+
+.gray {
+    color: gray;
 }
