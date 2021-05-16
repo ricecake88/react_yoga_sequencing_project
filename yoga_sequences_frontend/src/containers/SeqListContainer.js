@@ -10,7 +10,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Error from '../components/errors/Error';
 
 // TO-DO: Add in categories and select sequence by category
-class SeqNewContainer extends Component {
+class SeqListContainer extends Component {
 
     state = {
         isLoaded: false
@@ -78,4 +78,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SeqNewContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SeqListContainer);
