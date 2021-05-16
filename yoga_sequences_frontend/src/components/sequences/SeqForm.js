@@ -6,7 +6,7 @@ import { editSequence, getSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq'
 import Form from './Form';
 
-class SeqFormNewest extends Component {
+class SeqForm extends Component {
 
     state = {
         sequence: {},
@@ -36,7 +36,7 @@ class SeqFormNewest extends Component {
                 let category_id = props.sequence.category.id;
                 if (props.sequence.pose_in_seqs.length !== 0) {
                     pose_in_seqs = props.sequence.pose_in_seqs
-                    SeqFormNewest.sortPoses(props.sequence.pose_in_seqs)
+                    SeqForm.sortPoses(props.sequence.pose_in_seqs)
                 }
 
                 // set up state so the page will render with these properties
@@ -71,7 +71,7 @@ class SeqFormNewest extends Component {
                 // update state with values from sequence information
                 if (this.props.sequence.pose_in_seqs.length !== 0) {
                     pose_in_seqs = this.props.sequence.pose_in_seqs
-                    SeqFormNewest.sortPoses(this.props.sequence.pose_in_seqs)
+                    SeqForm.sortPoses(this.props.sequence.pose_in_seqs)
                 }            
             }
 
@@ -92,7 +92,7 @@ class SeqFormNewest extends Component {
                 const sequence = this.props.sequences.find(sequence => sequence.id === parseInt(this.props.match.params.id))
 
                 // sort poses in the sequence by pose order
-                SeqFormNewest.sortPoses(sequence.pose_in_seqs);
+                SeqForm.sortPoses(sequence.pose_in_seqs);
                 this.setState({
                     sequence: sequence,
                     name: sequence.name,
@@ -359,4 +359,4 @@ function mapDispatchToProps(dispatch, props) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SeqFormNewest);
+export default connect(mapStateToProps, mapDispatchToProps)(SeqForm);

@@ -8,7 +8,7 @@ import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
 //import Error from '../components/errors/Error';
 import LoadingSpinner from '../components/LoadingSpinner';
-import SeqFormNewest from '../components/sequences/SeqFormNewest';
+import SeqForm from '../components/sequences/SeqForm';
 //import SeqShow from '../components/sequences/SeqShow_OLD';
 import { clearErrorMessage } from '../actions/errors';
 
@@ -19,9 +19,12 @@ class SeqFormContainer extends Component {
     }
 
     componentDidMount = () => {
-        this.props.getPoses();
-        this.props.getSequences(this.props.auth.currentUser);
-        this.props.getCategories(this.props.auth.currentUser);
+        this.props.getPoses()
+        .catch(err => console.log(err));
+        this.props.getSequences(this.props.auth.currentUser)
+        .catch(err => console.log(err));
+        this.props.getCategories(this.props.auth.currentUser)
+        .catch(err => console.log(err));
         this.setState({
             isLoaded: true
         })
@@ -43,7 +46,7 @@ class SeqFormContainer extends Component {
                     {/*<Error error={this.props.error}/>*/}
                     {/*<SeqListNewest poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories} match={this.props.match}/>
                     <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>*/}
-                    <SeqFormNewest 
+                    <SeqForm 
                         sequences={this.props.sequences}
                         categories={this.props.categories} 
                         poses={this.props.poses} 
