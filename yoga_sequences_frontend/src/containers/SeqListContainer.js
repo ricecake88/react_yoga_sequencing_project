@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 //import SeqFormNew from '../components/sequences/SeqFormNew';
-import SeqListNew from '../components/sequences/SeqListNew';
+import SeqList from '../components/sequences/SeqList';
 import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
@@ -13,23 +13,20 @@ import Error from '../components/errors/Error';
 class SeqListContainer extends Component {
 
     state = {
-        isLoaded: false
+        isLoaded: false,
+        message: ''
     }
 
     componentDidMount = () => {
-        //this.props.getPoses()
-        //.catch(err => console.log(err));
-        this.props.getSequences(this.props.auth.currentUser)
+        this.props.getSequences(this.props.user)
         .catch(err => console.log(err));
-        //this.props.getCategories(this.props.auth.currentUser)
-        //.catch(err => console.log(err));
         this.setState({
+            ...this.state,
             isLoaded: true
         })
     }
 
     componentWillUnmount() {
-        // fix Warning: Can't perform a React state update on an unmounted component
         this.setState = (state,callback)=>{
             return;
         };
@@ -37,6 +34,12 @@ class SeqListContainer extends Component {
 
     onDelete = (id) => {
         this.props.deleteSequence(id)
+        .then(response => {
+            this.setState({
+                ...this.state,
+                message: "Sequence Deleted."
+            })
+        })
         .catch(err => console.log(err))
       }
 
@@ -47,13 +50,11 @@ class SeqListContainer extends Component {
             isLoaded ?
             <>
                 <h1>Sequences <NavLink className="link no-ul" to="/sequences/add"><span title="New Sequence">+</span></NavLink></h1>
+                <div className="message">{this.state.message}</div>
                 <Error error={this.props.error}/>
-                    <SeqListNew 
-                        //poses={this.props.poses}
-                        //sequences={this.props.sequences}
-                        //categories={this.props.categories}
-                        onDelete={this.onDelete}/>
-                    </>
+                <SeqList 
+                    onDelete={this.onDelete}/>
+                 </>
             : <LoadingSpinner />
         )
     }
@@ -61,19 +62,13 @@ class SeqListContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        //poses: state.poses.poses,
-        //sequences: state.sequences.sequences,
-        //categories: state.categories.categories,
-        //loggedIn: state.auth.loggedIn,
-        auth: state.auth,
+        user: state.auth.currentUser,
         error: state.error.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        //getPoses: () => dispatch(getPoses()),
         getSequences: (user) => dispatch(getSequences(user)),
-        //getCategories: (user) => dispatch(getCategories(user)),
         deleteSequence: (id) => dispatch(deleteSequence(id)),
     }
 }
