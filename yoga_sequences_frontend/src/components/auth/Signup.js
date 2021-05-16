@@ -26,6 +26,7 @@ class Signup extends React.Component {
 
   render() {
     return (
+      <div className="genericContainer">
       <form
         onSubmit={this.handleSubmit}
       >
@@ -60,6 +61,7 @@ class Signup extends React.Component {
           value='Sign Up'
         />
       </form>
+      </div>
     );
   }
 }

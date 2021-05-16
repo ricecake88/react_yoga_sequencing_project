@@ -17,11 +17,11 @@ function withAuth(WrappedComponent) {
         return <LoadingSpinner />;
       } else if (!this.props.loggedIn) {
         return (
-          <>
+          <div className="genericContainer">
             <Login />
             <p>You need to login to view this page.</p>
             <Error error={this.props.error} />
-          </>
+          </div>
         );
       } else {
         return <WrappedComponent {...this.props} />;
