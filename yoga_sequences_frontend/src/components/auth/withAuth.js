@@ -9,7 +9,8 @@ import Error from "../errors/Error"
 function withAuth(WrappedComponent) {
   class Wrapper extends React.Component {
     componentDidMount() {
-      this.props.dispatchCheckAuth();
+      this.props.dispatchCheckAuth()
+      .catch(err => console.log(err));
     }
 
     render() {
@@ -39,12 +40,6 @@ function withAuth(WrappedComponent) {
     }
 
   }
-
-  // const mapStateToProps = ({
-  //   auth: { authChecked, loggedIn, currentUser }
-  //     }) => {
-  //       return { authChecked, loggedIn, currentUser };
-  //   };
 
   const mapDispatchToProps = (dispatch) => {
     return {
