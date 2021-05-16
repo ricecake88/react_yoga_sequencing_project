@@ -40,7 +40,7 @@ class CategoryContainer extends Component {
                 <div onClick={this.onClick}>
                     <h1>Categories</h1>
                     <Error error={this.props.error}/>
-                    <CategoryAdd addCategory={this.addCategory} />
+                    <CategoryAdd addCategoryCallback={this.addCategory} />
                     <CategoryList 
                         categories={this.props.categories} 
                         deleteCategory={this.props.deleteCategory} 

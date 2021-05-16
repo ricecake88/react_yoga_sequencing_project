@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class CategoryAdd extends Component {
 
     state = {
-        category: ''
+        category: '',
     }
 
     onChange = (event) => {
@@ -14,20 +14,18 @@ class CategoryAdd extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.addCategory(this.state.category)
-        this.setState({
-            category: ''
-        })
+        this.props.addCategoryCallback(this.state.category)
     }
 
     render() {
-        return (//TO-DO: STYLING
+        return (
         <>
             <form onSubmit={this.onSubmit}>
-                <label htmlFor="category">Add Category</label>
+                <label htmlFor="category">Name:</label>
                 <input type="text" name="category" 
                     value={this.state.category} 
                     onChange={this.onChange} 
+                    placeholder="New Category"
                     onClick={this.props.onClick}/>
                 <button>Add</button>
             </form>
