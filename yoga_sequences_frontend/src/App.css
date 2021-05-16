@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost&family=Oswald&family=Roboto+Slab&family=Spartan&family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost&family=Oswald&family=Roboto+Slab&family=Spartan&family=Raleway&family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons"');
 
 body {
@@ -12,20 +12,13 @@ body {
     background-size: auto;
     background-repeat: no-repeat;
 }
-h1 {
+h1, .heading {
     font-family: 'Jost', serif;
-    font-size: 14pt;
+    font-size: 18pt;
     color: rgb(85, 36, 17);
 }
 
-form,select,input,p, select {
-    font-family: 'Roboto Slab', serif;
-    color: black;
-}
-.label {
-    font-weight: bold;
-}
-
+/* navigation bar related CSS */
 .navbar {
     background-color:rgb(255, 237, 236);
     font-size: 12pt;
@@ -49,6 +42,7 @@ form,select,input,p, select {
 .link {
     font-family: 'Jost', sans-serif;
 }
+
 
 .no-ul {
     text-decoration: none;
@@ -90,32 +84,69 @@ form,select,input,p, select {
 
 }
 
-.sequenceContainer {
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 60%;
-    /*border: 5px solid red*/
+/* Form related CSS */
+form,select,input,p, select {
+    font-family: 'Roboto Slab', serif;
+    color: black;
 }
 
-.sequenceContainerGrid {
+label {
+    font-weight: bold
+}
+
+/*** below two need to be updated with colors */
+input, select {
+    border: 1px pink solid;
+    outline: 0;
+}
+input:focus, select:focus {
+    border: 1px red solid;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+
+/* generic styles for all pages */
+.genericContainer {
+    margin: 10px;
+}
+
+.genericInnerContainer {
+    background-color: beige;
+    opacity: 80%;
+    color:black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+/* table grid layouts */
+.sequenceContainerGrid3 {
     margin-left: 10px;
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 75% 10% 10%;
-    /*border: 5px solid green;*/
+
 }
 
-.sequenceContainer .header, .sequenceContainer .head, .sequenceContainer .cell {
-    /*padding: 10px;*/
-    /*border: 1px solid lightgray;*/
+.sequenceContainerGrid2 {
+    margin-left: 10px;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 80% 20%;
+
+}
+
+.genericInnerContainer .header, .genericInnerContainer .head, .genericInnerContainer .cell {
     height: 25px;
     padding: 10px;
-    
-    
 }
 
-/* header to my table */
-.sequenceContainer .header {
+/* header to sequence table */
+.genericInnerContainer .header {
     background: rgb(255, 228, 168);
     font-weight: bold;
     border: 1px solid rgb(167, 103, 0);
@@ -124,63 +155,40 @@ form,select,input,p, select {
 }
 
 /* row cell to table */
-.sequenceContainer .head {
+.genericInnerContainer .head {
     background: white;
     border: 1px solid rgb(253, 200, 156);
     color: black;
     font-family: 'Jost', sans-serif;
 }
 
-/* ---------- sequence show CSS styles -------- */
-.sequenceShowContainer {
-    margin: 10px;
-   /* font-family: Jost, sans-serif;*/
-}
 
-.genericContainer {
-    margin: 10px;
-   /* font-family: Jost, sans-serif;*/
-}
 
-.sequenceShowDiv, .poseDescription {
-    background-color: beige;
-    padding: 10px;
-    /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
-    opacity: 60%;
-    color: black;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    border: 1px solid gray;
-}
-
-.genericInnerContainer {
-    background-color: beige;
-    opacity: 60%;
-    color:black;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    border: 1px solid gray;
-    padding: 10px;
-}
+/* sequence Show classNames */
 .highlightPose {
-    width: 80%;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
 }
 
-label {
-    font-weight: bold
-}
 .center {
     text-align: center;
 }
 
-.selectedPose {
+.big {
+    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.next-text {
+    text-align: right;
+}
+.genericInnerContainer .selectedPose {
     color: red;
     font-weight: bold;
+    background-color:black;
 }
+
 /* column cell to table */
 .sequenceContainer .cell  {
     background: grey;
