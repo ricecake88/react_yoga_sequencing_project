@@ -40,7 +40,7 @@ h1, .heading {
     text-decoration: none;
 }
 
-.openLinks {
+.navbar .openLinks {
     text-align:left;
     display: inline-block;
     border: 5px solid red;
@@ -48,29 +48,35 @@ h1, .heading {
     padding: 10px;
 }
 
-.authLinks {
+.navbar .authLinks {
     display: block;
     border: 5px solid greenyellow;
     float: right;
     padding: 10px;
 }
-.link {
+.navbar .link {
     font-family: 'Jost', sans-serif;
-    color: rgb(93, 93, 93);
+   /* color: rgb(93, 93, 93);*/
+   color: brown;
     /*width: 100px; */
     /*padding: 10px;*/
     padding: 0px 10px;
     text-transform: uppercase;
 }
 
-.activeLink {
+.activeLink  {
     text-align:right;
     /*display:inline;*/
     border: 5px solid black;
     color: brown;
     font-weight: bold;
 }
-.link:hover {
+
+.genericInnerContainer .link {
+    color: rgb(93, 93, 93);
+}
+
+.genericInnerContainer .link:hover, .navbar .link:hover {
     color: brown;
 }
 
@@ -100,6 +106,7 @@ h1, .heading {
 form, select, input, select {
     font-family: 'Roboto Slab', serif;
     color: black;
+    font-size: 12pt;
     padding: 3px;
     margin: 5px;
 }
@@ -122,8 +129,8 @@ input, select {
 input:focus, select:focus {
     border: 1px red solid;
     outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 150, 102, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 150, 102, 0.6);
 }
 
 

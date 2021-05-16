@@ -1,14 +1,13 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 //import SeqFormNew from '../components/sequences/SeqFormNew';
 import SeqListNew from '../components/sequences/SeqListNew';
 import { getSequences, deleteSequence} from '../actions/sequences'
 import { getCategories } from '../actions/categories';
 import { getPoses } from '../actions/poses';
 import LoadingSpinner from '../components/LoadingSpinner';
-//import SeqFormNew from '../components/sequences/SeqFormNew';
-//import SeqShow from '../components/sequences/SeqShow';
+import Error from '../components/errors/Error';
 
 // TO-DO: Add in categories and select sequence by category
 class SeqNewContainer extends Component {
@@ -18,34 +17,43 @@ class SeqNewContainer extends Component {
     }
 
     componentDidMount = () => {
-        this.props.getPoses();
-        this.props.getSequences(this.props.auth.currentUser);
-        this.props.getCategories(this.props.auth.currentUser);
+        //this.props.getPoses()
+        //.catch(err => console.log(err));
+        this.props.getSequences(this.props.auth.currentUser)
+        .catch(err => console.log(err));
+        //this.props.getCategories(this.props.auth.currentUser)
+        //.catch(err => console.log(err));
         this.setState({
             isLoaded: true
         })
     }
 
+    componentWillUnmount() {
+        // fix Warning: Can't perform a React state update on an unmounted component
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
+
     onDelete = (id) => {
         this.props.deleteSequence(id)
+        .catch(err => console.log(err))
       }
 
     render() {
-        console.log(">>>SeqContainer->render()")
-        console.log(this.props)
-        console.log(this.props.poses)
-        console.log(this.props.sequences)
+
         const { isLoaded } = this.state;
         return (
             isLoaded ?
-                <div>
+            <>
+                <h1>Sequences <NavLink className="link no-ul" to="/sequences/add"><span title="New Sequence">+</span></NavLink></h1>
+                <Error error={this.props.error}/>
                     <SeqListNew 
-                        poses={this.props.poses}
-                        sequences={this.props.sequences}
-                        categories={this.props.categories}
+                        //poses={this.props.poses}
+                        //sequences={this.props.sequences}
+                        //categories={this.props.categories}
                         onDelete={this.onDelete}/>
-                    <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>
-                </div>
+                    </>
             : <LoadingSpinner />
         )
     }
@@ -53,19 +61,19 @@ class SeqNewContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        poses: state.poses.poses,
-        sequences: state.sequences.sequences,
-        categories: state.categories.categories,
-        loggedIn: state.auth.loggedIn,
+        //poses: state.poses.poses,
+        //sequences: state.sequences.sequences,
+        //categories: state.categories.categories,
+        //loggedIn: state.auth.loggedIn,
         auth: state.auth,
         error: state.error.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getPoses: () => dispatch(getPoses()),
+        //getPoses: () => dispatch(getPoses()),
         getSequences: (user) => dispatch(getSequences(user)),
-        getCategories: (user) => dispatch(getCategories(user)),
+        //getCategories: (user) => dispatch(getCategories(user)),
         deleteSequence: (id) => dispatch(deleteSequence(id)),
     }
 }
