@@ -28,6 +28,7 @@ export const checkAuth = () => {
             if (resp.ok) {
                 return resp.json().then(user => dispatch({type: AUTHENTICATED, payload: user}))
             } else {
+                dispatch({type: 'CLEAR_STORE'})
                 return Promise.reject(dispatch({type: NOT_AUTHENTICATED}))
             }
         })
@@ -102,6 +103,7 @@ export const logoutUser = () => {
         "Authorization": getToken(),
       },
     }).then((res) => {
+      dispatch({type: 'CLEAR_STORE'})
       if (res.ok) {
         return dispatch({ type: NOT_AUTHENTICATED });
       } else {
