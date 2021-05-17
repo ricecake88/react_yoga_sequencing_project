@@ -5,10 +5,10 @@ import { connect} from 'react-redux'
 class Categories2 extends Component {
 
   //TO-DO Reduce this to a functional component
-  componentDidMount = () => {
+  //componentDidMount = () => {
 
     //this.props.getCategories(this.props.user);
-  }
+  //}
 
  /* onChange = (event) => {
     console.log("Selected onChangeCategory");
@@ -53,7 +53,7 @@ class Categories2 extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        //categories: state.categories.categories
+        categories: state.categories.categories
     }
 }
 

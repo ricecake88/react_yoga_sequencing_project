@@ -71,8 +71,9 @@ class PoseContainer extends Component {
             <h1>Poses</h1>
             {/*display the drop down select for all the poses, requires list of all poses and the
             callback to update the state based on selection */}
+            <form>
                 <PoseSelector poses={this.props.poses} updateValue={this.updateValue}/>
-
+            </form>
                 {/*display the Pose */}
                 {this.displayPose()}
         </div> : <LoadingSpinner />

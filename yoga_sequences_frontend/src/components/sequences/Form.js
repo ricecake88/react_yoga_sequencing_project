@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-import Categories2 from './Categories2';
+import SeqCategories from './SeqCategories';
 //import { connect } from 'react-redux';
 import SeqCategoryAdd from './SeqCategoryAdd';
 //import { addCategory } from '../../actions/categories';
 //import { addSequence } from '../../actions/sequences';
 //import { editSequence } from '../../actions/sequences';
 //import { deletePoseFromSeq } from '../../actions/poseInSeq'
-import PoseAdd from './PoseAdd';
+import SeqPoseAdd from './SeqPoseAdd';
 //import Login from '../auth/Login';
 import Error from '../errors/Error';
 
@@ -15,11 +15,11 @@ const Form  = (props) => {
         <Fragment>
         {props.route === "add" ? <h1>Create a New Sequence</h1> : <h1>Edit Sequence</h1>}
         {props.error !== null ? <Error className="errors" error={props.error}/> : null}
-        {props.message}
+        <div className="message">{props.message}</div>
         <form onSubmit={props.onSubmit}>
             <label htmlFor="name"> Sequence Name: </label>
             <input type="name" name="name" onChange={props.onChange} value={props.name} onClick={()=>props.onClick()}/><br/>
-            <Categories2 
+            <SeqCategories
                 user={props.auth.currentUser}
                 categories={props.categories}
                 addCategory={props.addCategory } 
@@ -32,7 +32,7 @@ const Form  = (props) => {
                 name="category_id" 
                 addCategory={props.addCategory} 
                 onChange={props.onChange}/><br/>
-            <PoseAdd 
+            <SeqPoseAdd 
                 poses={props.poses} 
                 onClick={props.onClick}
                 onClickAddPose={props.onClickAddPose} 

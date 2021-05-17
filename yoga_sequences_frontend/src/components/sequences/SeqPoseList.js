@@ -31,6 +31,7 @@ const SeqPoseList = ({posesInSeq, poses, current}) => {
                         return <Fragment key={"pose" + pose.id}>
                             {highlightCurrentPose(current, index, pose)}</Fragment>
                     })}
+                
                 </>
         }
     }

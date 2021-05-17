@@ -17,8 +17,10 @@ class SeqShowContainer extends Component {
     }
 
     componentDidMount = () => {
-        this.props.getSequences(this.props.auth.currentUser);
-        this.props.getPoses();
+        this.props.getSequences(this.props.auth.currentUser)
+        .catch(err => console.log(err));
+        this.props.getPoses()
+        .catch(err => console.log(err));
         this.setState({
             isLoaded: true
         })

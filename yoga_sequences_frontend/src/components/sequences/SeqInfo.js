@@ -18,7 +18,7 @@ const SeqInfo = (props) => {
                     {sequence.pose_in_seqs.length !== 0 ?
                         <SeqPoseInSeq poses={poses} pose={sequence.pose_in_seqs[data.counter]}/>
                     : "Nothing to do yet!"}
-                    <div className="next-text">{data.counter+1 < sequence.pose_in_seqs.length ?  "Next Up: " : "Last Pose"}
+                    <div className="ar">{data.counter+1 < sequence.pose_in_seqs.length ?  "Next Up: " : "Last Pose"}
                         {data.counter+1 < sequence.pose_in_seqs.length ?
                                 poses.find(pose => pose.id === sequence.pose_in_seqs[data.counter+1].pose_id).name
                         : null }

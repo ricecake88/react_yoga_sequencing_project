@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PoseSelector from '../poses/PoseSelector';
-import PoseDraggable from '../sequences/PoseDraggable';
-
+import SeqPoseDraggable from './SeqPoseDraggable';
 class PoseAdd extends Component {
 
     state = {
@@ -29,7 +28,7 @@ class PoseAdd extends Component {
                 <button onClick={this.props.onClickAddPose} value={this.state.pose_id}>+</button><br/>
 
             {(this.props.addedPoses.length !== 0) ?
-                <PoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag} onChange={this.props.onChange}/> : null
+                <SeqPoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag} onChange={this.props.onChange}/> : null
             }
         </>)
     }

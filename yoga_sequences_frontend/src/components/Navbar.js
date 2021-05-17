@@ -20,15 +20,20 @@ class Navbar extends React.Component {
       return loggedIn ? (
         <>
           <NavLink exact to='/sequences/add'
-           className='link no-ul'>
+           className='link no-ul'
+           activeClassName="activeLink"
+           >
            +
          </NavLink>
           <NavLink exact to='/categories'
-           className='link no-ul'>
+           className='link no-ul'
+           activeClassName="activeLink"
+           >
             Categories
          </NavLink>
           <NavLink exact to='/sequences'
            className='link no-ul'
+           activeClassName="activeLink"
           >
             Sequences
           </NavLink>
@@ -73,7 +78,7 @@ render() {
             exact
             to='/'
           >
-            Normal Route
+            Home
           </NavLink>
 
           <NavLink

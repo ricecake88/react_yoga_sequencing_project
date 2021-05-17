@@ -41,12 +41,7 @@ class SeqFormContainer extends Component {
         return (
             isLoaded ?
                 <div>
-                    {/*<SeqForm route={"Add"} />*/}
-                    {/*{this.props.location.status !== undefined ? <div>{this.props.location.status}</div> : null}*/}
-                    {/*<Error error={this.props.error}/>*/}
-                    {/*<SeqListNewest poses={this.props.poses} sequences={this.props.sequences} categories={this.props.categories} match={this.props.match}/>
-                    <NavLink className="link" to="/sequences/add">Create New Sequence</NavLink>*/}
-                    <SeqForm 
+                    <SeqForm
                         sequences={this.props.sequences}
                         categories={this.props.categories} 
                         poses={this.props.poses} 
@@ -55,11 +50,25 @@ class SeqFormContainer extends Component {
                         clearErrorMessage={this.props.clearErrorMessage}
                         //message={this.props.message}
                     />
+
                 </div>
             : <LoadingSpinner />
         )
     }
 }
+
+/*const mapStateToProps = (state) => {
+    return {
+        poses: state.poses.poses,
+        sequences: state.sequences.sequences,
+        //user: state.auth.currentUser,
+        categories: state.categories.categories,
+        //loggedIn: state.auth.loggedIn,
+        auth: state.auth,
+        error: state.error.error,
+        //message: state.sequences.message
+    }
+}*/
 
 const mapStateToProps = (state) => {
     return {

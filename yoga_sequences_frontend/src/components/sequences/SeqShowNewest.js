@@ -49,7 +49,7 @@ class SeqShowNewest extends Component {
         let id = this.props.match.params.id;
 
         // if user refreshes the page or arrives here directly
-        if (this.props.sequences.length === 0 && 
+        if (this.props.sequences.length === 0 &&
             this.props.match.params.id !== "add" && 
             this.props.match.url === `/sequences/${id}`) {
             console.log("SHOW -> REFRESH/DIRECT")
@@ -69,7 +69,7 @@ class SeqShowNewest extends Component {
             })
             .catch(err => console.log("Caught!"))
         } else {
-            console.log("SHOW -> NAVIGATE FROM LIST")
+            console.log("SHOW -> USE SEQUENCES SINCE WE ALREADY HAVE IT FOR EFFICIENCY")
 
             // if user accesses the sequence from the sequence list
             // find the sequence based on path id from sequence list
@@ -154,6 +154,7 @@ class SeqShowNewest extends Component {
                         changePause={this.changePause}
                         reset={this.reset}
                         poses={sequence.poses} />
+                    <br/>
                     <SeqPoseList 
                         posesInSeq={sequence.pose_in_seqs}
                         poses={this.props.poses}
@@ -312,7 +313,7 @@ const mapStateToProps = (state) => {
     return {
         sequences: state.sequences.sequences,
 
-        // needed for when user goes directly to page
+        // only when user directly arrives to this address will we use this
         sequence: state.sequences.selSequence,
     }
 }

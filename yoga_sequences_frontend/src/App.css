@@ -21,8 +21,8 @@ h1, .heading {
 
 /* navigation bar related CSS */
 .navbar {
-    background-color:rgb(255, 237, 236);
-    font-size: 12pt;
+    background-color:rgb(255, 220, 189);
+    font-size: 14pt;
     width: 100%;
     height: 60px;
     margin: 0;
@@ -43,16 +43,17 @@ h1, .heading {
 .navbar .openLinks {
     text-align:left;
     display: inline-block;
-    border: 5px solid red;
+    /*border: 5px solid red;*/
     margin-left:5px;
     padding: 10px;
 }
 
 .navbar .authLinks {
     display: block;
-    border: 5px solid greenyellow;
+    /*border: 5px solid greenyellow;*/
     float: right;
     padding: 10px;
+    margin-right: 5px;
 }
 .navbar .link {
     font-family: 'Jost', sans-serif;
@@ -60,14 +61,14 @@ h1, .heading {
    color: brown;
     /*width: 100px; */
     /*padding: 10px;*/
-    padding: 0px 10px;
+    padding: 0px 15px;
     text-transform: uppercase;
 }
 
 .activeLink  {
     text-align:right;
     /*display:inline;*/
-    border: 5px solid black;
+    /*border: 5px solid black;*/
     color: brown;
     font-weight: bold;
 }
@@ -114,7 +115,6 @@ form, select, input, select {
 form label {
     font-weight: bold;
     padding: 3px;
-    border: 1px solid black;
     margin: 5px;
 }
 form fieldset {
@@ -190,15 +190,8 @@ input:focus, select:focus {
 
 
 
-/* sequence Show classNames */
-.highlightPose {
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .genericInnerContainer .selectedPose {
-    color: red;
+    color: white;
     font-weight: bold;
     background-color:black;
 }
@@ -214,6 +207,13 @@ input:focus, select:focus {
 }
 .seqField {
     padding: 5px;
+}
+
+/* sequence Show classNames */
+.highlightPose {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* delete and edit actions on sequences */
@@ -241,6 +241,11 @@ button:hover {
     border: 1px solid blue;
 }
 
+.message {
+    margin-left: 20px;
+    padding: 5px;
+}
+
 /* common styling */
 .center {
     text-align: center;
@@ -262,3 +267,54 @@ button:hover {
 .gray {
     color: gray;
 }
+
+/**** draggable style ****/
+
+.droppable {
+    width: 100%;
+    /*border: 1px solid gray;
+    border-radius: 3pt;*/
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+}
+.draggable {
+    padding: 5px;
+    border: 1px solid silver;
+    border-radius: 3pt;
+}
+
+.droppable .draggable-header, .draggable-header:hover {
+    background-color: peachpuff;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid grey;
+}
+
+.draggable:hover, .draggable:active {
+    background-color: silver;
+    border-radius: 3pt;
+}
+
+.draggable .first, .draggable-header .first {
+    width: 70%;
+    margin: 2px;
+    display: inline-block;
+}
+
+.draggable .second, .draggable-header .second {
+    width: 10%;
+    margin: 2px;
+    display: inline;
+}
+.draggable input {
+    width: 10%;
+}
+.draggable .third, .draggable-header .third {
+    width: 10%;
+    margin: 2px;
+    display: inline;
+    float: right;
+}
+
+/**** end draggable style ****/
