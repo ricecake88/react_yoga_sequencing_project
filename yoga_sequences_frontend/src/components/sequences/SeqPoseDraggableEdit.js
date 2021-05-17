@@ -5,12 +5,11 @@ class SeqPoseDraggableEdit extends Component {
     render() {
         console.log("SeqPoseDraggableEdit");
         console.log(this.props.poseInSeq)
+        const pose = this.props.poses.find(pose => pose.id === this.props.poseInSeq.pose_id)
         return (
             <>
                 {/* find pose name */}
-                {this.props.poses.map(pose => {
-                    return (pose.id === this.props.poseInSeq.pose_id) ? <div className="first">{pose.name}</div> : null
-                })}
+                {Object.keys(pose).length !== 0 ? <div className="first">{pose.name}</div> : null}
                 {/* Input for num_breaths */}
                 <span className="second">
                     <input key={this.props.poseInSeq.num_breaths} 
