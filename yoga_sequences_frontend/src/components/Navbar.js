@@ -14,7 +14,6 @@ class Navbar extends React.Component {
     this.props.clearErrorMessage();
   }
   renderAuthLinks() {
-    console.log(this.props);
     const { authChecked, loggedIn, currentUser } = this.props;
     if (authChecked) {
       return loggedIn ? (
@@ -71,8 +70,6 @@ render() {
       <div className='navbarContainer'>
         <div className='openLinks'>
           <NavLink
-            //className='p-4 block sm:inline-block'
-            //activeClassName='text-blue-900'
             className="link no-ul"
             activeClassName="activeLink"
             exact
