@@ -16,7 +16,7 @@ class CategoryContainer extends Component {
     componentDidMount = () => {
         //retrieve all the categories
         this.props.getCategories(this.props.auth.currentUser)
-        .catch(err => console.log("getCategories -> " + err.error));
+        .catch(err => console.log(err));
 
         // once categories are retrieved then set state to
         // isLoaded
@@ -27,13 +27,13 @@ class CategoryContainer extends Component {
 
     addCategory = (category) => {
         this.props.addCategory(category)
-        .catch(err => console.log("addCategory -> " + err.error));
+        .catch(err => console.log(err));
     }
 
     onClick = () => {
         this.props.clearErrors();
     }
-    
+
     render() {
         return (
             this.state.isLoaded && !this.state.requesting ?
@@ -41,9 +41,9 @@ class CategoryContainer extends Component {
                     <h1 className="center">Categories</h1>
                     <Error error={this.props.error}/>
                     <CategoryAdd addCategoryCallback={this.addCategory} />
-                    <CategoryList 
-                        categories={this.props.categories} 
-                        deleteCategory={this.props.deleteCategory} 
+                    <CategoryList
+                        categories={this.props.categories}
+                        deleteCategory={this.props.deleteCategory}
                         />
                  </div>
             : <LoadingSpinner />
