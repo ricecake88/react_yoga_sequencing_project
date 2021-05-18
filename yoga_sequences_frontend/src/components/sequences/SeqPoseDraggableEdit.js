@@ -11,11 +11,11 @@ class SeqPoseDraggableEdit extends Component {
 
                 {/* Input for num_breaths */}
                 <span className="second">
-                    <input key={this.props.poseInSeq.num_breaths} 
-                        type="text" 
-                        defaultValue={this.props.poseInSeq.num_breaths} 
-                        name="num_breaths" 
-                        onChange={(event) =>this.props.onChange(event)} 
+                    <input key={this.props.poseInSeq.num_breaths}
+                        type="text"
+                        defaultValue={this.props.poseInSeq.num_breaths}
+                        name="num_breaths"
+                        onChange={(event) =>this.props.onChange(event)}
                         onBlur={(event) => this.props.onBlur(event, this.props.index)}>
                     </input>
                 </span>

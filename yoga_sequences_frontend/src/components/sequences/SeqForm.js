@@ -51,7 +51,7 @@ class SeqForm extends Component {
                 }
             } else return current_state;
         } else return current_state;
-    } 
+    }
 
     componentDidMount = () => {
 
@@ -72,7 +72,7 @@ class SeqForm extends Component {
                 if (this.props.sequence.pose_in_seqs.length !== 0) {
                     pose_in_seqs = this.props.sequence.pose_in_seqs
                     SeqForm.sortPoses(this.props.sequence.pose_in_seqs)
-                }            
+                }
             }
 
             // set state with new information if available
@@ -83,7 +83,7 @@ class SeqForm extends Component {
                 sequence: this.props.sequence,
                 pose_in_seqs: pose_in_seqs,
                 isLoaded: true
-            }))               
+            }))
            //console.log(this.state);
         } else if  (this.props.match.path === "/sequences/edit/:id") {
 
@@ -134,7 +134,7 @@ class SeqForm extends Component {
         console.log(this.state);
         let sequence = {};
         this.onClick();
-    
+
         // if the category state is not adding a category
         if (this.state.category_id !== "Add Category") {
             sequence = {
@@ -206,7 +206,7 @@ class SeqForm extends Component {
 
     }
 
-    /* delete pose from state pose_in_seqs and 
+    /* delete pose from state pose_in_seqs and
        also the database pose_in_seqs */
     onClickDeletePose = (event, id, localPoseId) => {
         event.preventDefault()
@@ -299,17 +299,17 @@ class SeqForm extends Component {
                     route={route}
                     error={this.props.error}
                     message={this.state.message}
-                    
+
                     // form props
                     onSubmit={this.onSubmit}
                     onChange={this.onChange}
                     name={this.state.name}
                     onClick={this.onClick}
-                    
+
                     // category props
                     category_id={this.state.category_id}
                     addCategory={this.props.addCategory}
-                    
+
                     // pose props
                     onClickAddPose={this.onClickAddPose}
                     pose_in_seqs={this.state.pose_in_seqs}

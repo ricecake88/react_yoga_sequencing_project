@@ -34,7 +34,7 @@ class SeqFormContainer extends Component {
                 <div>
                     <SeqForm
                         sequences={this.props.sequences}
-                        match={this.props.match} 
+                        match={this.props.match}
                         clearErrorMessage={this.props.clearErrorMessage}
                     />
 
