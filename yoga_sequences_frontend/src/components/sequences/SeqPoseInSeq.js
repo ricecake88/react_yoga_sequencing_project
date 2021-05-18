@@ -13,7 +13,10 @@ class SeqPoseInSeq extends Component {
                 <p>{this.props.pose.pose_order}</p>
                 */}
                 <p className="big center">{pose.name}</p>
-                {/*<p>{pose.image}</p>
+                <img src={require(`../../assets/images/poses/${pose.image}.png`).default}
+                    alt={`${pose.image}`}
+                    className="poseImg"/><br/>
+                {/*
                 <p>{pose.url}</p>
                 <p>{pose.video}</p>*/}
                 <p>{pose.description}</p>
