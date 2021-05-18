@@ -1,7 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import NormalRoute from "./components/NormalRoute";
+import Home from "./components/Home";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import withAuth from './components/auth/withAuth';
@@ -20,7 +20,7 @@ function App() {
       <div className="genericContainer">
         <div className="genericInnerContainer">
           <Switch>
-              <Route exact path='/' component={NormalRoute} />
+              <Route exact path='/' component={Home} />
               <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
               <Route exact path='/poses' component={PoseContainer}/>
               <Route exact path='/signup' component={Signup} />
