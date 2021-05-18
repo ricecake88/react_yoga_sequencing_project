@@ -29,8 +29,6 @@ class SeqShow extends Component {
         if (Object.keys(current_state.sequence).length === 0 &&
             Object.keys(props.sequence).length !== 0 &&
             props.match.id !== "add" ) {
-                //SeqShow.sortPoses(props.sequence.pose_in_seqs)
-                console.log("SHOW -> SETTING UP INITIAL SEQUENCE ONCE")
                 return {
                     ...current_state,
                     sequence: {
@@ -43,14 +41,12 @@ class SeqShow extends Component {
     }
 
     componentDidMount = () => {
-        console.log("SeqShow -> componentDidMount")
         let id = this.props.match.params.id;
 
         // if user refreshes the page or arrives here directly
         if (this.props.sequences.length === 0 &&
             this.props.match.params.id !== "add" &&
             this.props.match.url === `/sequences/${id}`) {
-            console.log("SHOW -> REFRESH/DIRECT")
 
             // make request to server to retrieve sequence
             this.props.getSequence(parseInt(this.props.match.params.id))
@@ -67,16 +63,15 @@ class SeqShow extends Component {
             })
             .catch(err => console.log("Caught!"))
         } else {
-            console.log("SHOW -> USE SEQUENCES SINCE WE ALREADY HAVE IT FOR EFFICIENCY")
 
             // if user accesses the sequence from the sequence list
             // find the sequence based on path id from sequence list
+            // for efficiency
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
 
             // set initial
             if (sequence) {
-                //SeqShow.sortPoses(sequence.pose_in_seqs)
                 let num_breaths = 1;
                 if (sequence !== undefined && sequence.pose_in_seqs.length !== 0) {
                     num_breaths = sequence.pose_in_seqs[0].num_breaths
@@ -163,7 +158,6 @@ class SeqShow extends Component {
     }
 
     render() {
-        console.log("SHOW -> RENDER")
         const {isLoaded, ...data} = this.state;
         return isLoaded ?
             <div>
