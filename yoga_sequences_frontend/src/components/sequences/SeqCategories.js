@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux'
-//import { getCategories } from '../../actions/categories';
 
-class Categories2 extends Component {
+class SeqCategories extends Component {
 
-  //TO-DO Reduce this to a functional component
-  //componentDidMount = () => {
-
-    //this.props.getCategories(this.props.user);
-  //}
-
- /* onChange = (event) => {
-    console.log("Selected onChangeCategory");
-     this.setState({
-            [event.target.name]: event.target.value
-        })
-  }*/
-
-  //onSubmit = (event) => {
-  //  event.preventDefault();
-  //}
 
   display() {
-        //console.log(">>>Categories2")
-        //console.log(this.props)
-        //console.log(this.props.categories)
-        //console.log(Object.keys(this.props.categories).length)
+
         return (
         <>
         <label htmlFor="category">Category: </label>
@@ -44,10 +24,7 @@ class Categories2 extends Component {
   };
 
    render() {
-        return(
-        <>
-            {this.display()}
-        </>)
+        return <>{this.display()}</>
     }
 }
 
@@ -57,9 +34,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps =(dispatch) => {
-    return {
-        //getCategories: (user) => dispatch(getCategories(user))
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Categories2);
+export default connect(mapStateToProps)(SeqCategories);
