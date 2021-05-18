@@ -58,7 +58,7 @@ h1, .heading {
 .navbar .link {
     font-family: 'Jost', sans-serif;
    /* color: rgb(93, 93, 93);*/
-   color: brown;
+   color: black;
     /*width: 100px; */
     /*padding: 10px;*/
     padding: 0px 15px;
@@ -72,36 +72,6 @@ h1, .heading {
     color: brown;
     font-weight: bold;
 }
-
-.genericInnerContainer .link {
-    color: rgb(93, 93, 93);
-}
-
-.genericInnerContainer .link:hover, .navbar .link:hover {
-    color: brown;
-}
-
-/*.openLink {
-    color: darkgray;
-    width: 100px;
-    padding: 10px;
-    text-transform: uppercase;
-}
-
-.openLink:hover, .authLink:hover, link:hover {
-    color: brown
-}*/
-
-/*.link:hover {
-    color:brown;
-}*/
-
-/*.authLink {
-    color: rgb(93, 93, 93);
-    padding: 15px;
-    text-transform: uppercase;
-
-}*/
 
 /* Form related CSS */
 form, select, input, select {
@@ -150,6 +120,15 @@ input:focus, select:focus {
     padding: 10px;
 }
 
+.genericInnerContainer .link {
+    color: rgb(93, 93, 93);
+}
+
+.genericInnerContainer .link:hover, .navbar .link:hover {
+    color: brown;
+}
+
+
 /* table grid layouts */
 .sequenceContainerGrid3 {
     margin-left: 10px;
@@ -173,7 +152,7 @@ input:focus, select:focus {
 
 /* header to sequence table */
 .genericInnerContainer .header {
-    background: rgb(255, 228, 168);
+    background: rgb(255, 235, 212);
     font-weight: bold;
     border: 1px solid rgb(167, 103, 0);
     color:brown;
@@ -183,7 +162,7 @@ input:focus, select:focus {
 /* row cell to table */
 .genericInnerContainer .head {
     background: white;
-    border: 1px solid rgb(253, 200, 156);
+    border: 1px solid rgb(255, 209, 187);
     color: black;
     font-family: 'Jost', sans-serif;
 }
@@ -242,7 +221,7 @@ button:hover {
 }
 
 .message {
-    margin-left: 20px;
+    margin-left: 10px;
     padding: 5px;
 }
 
@@ -268,6 +247,10 @@ button:hover {
     color: gray;
 }
 
+.margin10 {
+    margin: 10px;
+}
+
 /**** draggable style ****/
 
 .droppable {
@@ -277,6 +260,7 @@ button:hover {
     margin-right: auto;
     margin-left: auto;
     margin-top: 10px;
+    font-family: 'Jost', sans-serif;
 }
 .draggable {
     padding: 5px;
@@ -285,7 +269,7 @@ button:hover {
 }
 
 .droppable .draggable-header, .draggable-header:hover {
-    background-color: peachpuff;
+    background-color: rgb(255, 235, 212);
     font-weight: bold;
     padding: 10px;
     border: 1px solid grey;
@@ -309,6 +293,7 @@ button:hover {
 }
 .draggable input {
     width: 10%;
+    font-family: 'Jost', sans-serif;
 }
 .draggable .third, .draggable-header .third {
     width: 10%;
