@@ -5,8 +5,6 @@ import SeqPoseDraggableEdit from './SeqPoseDraggableEdit';
 class SeqPoseDraggable extends Component  {
 
     render() {
-        console.log("Pose Draggable")
-        console.log(this.props)
         return (
             <DragDropContext onDragEnd={this.props.onDrag}>
                 <Droppable droppableId="poses">
@@ -14,7 +12,7 @@ class SeqPoseDraggable extends Component  {
                         <div className="droppable">
                             <div className="draggable-header">
                                 <div className="first">Name</div>
-                                <div className="second"># of Breaths</div>
+                                <div className="second" title="One breath is 3 seconds"># of Breaths</div>
                                 <div className="third">Remove</div>
                             </div>
                         <div {...provided.droppableProps} ref={provided.innerRef}>

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
 import { editSequence, getSequence } from '../../actions/sequences';
-import { deletePoseFromSeq } from '../../actions/poseInSeq'
+import { deletePoseFromSeq } from '../../actions/poseInSeq';
+import { setError } from '../../actions/errors';
 import Form from './Form';
 
 class SeqForm extends Component {
@@ -54,13 +55,12 @@ class SeqForm extends Component {
 
     componentDidMount = () => {
 
-        //this.props.getCategories(this.props.auth.currentUser);
-
         // came through direct, therefore passed props may not be available yet
         if (this.props.sequences.length === 0 && this.props.match.path === "/sequences/edit/:id" ){
 
             // retrieve sequence associated with id in URL
-            this.props.getSequence(this.props.match.params.id);
+            this.props.getSequence(this.props.match.params.id)
+            .catch(err => console.log(err));
 
             //initialize state variables
             let pose_in_seqs = [];
@@ -141,11 +141,10 @@ class SeqForm extends Component {
                 ...this.state.sequence,
                 name: this.state.name,
                 category_id: parseInt(this.state.category_id),
-                user_id: this.props.auth.currentUser.id,
+                user_id: this.props.user.id,
                 pose_in_seqs: this.state.pose_in_seqs
             }
             if (this.props.match.path === "/sequences/add") {
-                //console.log("YESSSSSSSSSSS")
                this.props.addSequence(sequence)
                .then(resp => {
                     this.setState({
@@ -156,7 +155,6 @@ class SeqForm extends Component {
                         sequence: {},
                         message: 'Saved Sequence.'
                     })
-                    //console.log(this.state)
                 })
                 .catch(err => console.log(err))
 
@@ -164,6 +162,7 @@ class SeqForm extends Component {
             else if (this.props.match.path === "/sequences/edit/:id") {
                this.props.editSequence(sequence)
                .then(resp => {
+                   let path = `/sequences/${parseInt(this.props.match.id)}`
                     this.setState({
                     name: '',
                     category_id: "",
@@ -178,10 +177,7 @@ class SeqForm extends Component {
         } else {
             // category state is still in adding a category when
             // user tries to submit
-            this.setState({
-                ...this.state,
-                message: 'Category not added, cannot submit.'
-            })
+            this.props.setError('Category not added, cannot submit.')
         }
 
     }
@@ -207,7 +203,6 @@ class SeqForm extends Component {
             ...this.state,
             pose_in_seqs: [...this.state.pose_in_seqs, pose_in_seq ]
             })
-        //console.log(this.state.pose_in_seqs);
 
     }
 
@@ -299,46 +294,39 @@ class SeqForm extends Component {
         const route = this.props.match.path.split("/")[2];
 
         return (
-            /*this.props.auth.loggedIn && this.props.auth.currentUser ?*/
-                this.state.isLoaded ?
-                    <Form
-                        route={route}
-                        error={this.props.error}
-
-                        /* this needs to change */
-                        message={this.state.message}
-
-                        // form props
-                        onSubmit={this.onSubmit}
-                        onChange={this.onChange}
-                        name={this.state.name}
-                        onClick={this.onClick}
-                        auth={this.props.auth}
-
-                        // category props
-                        categories={this.props.categories}
-                        category_id={this.state.category_id}
-                        addCategory={this.props.addCategory}
-                        
-                        // pose props
-                        poses={this.props.poses}
-                        onClickAddPose={this.onClickAddPose}
-                        pose_in_seqs={this.state.pose_in_seqs}
-                        onClickDeletePose={this.onClickDeletePose}
-                        onBlur={this.onBlur}
-                        handleOnDragEnd={this.handleOnDragEnd}
-                    />
-                : null
-            /*: <Login />*/
+            this.state.isLoaded ?
+                <Form
+                    route={route}
+                    error={this.props.error}
+                    message={this.state.message}
+                    
+                    // form props
+                    onSubmit={this.onSubmit}
+                    onChange={this.onChange}
+                    name={this.state.name}
+                    onClick={this.onClick}
+                    
+                    // category props
+                    category_id={this.state.category_id}
+                    addCategory={this.props.addCategory}
+                    
+                    // pose props
+                    onClickAddPose={this.onClickAddPose}
+                    pose_in_seqs={this.state.pose_in_seqs}
+                    onClickDeletePose={this.onClickDeletePose}
+                    onBlur={this.onBlur}
+                    handleOnDragEnd={this.handleOnDragEnd}
+                />
+            : null
         )
     }
 }
 
 function mapStateToProps(state) {
     return {
-        auth: state.auth,
+        user: state.auth.currentUser,
         error: state.error.error,
-        //categories: state.categories.categories,
+        poses: state.poses.poses,
         sequence: state.sequences.selSequence
      }
 }
@@ -354,7 +342,8 @@ function mapDispatchToProps(dispatch, props) {
 
         // functions only needed upon refresh or directly accessed
         getSequence: (id) => props.sequences.length === 0 ? dispatch(getSequence(id)) : null,
-        getCategories: (user) => props.sequences.length === 0 ? dispatch(getCategories(user)) : null
+        getCategories: (user) => props.sequences.length === 0 ? dispatch(getCategories(user)) : null,
+        setError: (msg) => dispatch(setError(msg))
 
     }
 }
