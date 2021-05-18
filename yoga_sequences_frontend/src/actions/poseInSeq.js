@@ -3,7 +3,6 @@ import { getToken } from './auth';
 import { handleServerError } from './errors';
 
 export const deletePoseFromSeq = (id) => {
-    console.log("deletePoseFromSeq")
     let config = {
         method: 'DELETE',
         headers: {
@@ -13,13 +12,12 @@ export const deletePoseFromSeq = (id) => {
         }
     }
     return(dispatch) => {
-        dispatch({type: 'START_DELETE_POSEINSEQ'})
+        dispatch({type: 'START_DELETE_POSE_IN_SEQ'})
         fetch(`${BACKEND_URL}/pose_in_seqs/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json)
-                    dispatch({type: 'DELETE_POSEINSEQ'}, json.poseInSeq)
+                    dispatch({type: 'DELETE_POSE_IN_SEQ'}, json.poseInSeq)
                 })
             } else {
                 return handleServerError(response, dispatch)
@@ -28,10 +26,8 @@ export const deletePoseFromSeq = (id) => {
     }
 }
 
+/* currently this is not being used */
 export const addPoseToSeq = (id, pose_in_seq) => {
-    console.log("addPoseToSeq");
-    console.log(id);
-    console.log(pose_in_seq);
     let config = {
         method: 'POST',
         headers: {

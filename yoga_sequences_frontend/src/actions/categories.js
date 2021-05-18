@@ -3,8 +3,6 @@ import { getToken } from './auth';
 import { handleServerError } from './errors';
 
 export const getCategories = (user) => {
-    //console.log(">>> in actions/sequences -> getCategories");
-    console.log(user);
     let config = {
         headers: {
             'Accept': "application/json",
@@ -18,7 +16,7 @@ export const getCategories = (user) => {
         .then(response =>  {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
+                    //console.log(json);
                     dispatch({ type: 'GET_CATEGORIES', categories: json.categories})
                 })
             } else {
@@ -32,7 +30,6 @@ export const getCategories = (user) => {
 
 
 export const addCategory = (category) => {
-    //console.log("\tAction >> add Category");
     let config = {
         method: 'POST',
         headers: {
@@ -60,8 +57,6 @@ export const addCategory = (category) => {
 }
 
 export const deleteCategory = (id) => {
-    //console.log("\t>>>categories Action -> deleteCategory");
-    //console.log(id);
     let config = {
         method: 'DELETE',
         headers: {

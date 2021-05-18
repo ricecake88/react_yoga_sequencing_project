@@ -15,7 +15,6 @@ export const getPoses = () => {
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
-                    console.log(json);
                     dispatch({type: 'GET_POSES', poses: json.poses})
                 })
             } else {
