@@ -162,7 +162,6 @@ class SeqForm extends Component {
             else if (this.props.match.path === "/sequences/edit/:id") {
                this.props.editSequence(sequence)
                .then(resp => {
-                   let path = `/sequences/${parseInt(this.props.match.id)}`
                     this.setState({
                     name: '',
                     category_id: "",
