@@ -23,12 +23,12 @@ class SeqShow extends Component {
        otherwise the state never changes since this is repeatedly called */
     static getDerivedStateFromProps(props, current_state) {
 
-        console.log("Show -> ugetDerivedStateFromProps")
         // if state sequence is not set yet and sequence from props is available
         // set the initial state for sequence
         if (Object.keys(current_state.sequence).length === 0 &&
             Object.keys(props.sequence).length !== 0 &&
             props.match.id !== "add" ) {
+                SeqShow.sortPoses(props.sequence.pose_in_seqs);
                 return {
                     ...current_state,
                     sequence: {
@@ -69,7 +69,7 @@ class SeqShow extends Component {
             // for efficiency
             const sequence = this.props.sequences.find(sequence =>
                 sequence.id === parseInt(this.props.match.params.id));
-
+            SeqShow.sortPoses(sequence.pose_in_seqs);
             // set initial
             if (sequence) {
                 let num_breaths = 1;
