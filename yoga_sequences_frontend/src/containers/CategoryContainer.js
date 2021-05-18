@@ -38,13 +38,13 @@ class CategoryContainer extends Component {
         return (
             this.state.isLoaded && !this.state.requesting ?
                 <div onClick={this.onClick}>
-                    <h1>Categories</h1>
+                    <h1 className="center">Categories</h1>
                     <Error error={this.props.error}/>
                     <CategoryAdd addCategoryCallback={this.addCategory} />
                     <CategoryList 
                         categories={this.props.categories} 
                         deleteCategory={this.props.deleteCategory} 
-                        user={this.props.auth.currentUser}/>
+                        />
                  </div>
             : <LoadingSpinner />
         )
@@ -52,15 +52,10 @@ class CategoryContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(">>CategoryContainer -> mapStateToProps");
-    //console.log(state);
     return {
         categories: state.categories.categories,
-        //user: state.auth.currentUser,
         error: state.error.error,
         auth: state.auth,
-        //errors: state.categories.errors,
-        //global_errors: state.errors
     }
 }
 

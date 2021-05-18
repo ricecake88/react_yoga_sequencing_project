@@ -2,7 +2,6 @@ import React from 'react';
 import Category from './Category';
 
 const CategoryList = (props) => {
-    // TO-DO: STYLING
     return (
         props.categories && props.categories.length !== 0 ? 
             <div className="sequenceContainerGrid2">

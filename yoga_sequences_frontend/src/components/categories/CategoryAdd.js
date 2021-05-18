@@ -15,6 +15,9 @@ class CategoryAdd extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         this.props.addCategoryCallback(this.state.category)
+        this.setState({
+            category: ''
+        })
     }
 
     render() {
