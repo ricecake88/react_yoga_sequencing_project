@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Seq = (props) => {
-    //console.log("Seq Component");
-    //console.log(props)
     return  (
         <span>
         {props.sequence.name}
