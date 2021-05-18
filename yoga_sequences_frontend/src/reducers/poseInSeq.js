@@ -1,6 +1,8 @@
-/* this reducer is not used as the poseInSeq
- state is always determined within a sequence
- and handled within the component itself */
+/* this reducer is partially used as the poseInSeq
+ state is determined within a sequence
+ and handled within the component itself 
+ only add pose in sequence is used, within the edit page
+ */
 export default function poseInSeqReducer(
     state = {
         pose_in_seqs: [],
