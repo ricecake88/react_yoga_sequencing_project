@@ -208,15 +208,31 @@ input:focus, select:focus {
 .delete:active, .edit:active {
     color: red;
 }
-.errors {
+.error {
     font-weight:bold;
+    width: 80%;
+    color: maroon;
+    padding: 5px;
 }
 
 .click {
     cursor: pointer;
 }
+
+button {
+    padding: 5px 10px;
+    border: 1px solid pink;
+    border-radius: 3pt;
+    font-family: 'Roboto Slab', serif;
+    background-color: rgb(251, 238, 217);
+}
+
 button:hover {
-    border: 1px solid blue;
+    border: 1px solid brown;
+}
+
+button:active {
+    border: 1px solid red;
 }
 
 .message {
