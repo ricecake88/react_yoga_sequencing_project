@@ -36,7 +36,7 @@ class Navbar extends React.Component {
           >
             Sequences
           </NavLink>
-          {currentUser.email}
+          {currentUser.email} &nbsp;
           <Logout />
         </>
       ) : (

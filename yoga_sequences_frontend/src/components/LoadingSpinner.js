@@ -5,7 +5,7 @@ const LoadingSpinner= () => {
     return (
         <div>
             <div>
-                <ImSpinner3 />
+                <ImSpinner3 /> Loading...
             </div>
         </div>
     )
