@@ -33,8 +33,6 @@ class PoseContainer extends Component {
     }
 
     updateValue = (val) => {
-        //console.log("updating Value")
-        //console.log(val)
         //updated pose based on selection
         this.setState({
             ...this.state,
@@ -56,8 +54,6 @@ class PoseContainer extends Component {
     }
 
     displayPose = () => {
-        //console.log("displayPose")
-        //console.log(this.state.pose_id);
         // if the pose exists, update the pose with the latest related information
         // based on the select
         if (Object.keys(this.state.pose).length !== 0) {
@@ -68,7 +64,7 @@ class PoseContainer extends Component {
     render() {
         const { isLoaded } = this.state;
         return isLoaded ? <div>
-            <h1>Poses</h1>
+            <h1 className="center">Poses</h1>
             {/*display the drop down select for all the poses, requires list of all poses and the
             callback to update the state based on selection */}
             <form>
@@ -85,7 +81,6 @@ const mapStateToProps = (state) => {
         poses: state.poses.poses
     }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
     return {
