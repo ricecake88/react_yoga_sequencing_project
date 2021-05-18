@@ -1,7 +1,4 @@
 export default function categoryReducer(state={categories: [], requesting: false}, action) {
-    //console.log("\t >>>in categoryReducer")
-    //console.log(state)
-    //console.log(action)
     switch(action.type) {
         case 'START_GET_CATEGORIES':
             return {

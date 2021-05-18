@@ -6,9 +6,6 @@ export default function poseInSeqReducer(
         pose_in_seqs: [],
         requesting: false
     }, action) {
-        //console.log(">>> poseInSeqReducer");
-        //console.log(state);
-        //console.log(action);
     switch(action.type) {
         case 'START_ADD_POSE_IN_SEQ':
             return {

@@ -1,11 +1,8 @@
-export default function poseReducer(state = 
-    { 
-        poses: [], 
+export default function poseReducer(state =
+    {
+        poses: [],
         requesting: false
     }, action) {
-    //console.log(">>> poseReducer");
-    //console.log(state);
-    //console.log(action);
     switch(action.type) {
         case 'START_GET_POSES':
             return {

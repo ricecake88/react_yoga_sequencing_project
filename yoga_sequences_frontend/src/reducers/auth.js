@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function authReducer(state = initialState, action) {
-    //console.log(state)
     switch(action.type) {
         case AUTHENTICATED:
             return {

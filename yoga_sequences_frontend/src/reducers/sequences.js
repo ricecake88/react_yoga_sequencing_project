@@ -4,9 +4,6 @@ export default function sequenceReducer(
         selSequence: {},
         requesting: false
     }, action) {
-        //console.log(">>> sequenceReducer");
-        //console.log(state);
-        //console.log(action);
     switch(action.type) {
         case 'START_GET_ALL_SEQ':
             return {
