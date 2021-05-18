@@ -9,9 +9,9 @@ const SeqPoseList = ({posesInSeq, poses, current}) => {
                 id: poseInSeq.id
             }
         })
-    console.log(posesAll);
 
-    function highlightCurrentPose(current, index, pose) {
+        /* highlight the pose in the table that is current */
+        function highlightCurrentPose(current, index, pose) {
         if (current === index) {
             return <>
                 <div className="head selectedPose poseDiv">{index+1}. {pose.name} </div>
@@ -22,16 +22,18 @@ const SeqPoseList = ({posesInSeq, poses, current}) => {
                 <div className="head">{pose.num_breaths}</div></>
         }
     }
+
     function display () {
         if (posesInSeq.length > 0) {
             return <>
                 <div className="header">Poses</div>
-                <div className="header">Number of Breaths</div>
+                <div className="header"># of Breaths</div>
                     {posesAll.map((pose,index) => {
                         return <Fragment key={"pose" + pose.id}>
-                            {highlightCurrentPose(current, index, pose)}</Fragment>
+                            {highlightCurrentPose(current, index, pose)}
+                            </Fragment>
                     })}
-                
+
                 </>
         }
     }

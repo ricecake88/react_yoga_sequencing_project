@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//import { BrowserRouter, NavLink } from 'react-router-dom';
-//import PoseList from '../components/sequences/PoseList';
 import LoadingSpinner from '../components/LoadingSpinner';
-//import SeqInfo from '../components/sequences/SeqInfo';
-import SeqShowNewest from '../components/sequences/SeqShowNewest';
+import SeqShow from '../components/sequences/SeqShow';
+import Error from '../components/errors/Error';
 import { getSequences } from '../actions/sequences';
 import { getPoses } from '../actions/poses';
-
-import Error from '../components/errors/Error';
 
 class SeqShowContainer extends Component {
 
@@ -30,9 +26,9 @@ class SeqShowContainer extends Component {
         return (
             <div className="genericContainer">
                 <Error error={this.props.error}/>
-                <SeqShowNewest 
+                <SeqShow
                     //sequences={this.props.sequences}
-                    match={this.props.match} 
+                    match={this.props.match}
                     poses={this.props.poses}/>
             </div>
         )
@@ -41,7 +37,7 @@ class SeqShowContainer extends Component {
 
     render() {
         return this.state.isLoaded ?
-                <div>{this.display()}</div> 
+                <div>{this.display()}</div>
                : <LoadingSpinner />
     }
 
@@ -57,7 +53,6 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         poses: state.poses.poses,
-        //requesting: state.sequences.requesting,
         auth: state.auth,
         error: state.error.error
     }
