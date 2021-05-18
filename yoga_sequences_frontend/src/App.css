@@ -266,6 +266,12 @@ button:active {
     margin: 10px;
 }
 
+.poseImg {
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 /**** draggable style ****/
 
 .droppable {
