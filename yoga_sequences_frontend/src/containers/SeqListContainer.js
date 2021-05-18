@@ -1,11 +1,8 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-//import SeqFormNew from '../components/sequences/SeqFormNew';
 import SeqList from '../components/sequences/SeqList';
 import { getSequences, deleteSequence} from '../actions/sequences'
-import { getCategories } from '../actions/categories';
-import { getPoses } from '../actions/poses';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Error from '../components/errors/Error';
 
@@ -49,10 +46,10 @@ class SeqListContainer extends Component {
         return (
             isLoaded ?
             <>
-                <h1>Sequences <NavLink className="link no-ul" to="/sequences/add"><span title="New Sequence">+</span></NavLink></h1>
+                <h1 className="center">Sequences <NavLink className="link no-ul" to="/sequences/add"><span title="New Sequence">+</span></NavLink></h1>
                 <div className="message">{this.state.message}</div>
                 <Error error={this.props.error}/>
-                <SeqList 
+                <SeqList
                     onDelete={this.onDelete}/>
                  </>
             : <LoadingSpinner />
