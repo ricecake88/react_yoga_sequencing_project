@@ -13,8 +13,7 @@ export const handleServerError = (response, dispatch) => {
         dispatch({type: 'ERROR', error: json.error})
         if (response.status === 401)
             return Promise.reject(dispatch({type: NOT_AUTHENTICATED}))
-        else 
-        
+        else
             return Promise.reject(dispatch({type: 'ERROR', error: json.error}))
         })
 
