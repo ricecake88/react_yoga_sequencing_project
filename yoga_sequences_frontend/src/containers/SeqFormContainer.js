@@ -25,8 +25,6 @@ class SeqFormContainer extends Component {
         })
     }
 
-
-
     render() {
         const { isLoaded } = this.state;
         return (
@@ -36,6 +34,7 @@ class SeqFormContainer extends Component {
                         sequences={this.props.sequences}
                         match={this.props.match}
                         clearErrorMessage={this.props.clearErrorMessage}
+                        onDeleteSeq={this.onDelete}
                     />
 
                 </div>

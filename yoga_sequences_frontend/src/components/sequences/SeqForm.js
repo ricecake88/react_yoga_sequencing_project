@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCategory, getCategories } from '../../actions/categories';
 import { addSequence } from '../../actions/sequences';
-import { editSequence, getSequence } from '../../actions/sequences';
+import { editSequence, getSequence, deleteSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq';
 import { setError } from '../../actions/errors';
 import Form from './Form';
@@ -111,7 +111,6 @@ class SeqForm extends Component {
     }
 
     onClick = () => {
-        console.log("onClick")
         this.props.clearErrorMessage();
         this.setState({
             ...this.state,
@@ -120,8 +119,6 @@ class SeqForm extends Component {
     }
 
     onChange = (event) => {
-        console.log("Sequence Form 2 -> onChange()")
-        console.log(event.target.name)
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -130,8 +127,6 @@ class SeqForm extends Component {
     /* this goes to the server */
     onSubmit = (event) => {
         event.preventDefault();
-        console.log("on Submit")
-        console.log(this.state);
         let sequence = {};
         this.onClick();
 
@@ -288,6 +283,17 @@ class SeqForm extends Component {
         }
     }
 
+    onDeleteSeq = (id) => {
+        this.props.deleteSequence(id)
+        .then(resp => {
+            this.setState({
+                ...this.state,
+                message: 'Sequence Deleted.'
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
     render() {
         // get the route based on path - edit or add
         const route = this.props.match.path.split("/")[2];
@@ -315,6 +321,8 @@ class SeqForm extends Component {
                     onClickDeletePose={this.onClickDeletePose}
                     onBlur={this.onBlur}
                     handleOnDragEnd={this.handleOnDragEnd}
+
+                    onDeleteSeq={this.onDeleteSeq}
                 />
             : null
         )
@@ -338,6 +346,9 @@ function mapDispatchToProps(dispatch, props) {
         addSequence: (sequence) => props.match.path === "/sequences/add" ? dispatch(addSequence(sequence)) : null,
         editSequence: (sequence) => props.match.path === "/sequences/edit/:id" ? dispatch(editSequence(sequence)) : null,
         deletePoseFromSeq: (pose) => dispatch(deletePoseFromSeq(pose)),
+
+        // related to sequence list
+        deleteSequence: (id) => dispatch(deleteSequence(id)),
 
         // functions only needed upon refresh or directly accessed
         getSequence: (id) => props.sequences.length === 0 ? dispatch(getSequence(id)) : null,

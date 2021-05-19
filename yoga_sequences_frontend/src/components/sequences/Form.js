@@ -43,7 +43,7 @@ const Form  = (props) => {
         </form>
         <br/>
         {props.route === "add" ?
-            <SeqList />
+            <SeqList onDelete={props.onDeleteSeq}/>
         : null}
         </Fragment>
     )
