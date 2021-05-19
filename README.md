@@ -52,7 +52,7 @@ This indicates that the backend will be served up by port 3001.
 
 ## Authors
 
-* Grace Shih - Initial work for basic habit application.
+* Grace Shih - Initial work for a yoga sequencing application.
 
 ## License
 
