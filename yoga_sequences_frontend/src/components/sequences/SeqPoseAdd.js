@@ -26,7 +26,7 @@ class PoseAdd extends Component {
             <PoseSelector poses={this.props.poses} updateValue={this.updateNumBreaths} select="addToSeq" onClick={this.props.onClick}/>
                 <button onClick={this.props.onClickAddPose} value={this.state.pose_id}>+</button><br/>
 
-            {(this.props.addedPoses.length !== 0) ?
+            {(this.props.addedPoses !== undefined && this.props.addedPoses.length !== 0) ?
                 <SeqPoseDraggable poses={this.props.poses} addedPoses={this.props.addedPoses} delete={this.props.delete} onBlur={this.props.onBlur} onDrag={this.props.onDrag} onChange={this.props.onChange}/> : null
             }
         </>)

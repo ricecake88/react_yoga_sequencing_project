@@ -14,7 +14,7 @@ class SeqForm extends Component {
         name: '',
         category_id: '',
         pose_id: 0,
-        pose_in_seqs: [],
+        //pose_in_seqs: [],
         isLoaded: false,
         message: ''
     }
@@ -32,11 +32,11 @@ class SeqForm extends Component {
             if (Object.keys(props.sequence).length !== 0 && Object.keys(current_state.sequence).length === 0) {
 
 
-                let pose_in_seqs = [];
+                //let pose_in_seqs = [];
                 let name= props.sequence.name;
                 let category_id = props.sequence.category.id;
                 if (props.sequence.pose_in_seqs.length !== 0) {
-                    pose_in_seqs = props.sequence.pose_in_seqs
+                    //pose_in_seqs = props.sequence.pose_in_seqs
                     SeqForm.sortPoses(props.sequence.pose_in_seqs)
                 }
 
@@ -47,7 +47,7 @@ class SeqForm extends Component {
                     sequence: props.sequence,
                     name: name,
                     category_id: category_id,
-                    pose_in_seqs: pose_in_seqs
+                    //pose_in_seqs: SeqForm.sortPoses(props.sequence.pose_in_seqs)
                 }
             } else return current_state;
         } else return current_state;
@@ -63,14 +63,14 @@ class SeqForm extends Component {
             .catch(err => console.log(err));
 
             //initialize state variables
-            let pose_in_seqs = [];
+            //let pose_in_seqs = [];
 
             // sequence has been retrieved
             if (Object.keys(this.props.sequence).length !== 0) {
 
                 // update state with values from sequence information
                 if (this.props.sequence.pose_in_seqs.length !== 0) {
-                    pose_in_seqs = this.props.sequence.pose_in_seqs
+                    //pose_in_seqs = this.props.sequence.pose_in_seqs
                     SeqForm.sortPoses(this.props.sequence.pose_in_seqs)
                 }
             }
@@ -81,7 +81,7 @@ class SeqForm extends Component {
             this.setState(prevState => ({
                 ...prevState,
                 sequence: this.props.sequence,
-                pose_in_seqs: pose_in_seqs,
+                //pose_in_seqs: pose_in_seqs,
                 isLoaded: true
             }))
            //console.log(this.state);
@@ -97,7 +97,7 @@ class SeqForm extends Component {
                     sequence: sequence,
                     name: sequence.name,
                     category_id: sequence.category.id,
-                    pose_in_seqs: sequence.pose_in_seqs,
+                    //pose_in_seqs: sequence.pose_in_seqs,
                     isLoaded: true
                 })
             }
@@ -137,7 +137,7 @@ class SeqForm extends Component {
                 name: this.state.name,
                 category_id: parseInt(this.state.category_id),
                 user_id: this.props.user.id,
-                pose_in_seqs: this.state.pose_in_seqs
+                //pose_in_seqs: this.state.pose_in_seqs
             }
             if (this.props.match.path === "/sequences/add") {
                this.props.addSequence(sequence)
@@ -145,7 +145,7 @@ class SeqForm extends Component {
                     this.setState({
                         name: '',
                         category_id: "",
-                        pose_in_seqs: [],
+                        //pose_in_seqs: [],
                         pose_id: 0,
                         sequence: {},
                         message: 'Saved Sequence.'
@@ -160,7 +160,7 @@ class SeqForm extends Component {
                     this.setState({
                     name: '',
                     category_id: "",
-                    pose_in_seqs: [],
+                    //pose_in_seqs: [],
                     pose_id: 0,
                     sequence: {},
                     message: 'Saved Sequence.'
@@ -187,7 +187,7 @@ class SeqForm extends Component {
             name: pose.name,
             pose_id: pose.id,
             num_breaths:  1,
-            pose_order: this.state.pose_in_seqs.length
+            pose_order: Object.keys(this.state.sequence).length !== 0 ? this.state.sequence.pose_in_seqs.length : 0
         }
         // this isn't called to duplicate the behaviour in creating a new object
         /*if (this.props.route === "Edit") {
@@ -195,8 +195,11 @@ class SeqForm extends Component {
         }*/
         this.setState({
             ...this.state,
-            pose_in_seqs: [...this.state.pose_in_seqs, pose_in_seq ]
-            })
+            sequence: {
+                ...this.state.sequence,
+                pose_in_seqs: Object.keys(this.state.sequence).length !== 0 ? [...this.state.sequence.pose_in_seqs, pose_in_seq ] : [pose_in_seq]
+            }
+        })
 
     }
 
@@ -215,7 +218,10 @@ class SeqForm extends Component {
         // remove the pose_in_seqs state
         this.setState({
             ...this.state,
-            pose_in_seqs: this.state.pose_in_seqs.filter((pose, index) => index !== localPoseId)
+            sequence: {
+                ...this.state.sequence,
+                pose_in_seqs: this.state.sequence.pose_in_seqs.filter((pose, index) => index !== localPoseId)
+            }
         })
 
     }
@@ -225,11 +231,14 @@ class SeqForm extends Component {
     onBlur = (event, poseElementId) => {
         this.setState(prevState => ({
             ...prevState,
-            pose_in_seqs: prevState.pose_in_seqs.map((pose, index) => {
-                return index === poseElementId ? {...pose,
-                    num_breaths: parseInt(event.target.value)}
-                : pose
-            })
+            sequence: {
+                ...prevState.sequence,
+                pose_in_seqs: prevState.sequence.pose_in_seqs.map((pose, index) => {
+                    return index === poseElementId ? {...pose,
+                        num_breaths: parseInt(event.target.value)}
+                    : pose
+                })
+            }
         }))
     }
 
@@ -238,7 +247,7 @@ class SeqForm extends Component {
         breaths */
     handleOnDragEnd = (result) => {
 
-        let items = Array.from(this.state.pose_in_seqs)
+        let items = Array.from(this.state.sequence.pose_in_seqs)
 
         // get the num_breaths of the pose element being dragged
         const source_num_breaths = items[result.source.index].num_breaths
@@ -260,7 +269,10 @@ class SeqForm extends Component {
         // update the pose_in_seqs to the reordered list of poses in sequence
         this.setState({
             ...this.state,
-            pose_in_seqs: items
+            sequence: {
+                ...this.state.sequence,
+                pose_in_seqs: items
+            }
         })
     }
 
@@ -317,7 +329,8 @@ class SeqForm extends Component {
 
                     // pose props
                     onClickAddPose={this.onClickAddPose}
-                    pose_in_seqs={this.state.pose_in_seqs}
+                    /*pose_in_seqs={this.state.pose_in_seqs}*/
+                    pose_in_seqs={this.state.sequence.pose_in_seqs}
                     onClickDeletePose={this.onClickDeletePose}
                     onBlur={this.onBlur}
                     handleOnDragEnd={this.handleOnDragEnd}
