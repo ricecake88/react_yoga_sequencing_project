@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux'
+import SeqCategoryAdd from './SeqCategoryAdd';
 
 class SeqCategories extends Component {
 
@@ -19,6 +20,12 @@ class SeqCategories extends Component {
               }) : null}
             <option value="Add Category">Add Category</option>
             </select>
+            <SeqCategoryAdd 
+               addTrue={this.props.id} 
+               name="category_id" 
+               addCategory={this.props.addCategory} 
+               onChange={this.props.onChange}/>
+            <br/>            
         </>
         )
   };

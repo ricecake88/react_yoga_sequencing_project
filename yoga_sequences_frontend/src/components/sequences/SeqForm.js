@@ -5,7 +5,12 @@ import { addSequence } from '../../actions/sequences';
 import { editSequence, getSequence, deleteSequence } from '../../actions/sequences';
 import { deletePoseFromSeq } from '../../actions/poseInSeq';
 import { setError } from '../../actions/errors';
-import Form from './Form';
+//import Form from './Form';
+import SeqCategories from './SeqCategories';
+//import SeqCategoryAdd from './SeqCategoryAdd';
+import SeqPoseAdd from './SeqPoseAdd';
+import SeqList from './SeqList';
+import Error from '../errors/Error';
 
 class SeqForm extends Component {
 
@@ -306,7 +311,7 @@ class SeqForm extends Component {
         .catch(err => console.log(err))
     }
 
-    render() {
+    /*render() {
         // get the route based on path - edit or add
         const route = this.props.match.path.split("/")[2];
 
@@ -329,7 +334,7 @@ class SeqForm extends Component {
 
                     // pose props
                     onClickAddPose={this.onClickAddPose}
-                    /*pose_in_seqs={this.state.pose_in_seqs}*/
+                    //pose_in_seqs={this.state.pose_in_seqs}
                     pose_in_seqs={this.state.sequence.pose_in_seqs}
                     onClickDeletePose={this.onClickDeletePose}
                     onBlur={this.onBlur}
@@ -339,6 +344,54 @@ class SeqForm extends Component {
                 />
             : null
         )
+    }*/
+
+
+    render() {
+        const route = this.props.match.path.split("/")[2];
+        return (
+            this.state.isLoaded ?
+                <>
+                    {route === "add" ? 
+                        <h1 className="center">Create a New Sequence</h1> 
+                    : <h1 className="center">Edit Sequence</h1>}
+                    <Error error={this.props.error}/>
+                    <div className="message">{this.state.message}</div>
+                    <form onSubmit={this.onSubmit}>
+                        <label htmlFor="name"> Sequence Name: </label>
+                        <input type="name" name="name" onChange={this.onChange} value={this.state.name} onClick={()=>this.onClick()}/><br/>
+                        <SeqCategories
+                            addCategory={this.props.addCategory } 
+                            id={this.state.category_id} 
+                            onChange={this.onChange}
+                            onClick={this.onClick}/>
+                        {/* TO-DO: Move this to SeqCategories */}
+                        {/*<SeqCategoryAdd 
+                            addTrue={this.state.category_id} 
+                            name="category_id" 
+                            addCategory={this.props.addCategory} 
+                            onChange={this.onChange}/>
+                        <br/>*/}
+                        <SeqPoseAdd 
+                            onClick={this.onClick}
+                            onClickAddPose={this.onClickAddPose} 
+                            addedPoses={this.state.sequence.pose_in_seqs} 
+                            delete={this.onClickDeletePose} 
+                            onBlur={this.onBlur} 
+                            onDrag={this.handleOnDragEnd} 
+                            onChange={this.onChange} />
+                        <br/>
+                        {route === "add" ?
+                            <button type="submit" value="Save New Sequence">Save New Sequence</button>
+                        : <button type="submit" value="Save Changes">Save Changes</button>}
+                    </form>
+                    <br/>
+                    {route === "add" ?
+                        <SeqList onDelete={this.onDeleteSeq}/>
+                    : null}
+                </>
+            : null
+        )        
     }
 }
 
