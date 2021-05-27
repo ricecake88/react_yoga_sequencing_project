@@ -1,9 +1,34 @@
 import React, { Component } from 'react';
-import { connect} from 'react-redux'
+import { connect, useSelector} from 'react-redux'
 import SeqCategoryAdd from './SeqCategoryAdd';
 import { SeqCategoryAddHooks } from './SeqCategoryAddHooks';
 
-class SeqCategories extends Component {
+export function SeqCategoriesHooks(props) {
+    const categories = useSelector(state => state.categories.categories)
+
+    return (
+        <>
+        <label htmlFor="category">Category: </label>
+        <select value={props.id} name="category_id" onChange={props.onChange} onClick={props.onClick}>
+            <option disabled value="">Select a Category</option>
+            {Object.keys(categories).length !== 0 ?
+              categories.sort((a,b) => b.id - a.id).map(category => {
+                 return (category.name === "Uncategorized" ?
+                  <option key={category.id} value={category.id} disabled>Uncategorized</option> :
+                  <option key={category.id} value={category.id}>{category.name}</option>)
+              }) : null}
+            <option value="Add Category">Add Category</option>
+            </select>
+            <SeqCategoryAddHooks
+               addTrue={props.id}
+               //name="category_id"
+               addCategory={props.addCategory}
+            onChange={props.onChange}/>
+        </>
+        )
+}
+
+/*class SeqCategories extends Component {
 
 
   display() {
@@ -21,12 +46,6 @@ class SeqCategories extends Component {
               }) : null}
             <option value="Add Category">Add Category</option>
             </select>
-            {/*<SeqCategoryAdd
-               addTrue={this.props.id}
-               //name="category_id"
-               addCategory={this.props.addCategory}
-               onChange={this.props.onChange}/>
-            <br/>*/}
             <SeqCategoryAddHooks
                addTrue={this.props.id}
                //name="category_id"
@@ -47,4 +66,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(SeqCategories);
+export default connect(mapStateToProps)(SeqCategories);*/
