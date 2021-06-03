@@ -146,7 +146,7 @@ class SeqForm extends Component {
             }
             if (this.props.match.path === "/sequences/add") {
                this.props.addSequence(sequence)
-               .then(resp => {
+               .then(() => {
                     this.setState({
                         name: '',
                         category_id: "",
@@ -161,7 +161,7 @@ class SeqForm extends Component {
             }
             else if (this.props.match.path === "/sequences/edit/:id") {
                this.props.editSequence(sequence)
-               .then(resp => {
+               .then(() => {
                     this.setState({
                     name: '',
                     category_id: "",
@@ -302,7 +302,7 @@ class SeqForm extends Component {
 
     onDeleteSeq = (id) => {
         this.props.deleteSequence(id)
-        .then(resp => {
+        .then(() => {
             this.setState({
                 ...this.state,
                 message: 'Sequence Deleted.'
@@ -310,42 +310,6 @@ class SeqForm extends Component {
         })
         .catch(err => console.log(err))
     }
-
-    /*render() {
-        // get the route based on path - edit or add
-        const route = this.props.match.path.split("/")[2];
-
-        return (
-            this.state.isLoaded ?
-                <Form
-                    route={route}
-                    error={this.props.error}
-                    message={this.state.message}
-
-                    // form props
-                    onSubmit={this.onSubmit}
-                    onChange={this.onChange}
-                    name={this.state.name}
-                    onClick={this.onClick}
-
-                    // category props
-                    category_id={this.state.category_id}
-                    addCategory={this.props.addCategory}
-
-                    // pose props
-                    onClickAddPose={this.onClickAddPose}
-                    //pose_in_seqs={this.state.pose_in_seqs}
-                    pose_in_seqs={this.state.sequence.pose_in_seqs}
-                    onClickDeletePose={this.onClickDeletePose}
-                    onBlur={this.onBlur}
-                    handleOnDragEnd={this.handleOnDragEnd}
-
-                    onDeleteSeq={this.onDeleteSeq}
-                />
-            : null
-        )
-    }*/
-
 
     render() {
         const route = this.props.match.path.split("/")[2];
@@ -365,13 +329,6 @@ class SeqForm extends Component {
                             id={this.state.category_id} 
                             onChange={this.onChange}
                             onClick={this.onClick}/>
-                        {/* TO-DO: Move this to SeqCategories */}
-                        {/*<SeqCategoryAdd 
-                            addTrue={this.state.category_id} 
-                            name="category_id" 
-                            addCategory={this.props.addCategory} 
-                            onChange={this.onChange}/>
-                        <br/>*/}
                         <SeqPoseAdd 
                             onClick={this.onClick}
                             onClickAddPose={this.onClickAddPose} 
