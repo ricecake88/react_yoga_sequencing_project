@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function NormalRoute() {
+export default function Home() {
   return (
     <div>
       <div>Welcome to Yoga Sequencing!</div>
