@@ -10,6 +10,7 @@ import CategoryContainer from './containers/CategoryContainer';
 import PoseContainer from './containers/PoseContainer';
 import SeqFormContainer from './containers/SeqFormContainer';
 import SeqShowContainer from './containers/SeqShowContainer';
+import NotFound from "./NotFound";
 
 function App() {
 
