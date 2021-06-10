@@ -35,9 +35,8 @@ Rails.application.routes.draw do
     end
 
     get '/api/v1/users/current_user', to: 'api/v1/users/current_user#index'
-    get '/poses', :to => redirect('index.html')
-    get '/categories', :to => redirect('index.html')
-    get '/sequences', :to => redirect('index.html')
+    get '/*path', to: 'react#index'
+
   ## For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #namespace :api do
   #  namespace :v1 do
