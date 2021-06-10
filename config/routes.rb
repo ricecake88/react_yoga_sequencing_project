@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
 
     get '/api/v1/users/current_user', to: 'api/v1/users/current_user#index'
+    match '*all', to: 'static_pages#index', via: [:get]
   ## For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #namespace :api do
   #  namespace :v1 do
