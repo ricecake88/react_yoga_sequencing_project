@@ -29,6 +29,7 @@ function App() {
               <Route exact path="/sequences/add" component={withAuth(SeqFormContainer)}/>
               <Route exact path="/sequences/edit/:id" component={withAuth(SeqFormContainer)}/>
               <Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>
+              <Route component={NotFound} />
           </Switch>
         </div>
       </div>
