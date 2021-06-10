@@ -18,9 +18,10 @@ function App() {
     <div className="App">
       <Router>
       <Navbar />
+      {/*<div className="genericContainer">
+        <div className="genericInnerContainer">*/}
+        <div>
           <Switch>
-      <div className="genericContainer">
-        <div className="genericInnerContainer">
               <Route exact path='/' component={Home} />
               <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
               <Route exact path='/poses' component={PoseContainer}/>
@@ -31,9 +32,10 @@ function App() {
               <Route exact path="/sequences/edit/:id" component={withAuth(SeqFormContainer)}/>
               <Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>
               <Route component={NotFound} />
-        </div>
-      </div>
           </Switch>
+          </div>
+        {/*  </div>
+        </div>*/}
       </Router>
     </div>
   );
