@@ -18,9 +18,8 @@ function App() {
     <div className="App">
       <Router>
       <Navbar />
-      {/*<div className="genericContainer">
-        <div className="genericInnerContainer">*/}
-        <div>
+        <div className="genericContainer">
+       {/* <div className="genericInnerContainer">*/}
           <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/categories' component={withAuth(CategoryContainer)}/>
@@ -33,9 +32,8 @@ function App() {
               <Route exact path="/sequences/:id" component={withAuth(SeqShowContainer)}/>
               <Route component={NotFound} />
           </Switch>
-          </div>
-        {/*  </div>
-        </div>*/}
+         </div>
+        {/*</div>*/}
       </Router>
     </div>
   );
