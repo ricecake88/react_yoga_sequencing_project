@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
+      <Router basename="/client">
       <Navbar />
       <div className="genericContainer">
         <div className="genericInnerContainer">
