@@ -127,7 +127,7 @@ input:focus, select:focus {
 
 .genericInnerContainer {
     background-color: beige;
-    /*opacity: 80%;*/
+    opacity: 80%;
     color:black;
     margin-left: auto;
     margin-right: auto;
