@@ -1,4 +1,5 @@
-import { AUTHENTICATED, NOT_AUTHENTICATED, BACKEND_USERS_URL } from '../actions';
+import { AUTHENTICATED, NOT_AUTHENTICATED, API_ROOT } from '../actions';
+//import { API_ROOT } from '../apiRoot.js';
 
 const setToken = (token) => {
     localStorage.setItem("token", token);
@@ -23,7 +24,7 @@ export const checkAuth = () => {
         }
     }
     return (dispatch) => {
-        return fetch(`${BACKEND_USERS_URL}/current_user`, config)
+        return fetch(`${API_ROOT}/users/current_user`, config)
         .then(resp => {
             if (resp.ok) {
                 return resp.json().then(user => dispatch({type: AUTHENTICATED, payload: user}))
@@ -45,7 +46,7 @@ export const signupUser = (credentials) => {
         body: JSON.stringify({user: credentials })
     }
     return (dispatch) => {
-        return fetch(`${BACKEND_USERS_URL}/signup`, config)
+        return fetch(`${API_ROOT}/users/signup`, config)
         .then(resp => {
             if (resp.ok) {
                 setToken(resp.headers.get("Authorization"));
@@ -74,7 +75,7 @@ export const loginUser = (credentials) => {
         body: JSON.stringify({ user: credentials })
     };
     return (dispatch) => {
-        return fetch(`${BACKEND_USERS_URL}/login`, config)
+        return fetch(`${API_ROOT}/users/login`, config)
         .then(resp => {
             if (resp.ok) {
                 setToken(resp.headers.get("Authorization"));
@@ -95,7 +96,7 @@ export const loginUser = (credentials) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    return fetch(`${BACKEND_USERS_URL}/logout`, {
+    return fetch(`${API_ROOT}/users/logout`, {
       method: "DELETE",
       headers: {
         "Accept": "application/json",

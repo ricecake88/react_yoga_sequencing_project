@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '.';
+import { API_ROOT } from '.';
 import { getToken } from './auth';
 import { handleServerError } from './errors';
 
@@ -13,7 +13,7 @@ export const getSequences = (user) => {
     };
     return (dispatch) => {
         dispatch({type: 'START_GET_ALL_SEQ'});
-        return fetch(`${BACKEND_URL}/sequences?user_id=${user.id}`, config)
+        return fetch(`${API_ROOT}/sequences?user_id=${user.id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -38,7 +38,7 @@ export const getSequence = (id) => {
     };
     return (dispatch) => {
         dispatch({type: 'START_GET_SEQ'});
-        return fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        return fetch(`${API_ROOT}/sequences/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -70,7 +70,7 @@ export const addSequence = (sequence) => {
 
     return (dispatch) => {
         dispatch({type: 'START_ADD_SEQ'});
-        return fetch(`${BACKEND_URL}/sequences`, config)
+        return fetch(`${API_ROOT}/sequences`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -96,7 +96,7 @@ export const deleteSequence = (id) => {
 
     return (dispatch) => {
         dispatch({type: 'START_DELETE_SEQ'});
-        return fetch(`${BACKEND_URL}/sequences/${id}`, config)
+        return fetch(`${API_ROOT}/sequences/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -126,7 +126,7 @@ export const editSequence = (sequence) => {
     };
     return (dispatch) => {
         dispatch({type: 'START_EDIT_SEQ'});
-        return fetch(`${BACKEND_URL}/sequences/${sequence.id}`, config)
+        return fetch(`${API_ROOT}/sequences/${sequence.id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {

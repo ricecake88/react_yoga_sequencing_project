@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '.';
+import { API_ROOT } from '.';
 import { getToken } from './auth';
 import { handleServerError } from './errors';
 
@@ -12,7 +12,7 @@ export const getCategories = (user) => {
     }
     return (dispatch) => {
         dispatch({ type: 'START_GET_CATEGORIES'});
-        return fetch(`${BACKEND_URL}/categories/?user_id=${user.id}`, config)
+        return fetch(`${API_ROOT}/categories/?user_id=${user.id}`, config)
         .then(response =>  {
             if (response.ok) {
                 return response.json().then(json => {
@@ -43,7 +43,7 @@ export const addCategory = (category) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_ADD_CATEGORY'});
-        return fetch(`${BACKEND_URL}/categories`, config)
+        return fetch(`${API_ROOT}/categories`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json =>
@@ -67,7 +67,7 @@ export const deleteCategory = (id) => {
     }
     return (dispatch) => {
         dispatch({type: 'START_DELETE_CATEGORY'});
-        return fetch(`${BACKEND_URL}/categories/${id}`, config)
+        return fetch(`${API_ROOT}/categories/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {

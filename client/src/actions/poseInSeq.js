@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '.';
+import { API_ROOT } from '.';
 import { getToken } from './auth';
 import { handleServerError } from './errors';
 
@@ -13,7 +13,7 @@ export const deletePoseFromSeq = (id) => {
     }
     return(dispatch) => {
         dispatch({type: 'START_DELETE_POSE_IN_SEQ'})
-        fetch(`${BACKEND_URL}/pose_in_seqs/${id}`, config)
+        fetch(`${API_ROOT}/pose_in_seqs/${id}`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
@@ -45,7 +45,7 @@ export const addPoseToSeq = (id, pose_in_seq) => {
 
     return (dispatch) => {
         dispatch({type: 'START_ADD_POSE_TO_SEQ'})
-        return fetch(`${BACKEND_URL}/pose_in_seqs`, config)
+        return fetch(`${API_ROOT}/pose_in_seqs`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {

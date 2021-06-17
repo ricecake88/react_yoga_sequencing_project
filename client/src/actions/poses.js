@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '.';
+import { API_ROOT } from '.';
 import { handleServerError } from './errors';
 
 export const getPoses = () => {
@@ -11,7 +11,7 @@ export const getPoses = () => {
     }
     return (dispatch) => {
         dispatch({type: 'START_GET_POSES'});
-        return fetch(`${BACKEND_URL}/poses`, config)
+        return fetch(`${API_ROOT}/poses`, config)
         .then(response => {
             if (response.ok) {
                 return response.json().then(json => {
